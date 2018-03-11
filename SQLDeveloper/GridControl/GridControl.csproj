@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F5F29C55-8FF0-4C14-AA74-6B9F801A4B18}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GridControl</RootNamespace>
+    <AssemblyName>GridControl</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ExportadorExcel">
+      <HintPath>..\ExportadorExcel\bin\Debug\ExportadorExcel.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CFiltro.cs" />
+    <Compile Include="ControlColumns.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ControlColumns.Designer.cs">
+      <DependentUpon>ControlColumns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ControlerGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ControlerGrid.Designer.cs">
+      <DependentUpon>ControlerGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CTablaColumnas.cs" />
+    <Compile Include="FormCalculadora.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCalculadora.Designer.cs">
+      <DependentUpon>FormCalculadora.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormColumnas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormColumnas.Designer.cs">
+      <DependentUpon>FormColumnas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormDetalleFiltro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDetalleFiltro.Designer.cs">
+      <DependentUpon>FormDetalleFiltro.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormDetalleMensaje.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDetalleMensaje.Designer.cs">
+      <DependentUpon>FormDetalleMensaje.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormFiltrar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormFiltrar.Designer.cs">
+      <DependentUpon>FormFiltrar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormQuery.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormQuery.Designer.cs">
+      <DependentUpon>FormQuery.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GriVisor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GriVisor.Designer.cs">
+      <DependentUpon>GriVisor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PageResult.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PageResult.Designer.cs">
+      <DependentUpon>PageResult.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ControlColumns.resx">
+      <DependentUpon>ControlColumns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ControlerGrid.resx">
+      <DependentUpon>ControlerGrid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormCalculadora.resx">
+      <DependentUpon>FormCalculadora.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormColumnas.resx">
+      <DependentUpon>FormColumnas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDetalleFiltro.resx">
+      <DependentUpon>FormDetalleFiltro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDetalleMensaje.resx">
+      <DependentUpon>FormDetalleMensaje.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormFiltrar.resx">
+      <DependentUpon>FormFiltrar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormQuery.resx">
+      <DependentUpon>FormQuery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GriVisor.resx">
+      <DependentUpon>GriVisor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PageResult.resx">
+      <DependentUpon>PageResult.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

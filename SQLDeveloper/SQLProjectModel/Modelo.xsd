@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Modelo" targetNamespace="http://tempuri.org/Modelo.xsd" xmlns:mstns="http://tempuri.org/Modelo.xsd" xmlns="http://tempuri.org/Modelo.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="Modelo" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="Modelo" msprop:Generator_UserDSName="Modelo">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="TGrupoConeccion" msprop:Generator_TableClassName="TGrupoConeccionDataTable" msprop:Generator_TableVarName="tableTGrupoConeccion" msprop:Generator_TablePropName="TGrupoConeccion" msprop:Generator_RowDeletingName="TGrupoConeccionRowDeleting" msprop:Generator_RowChangingName="TGrupoConeccionRowChanging" msprop:Generator_RowEvHandlerName="TGrupoConeccionRowChangeEventHandler" msprop:Generator_RowDeletedName="TGrupoConeccionRowDeleted" msprop:Generator_UserTableName="TGrupoConeccion" msprop:Generator_RowChangedName="TGrupoConeccionRowChanged" msprop:Generator_RowEvArgName="TGrupoConeccionRowChangeEvent" msprop:Generator_RowClassName="TGrupoConeccionRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Nombre" msprop:Generator_ColumnVarNameInTable="columnNombre" msprop:Generator_ColumnPropNameInRow="Nombre" msprop:Generator_ColumnPropNameInTable="NombreColumn" msprop:Generator_UserColumnName="Nombre" type="xs:string" minOccurs="0" />
+              <xs:element name="ID_Grupo" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID_Grupo" msprop:Generator_ColumnPropNameInRow="ID_Grupo" msprop:Generator_ColumnPropNameInTable="ID_GrupoColumn" msprop:Generator_UserColumnName="ID_Grupo" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TConexion" msprop:Generator_TableClassName="TConexionDataTable" msprop:Generator_TableVarName="tableTConexion" msprop:Generator_TablePropName="TConexion" msprop:Generator_RowDeletingName="TConexionRowDeleting" msprop:Generator_RowChangingName="TConexionRowChanging" msprop:Generator_RowEvHandlerName="TConexionRowChangeEventHandler" msprop:Generator_RowDeletedName="TConexionRowDeleted" msprop:Generator_UserTableName="TConexion" msprop:Generator_RowChangedName="TConexionRowChanged" msprop:Generator_RowEvArgName="TConexionRowChangeEvent" msprop:Generator_RowClassName="TConexionRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID_Conexion" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID_Conexion" msprop:Generator_ColumnPropNameInRow="ID_Conexion" msprop:Generator_ColumnPropNameInTable="ID_ConexionColumn" msprop:Generator_UserColumnName="ID_Conexion" type="xs:int" />
+              <xs:element name="Nombre" msprop:Generator_ColumnVarNameInTable="columnNombre" msprop:Generator_ColumnPropNameInRow="Nombre" msprop:Generator_ColumnPropNameInTable="NombreColumn" msprop:Generator_UserColumnName="Nombre" type="xs:string" minOccurs="0" />
+              <xs:element name="ID_Grupo" msprop:Generator_ColumnVarNameInTable="columnID_Grupo" msprop:Generator_ColumnPropNameInRow="ID_Grupo" msprop:Generator_ColumnPropNameInTable="ID_GrupoColumn" msprop:Generator_UserColumnName="ID_Grupo" type="xs:int" minOccurs="0" />
+              <xs:element name="ConnectionSting" msprop:Generator_ColumnVarNameInTable="columnConnectionSting" msprop:Generator_ColumnPropNameInRow="ConnectionSting" msprop:Generator_ColumnPropNameInTable="ConnectionStingColumn" msprop:Generator_UserColumnName="ConnectionSting" type="xs:string" minOccurs="0" />
+              <xs:element name="MotorDB" msprop:Generator_ColumnVarNameInTable="columnMotorDB" msprop:Generator_ColumnPropNameInRow="MotorDB" msprop:Generator_ColumnPropNameInTable="MotorDBColumn" msprop:Generator_UserColumnName="MotorDB" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TTabla" msprop:Generator_TableClassName="TTablaDataTable" msprop:Generator_TableVarName="tableTTabla" msprop:Generator_TablePropName="TTabla" msprop:Generator_RowDeletingName="TTablaRowDeleting" msprop:Generator_RowChangingName="TTablaRowChanging" msprop:Generator_RowEvHandlerName="TTablaRowChangeEventHandler" msprop:Generator_RowDeletedName="TTablaRowDeleted" msprop:Generator_UserTableName="TTabla" msprop:Generator_RowChangedName="TTablaRowChanged" msprop:Generator_RowEvArgName="TTablaRowChangeEvent" msprop:Generator_RowClassName="TTablaRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID_Tabla" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID_Tabla" msprop:Generator_ColumnPropNameInRow="ID_Tabla" msprop:Generator_ColumnPropNameInTable="ID_TablaColumn" msprop:Generator_UserColumnName="ID_Tabla" type="xs:int" />
+              <xs:element name="Nombre" msprop:Generator_ColumnVarNameInTable="columnNombre" msprop:Generator_ColumnPropNameInRow="Nombre" msprop:Generator_ColumnPropNameInTable="NombreColumn" msprop:Generator_UserColumnName="Nombre" type="xs:string" minOccurs="0" />
+              <xs:element name="ID_Objeto" msprop:Generator_ColumnVarNameInTable="columnID_Objeto" msprop:Generator_ColumnPropNameInRow="ID_Objeto" msprop:Generator_ColumnPropNameInTable="ID_ObjetoColumn" msprop:Generator_UserColumnName="ID_Objeto" type="xs:int" minOccurs="0" />
+              <xs:element name="IDentity" msprop:Generator_ColumnVarNameInTable="columnIDentity" msprop:Generator_ColumnPropNameInRow="IDentity" msprop:Generator_ColumnPropNameInTable="IDentityColumn" msprop:Generator_UserColumnName="IDentity" type="xs:boolean" default="false" minOccurs="0" />
+              <xs:element name="IDentityName" msprop:Generator_ColumnVarNameInTable="columnIDentityName" msprop:Generator_ColumnPropNameInRow="IDentityName" msprop:Generator_ColumnPropNameInTable="IDentityNameColumn" msprop:Generator_UserColumnName="IDentityName" type="xs:string" minOccurs="0" />
+              <xs:element name="ValorInicial" msprop:Generator_ColumnVarNameInTable="columnValorInicial" msprop:Generator_ColumnPropNameInRow="ValorInicial" msprop:Generator_ColumnPropNameInTable="ValorInicialColumn" msprop:Generator_UserColumnName="ValorInicial" type="xs:int" default="1" minOccurs="0" />
+              <xs:element name="Incremento" msprop:Generator_ColumnVarNameInTable="columnIncremento" msprop:Generator_ColumnPropNameInRow="Incremento" msprop:Generator_ColumnPropNameInTable="IncrementoColumn" msprop:Generator_UserColumnName="Incremento" type="xs:int" default="1" minOccurs="0" />
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Nuevo" msprop:Generator_ColumnVarNameInTable="columnNuevo" msprop:Generator_ColumnPropNameInRow="Nuevo" msprop:Generator_ColumnPropNameInTable="NuevoColumn" msprop:Generator_UserColumnName="Nuevo" type="xs:boolean" default="false" minOccurs="0" />
+              <xs:element name="UserEdit" msprop:Generator_ColumnVarNameInTable="columnUserEdit" msprop:Generator_ColumnPropNameInRow="UserEdit" msprop:Generator_ColumnPropNameInTable="UserEditColumn" msprop:Generator_UserColumnName="UserEdit" type="xs:boolean" default="false" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TCampo" msprop:Generator_TableClassName="TCampoDataTable" msprop:Generator_TableVarName="tableTCampo" msprop:Generator_TablePropName="TCampo" msprop:Generator_RowDeletingName="TCampoRowDeleting" msprop:Generator_RowChangingName="TCampoRowChanging" msprop:Generator_RowEvHandlerName="TCampoRowChangeEventHandler" msprop:Generator_RowDeletedName="TCampoRowDeleted" msprop:Generator_UserTableName="TCampo" msprop:Generator_RowChangedName="TCampoRowChanged" msprop:Generator_RowEvArgName="TCampoRowChangeEvent" msprop:Generator_RowClassName="TCampoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID_Tabla" msprop:Generator_ColumnVarNameInTable="columnID_Tabla" msprop:Generator_ColumnPropNameInRow="ID_Tabla" msprop:Generator_ColumnPropNameInTable="ID_TablaColumn" msprop:Generator_UserColumnName="ID_Tabla" type="xs:int" />
+              <xs:element name="Nombre" msprop:Generator_ColumnVarNameInTable="columnNombre" msprop:Generator_ColumnPropNameInRow="Nombre" msprop:Generator_ColumnPropNameInTable="NombreColumn" msprop:Generator_UserColumnName="Nombre" type="xs:string" />
+              <xs:element name="Tipo" msprop:Generator_ColumnVarNameInTable="columnTipo" msprop:Generator_ColumnPropNameInRow="Tipo" msprop:Generator_ColumnPropNameInTable="TipoColumn" msprop:Generator_UserColumnName="Tipo" type="xs:string" minOccurs="0" />
+              <xs:element name="AceptaNulo" msprop:Generator_ColumnVarNameInTable="columnAceptaNulo" msprop:Generator_ColumnPropNameInRow="AceptaNulo" msprop:Generator_ColumnPropNameInTable="AceptaNuloColumn" msprop:Generator_UserColumnName="AceptaNulo" type="xs:boolean" default="true" minOccurs="0" />
+              <xs:element name="CampoCalculado" msprop:Generator_ColumnVarNameInTable="columnCampoCalculado" msprop:Generator_ColumnPropNameInRow="CampoCalculado" msprop:Generator_ColumnPropNameInTable="CampoCalculadoColumn" msprop:Generator_UserColumnName="CampoCalculado" type="xs:boolean" default="false" minOccurs="0" />
+              <xs:element name="Formula" msprop:Generator_ColumnVarNameInTable="columnFormula" msprop:Generator_ColumnPropNameInRow="Formula" msprop:Generator_ColumnPropNameInTable="FormulaColumn" msprop:Generator_UserColumnName="Formula" type="xs:string" minOccurs="0" />
+              <xs:element name="EsDefault" msprop:Generator_ColumnVarNameInTable="columnEsDefault" msprop:Generator_ColumnPropNameInRow="EsDefault" msprop:Generator_ColumnPropNameInTable="EsDefaultColumn" msprop:Generator_UserColumnName="EsDefault" type="xs:boolean" default="false" minOccurs="0" />
+              <xs:element name="DefaultValue" msprop:Generator_ColumnVarNameInTable="columnDefaultValue" msprop:Generator_ColumnPropNameInRow="DefaultValue" msprop:Generator_ColumnPropNameInTable="DefaultValueColumn" msprop:Generator_UserColumnName="DefaultValue" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TForeignKey" msprop:Generator_TableClassName="TForeignKeyDataTable" msprop:Generator_TableVarName="tableTForeignKey" msprop:Generator_TablePropName="TForeignKey" msprop:Generator_RowDeletingName="TForeignKeyRowDeleting" msprop:Generator_RowChangingName="TForeignKeyRowChanging" msprop:Generator_RowEvHandlerName="TForeignKeyRowChangeEventHandler" msprop:Generator_RowDeletedName="TForeignKeyRowDeleted" msprop:Generator_UserTableName="TForeignKey" msprop:Generator_RowChangedName="TForeignKeyRowChanged" msprop:Generator_RowEvArgName="TForeignKeyRowChangeEvent" msprop:Generator_RowClassName="TForeignKeyRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID_FK" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID_FK" msprop:Generator_ColumnPropNameInRow="ID_FK" msprop:Generator_ColumnPropNameInTable="ID_FKColumn" msprop:Generator_UserColumnName="ID_FK" type="xs:int" />
+              <xs:element name="Nombre" msprop:Generator_ColumnVarNameInTable="columnNombre" msprop:Generator_ColumnPropNameInRow="Nombre" msprop:Generator_ColumnPropNameInTable="NombreColumn" msprop:Generator_UserColumnName="Nombre" type="xs:string" minOccurs="0" />
+              <xs:element name="TablaPadre" msprop:Generator_ColumnVarNameInTable="columnTablaPadre" msprop:Generator_ColumnPropNameInRow="TablaPadre" msprop:Generator_ColumnPropNameInTable="TablaPadreColumn" msprop:Generator_UserColumnName="TablaPadre" type="xs:string" minOccurs="0" />
+              <xs:element name="ID_TablaHija" msprop:Generator_ColumnVarNameInTable="columnID_TablaHija" msprop:Generator_ColumnPropNameInRow="ID_TablaHija" msprop:Generator_ColumnPropNameInTable="ID_TablaHijaColumn" msprop:Generator_UserColumnName="ID_TablaHija" type="xs:int" minOccurs="0" />
+              <xs:element name="ON_DELETE" msprop:Generator_ColumnVarNameInTable="columnON_DELETE" msprop:Generator_ColumnPropNameInRow="ON_DELETE" msprop:Generator_ColumnPropNameInTable="ON_DELETEColumn" msprop:Generator_UserColumnName="ON_DELETE" type="xs:float" minOccurs="0" />
+              <xs:element name="ON_UPDATE" msprop:Generator_ColumnVarNameInTable="columnON_UPDATE" msprop:Generator_ColumnPropNameInRow="ON_UPDATE" msprop:Generator_ColumnPropNameInTable="ON_UPDATEColumn" msprop:Generator_UserColumnName="ON_UPDATE" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TCampoFerenece" msprop:Generator_TableClassName="TCampoFereneceDataTable" msprop:Generator_TableVarName="tableTCampoFerenece" msprop:Generator_TablePropName="TCampoFerenece" msprop:Generator_RowDeletingName="TCampoFereneceRowDeleting" msprop:Generator_RowChangingName="TCampoFereneceRowChanging" msprop:Generator_RowEvHandlerName="TCampoFereneceRowChangeEventHandler" msprop:Generator_RowDeletedName="TCampoFereneceRowDeleted" msprop:Generator_UserTableName="TCampoFerenece" msprop:Generator_RowChangedName="TCampoFereneceRowChanged" msprop:Generator_RowEvArgName="TCampoFereneceRowChangeEvent" msprop:Generator_RowClassName="TCampoFereneceRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID_FK" msprop:Generator_ColumnVarNameInTable="columnID_FK" msprop:Generator_ColumnPropNameInRow="ID_FK" msprop:Generator_ColumnPropNameInTable="ID_FKColumn" msprop:Generator_UserColumnName="ID_FK" type="xs:int" minOccurs="0" />
+              <xs:element name="CampoPadre" msprop:Generator_ColumnVarNameInTable="columnCampoPadre" msprop:Generator_ColumnPropNameInRow="CampoPadre" msprop:Generator_ColumnPropNameInTable="CampoPadreColumn" msprop:Generator_UserColumnName="CampoPadre" type="xs:string" minOccurs="0" />
+              <xs:element name="CampoHijo" msprop:Generator_ColumnVarNameInTable="columnCampoHijo" msprop:Generator_ColumnPropNameInRow="CampoHijo" msprop:Generator_ColumnPropNameInTable="CampoHijoColumn" msprop:Generator_UserColumnName="CampoHijo" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TCheck" msprop:Generator_TableClassName="TCheckDataTable" msprop:Generator_TableVarName="tableTCheck" msprop:Generator_TablePropName="TCheck" msprop:Generator_RowDeletingName="TCheckRowDeleting" msprop:Generator_RowChangingName="TCheckRowChanging" msprop:Generator_RowEvHandlerName="TCheckRowChangeEventHandler" msprop:Generator_RowDeletedName="TCheckRowDeleted" msprop:Generator_UserTableName="TCheck" msprop:Generator_RowChangedName="TCheckRowChanged" msprop:Generator_RowEvArgName="TCheckRowChangeEvent" msprop:Generator_RowClassName="TCheckRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID_Check" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID_Check" msprop:Generator_ColumnPropNameInRow="ID_Check" msprop:Generator_ColumnPropNameInTable="ID_CheckColumn" msprop:Generator_UserColumnName="ID_Check" type="xs:int" minOccurs="0" />
+              <xs:element name="ID_Tabla" msprop:Generator_ColumnVarNameInTable="columnID_Tabla" msprop:Generator_ColumnPropNameInRow="ID_Tabla" msprop:Generator_ColumnPropNameInTable="ID_TablaColumn" msprop:Generator_UserColumnName="ID_Tabla" type="xs:int" minOccurs="0" />
+              <xs:element name="Regla" msprop:Generator_ColumnVarNameInTable="columnRegla" msprop:Generator_ColumnPropNameInRow="Regla" msprop:Generator_ColumnPropNameInTable="ReglaColumn" msprop:Generator_UserColumnName="Regla" type="xs:string" minOccurs="0" />
+              <xs:element name="Nombre" msprop:Generator_ColumnVarNameInTable="columnNombre" msprop:Generator_ColumnPropNameInRow="Nombre" msprop:Generator_ColumnPropNameInTable="NombreColumn" msprop:Generator_UserColumnName="Nombre" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TUnique" msprop:Generator_TableClassName="TUniqueDataTable" msprop:Generator_TableVarName="tableTUnique" msprop:Generator_TablePropName="TUnique" msprop:Generator_RowDeletingName="TUniqueRowDeleting" msprop:Generator_RowChangingName="TUniqueRowChanging" msprop:Generator_RowEvHandlerName="TUniqueRowChangeEventHandler" msprop:Generator_RowDeletedName="TUniqueRowDeleted" msprop:Generator_UserTableName="TUnique" msprop:Generator_RowChangedName="TUniqueRowChanged" msprop:Generator_RowEvArgName="TUniqueRowChangeEvent" msprop:Generator_RowClassName="TUniqueRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID_Unique" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID_Unique" msprop:Generator_ColumnPropNameInRow="ID_Unique" msprop:Generator_ColumnPropNameInTable="ID_UniqueColumn" msprop:Generator_UserColumnName="ID_Unique" type="xs:int" minOccurs="0" />
+              <xs:element name="Nombre" msprop:Generator_ColumnVarNameInTable="columnNombre" msprop:Generator_ColumnPropNameInRow="Nombre" msprop:Generator_ColumnPropNameInTable="NombreColumn" msprop:Generator_UserColumnName="Nombre" type="xs:string" minOccurs="0" />
+              <xs:element name="ID_Tabla" msprop:Generator_ColumnVarNameInTable="columnID_Tabla" msprop:Generator_ColumnPropNameInRow="ID_Tabla" msprop:Generator_ColumnPropNameInTable="ID_TablaColumn" msprop:Generator_UserColumnName="ID_Tabla" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TCampoUnique" msprop:Generator_TableClassName="TCampoUniqueDataTable" msprop:Generator_TableVarName="tableTCampoUnique" msprop:Generator_TablePropName="TCampoUnique" msprop:Generator_RowDeletingName="TCampoUniqueRowDeleting" msprop:Generator_RowChangingName="TCampoUniqueRowChanging" msprop:Generator_RowEvHandlerName="TCampoUniqueRowChangeEventHandler" msprop:Generator_RowDeletedName="TCampoUniqueRowDeleted" msprop:Generator_UserTableName="TCampoUnique" msprop:Generator_RowChangedName="TCampoUniqueRowChanged" msprop:Generator_RowEvArgName="TCampoUniqueRowChangeEvent" msprop:Generator_RowClassName="TCampoUniqueRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID_Unique" msprop:Generator_ColumnVarNameInTable="columnID_Unique" msprop:Generator_ColumnPropNameInRow="ID_Unique" msprop:Generator_ColumnPropNameInTable="ID_UniqueColumn" msprop:Generator_UserColumnName="ID_Unique" type="xs:int" minOccurs="0" />
+              <xs:element name="NombreCampo" msprop:Generator_ColumnVarNameInTable="columnNombreCampo" msprop:Generator_ColumnPropNameInRow="NombreCampo" msprop:Generator_ColumnPropNameInTable="NombreCampoColumn" msprop:Generator_UserColumnName="NombreCampo" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TPrimaryKey" msprop:Generator_TableClassName="TPrimaryKeyDataTable" msprop:Generator_TableVarName="tableTPrimaryKey" msprop:Generator_TablePropName="TPrimaryKey" msprop:Generator_RowDeletingName="TPrimaryKeyRowDeleting" msprop:Generator_RowChangingName="TPrimaryKeyRowChanging" msprop:Generator_RowEvHandlerName="TPrimaryKeyRowChangeEventHandler" msprop:Generator_RowDeletedName="TPrimaryKeyRowDeleted" msprop:Generator_UserTableName="TPrimaryKey" msprop:Generator_RowChangedName="TPrimaryKeyRowChanged" msprop:Generator_RowEvArgName="TPrimaryKeyRowChangeEvent" msprop:Generator_RowClassName="TPrimaryKeyRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID_PrimaryKey" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID_PrimaryKey" msprop:Generator_ColumnPropNameInRow="ID_PrimaryKey" msprop:Generator_ColumnPropNameInTable="ID_PrimaryKeyColumn" msprop:Generator_UserColumnName="ID_PrimaryKey" type="xs:int" minOccurs="0" />
+              <xs:element name="ID_Tabla" msprop:Generator_ColumnVarNameInTable="columnID_Tabla" msprop:Generator_ColumnPropNameInRow="ID_Tabla" msprop:Generator_ColumnPropNameInTable="ID_TablaColumn" msprop:Generator_UserColumnName="ID_Tabla" type="xs:int" minOccurs="0" />
+              <xs:element name="Nombre" msprop:Generator_ColumnVarNameInTable="columnNombre" msprop:Generator_ColumnPropNameInRow="Nombre" msprop:Generator_ColumnPropNameInTable="NombreColumn" msprop:Generator_UserColumnName="Nombre" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TCampoPK" msprop:Generator_TableClassName="TCampoPKDataTable" msprop:Generator_TableVarName="tableTCampoPK" msprop:Generator_TablePropName="TCampoPK" msprop:Generator_RowDeletingName="TCampoPKRowDeleting" msprop:Generator_RowChangingName="TCampoPKRowChanging" msprop:Generator_RowEvHandlerName="TCampoPKRowChangeEventHandler" msprop:Generator_RowDeletedName="TCampoPKRowDeleted" msprop:Generator_UserTableName="TCampoPK" msprop:Generator_RowChangedName="TCampoPKRowChanged" msprop:Generator_RowEvArgName="TCampoPKRowChangeEvent" msprop:Generator_RowClassName="TCampoPKRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID_PrimaryKey" msprop:Generator_ColumnVarNameInTable="columnID_PrimaryKey" msprop:Generator_ColumnPropNameInRow="ID_PrimaryKey" msprop:Generator_ColumnPropNameInTable="ID_PrimaryKeyColumn" msprop:Generator_UserColumnName="ID_PrimaryKey" type="xs:int" minOccurs="0" />
+              <xs:element name="NombreCampo" msprop:Generator_ColumnVarNameInTable="columnNombreCampo" msprop:Generator_ColumnPropNameInRow="NombreCampo" msprop:Generator_ColumnPropNameInTable="NombreCampoColumn" msprop:Generator_UserColumnName="NombreCampo" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TIndex" msprop:Generator_TableClassName="TIndexDataTable" msprop:Generator_TableVarName="tableTIndex" msprop:Generator_TablePropName="TIndex" msprop:Generator_RowDeletingName="TIndexRowDeleting" msprop:Generator_RowChangingName="TIndexRowChanging" msprop:Generator_RowEvHandlerName="TIndexRowChangeEventHandler" msprop:Generator_RowDeletedName="TIndexRowDeleted" msprop:Generator_UserTableName="TIndex" msprop:Generator_RowChangedName="TIndexRowChanged" msprop:Generator_RowEvArgName="TIndexRowChangeEvent" msprop:Generator_RowClassName="TIndexRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID_Index" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID_Index" msprop:Generator_ColumnPropNameInRow="ID_Index" msprop:Generator_ColumnPropNameInTable="ID_IndexColumn" msprop:Generator_UserColumnName="ID_Index" type="xs:int" minOccurs="0" />
+              <xs:element name="Nombre" msprop:Generator_ColumnVarNameInTable="columnNombre" msprop:Generator_ColumnPropNameInRow="Nombre" msprop:Generator_ColumnPropNameInTable="NombreColumn" msprop:Generator_UserColumnName="Nombre" type="xs:string" minOccurs="0" />
+              <xs:element name="ID_Tabla" msprop:Generator_ColumnVarNameInTable="columnID_Tabla" msprop:Generator_ColumnPropNameInRow="ID_Tabla" msprop:Generator_ColumnPropNameInTable="ID_TablaColumn" msprop:Generator_UserColumnName="ID_Tabla" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TCampoIndex" msprop:Generator_TableClassName="TCampoIndexDataTable" msprop:Generator_TableVarName="tableTCampoIndex" msprop:Generator_TablePropName="TCampoIndex" msprop:Generator_RowDeletingName="TCampoIndexRowDeleting" msprop:Generator_RowChangingName="TCampoIndexRowChanging" msprop:Generator_RowEvHandlerName="TCampoIndexRowChangeEventHandler" msprop:Generator_RowDeletedName="TCampoIndexRowDeleted" msprop:Generator_UserTableName="TCampoIndex" msprop:Generator_RowChangedName="TCampoIndexRowChanged" msprop:Generator_RowEvArgName="TCampoIndexRowChangeEvent" msprop:Generator_RowClassName="TCampoIndexRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID_Index" msprop:Generator_ColumnVarNameInTable="columnID_Index" msprop:Generator_ColumnPropNameInRow="ID_Index" msprop:Generator_ColumnPropNameInTable="ID_IndexColumn" msprop:Generator_UserColumnName="ID_Index" type="xs:int" minOccurs="0" />
+              <xs:element name="NombreCampo" msprop:Generator_ColumnVarNameInTable="columnNombreCampo" msprop:Generator_ColumnPropNameInRow="NombreCampo" msprop:Generator_ColumnPropNameInTable="NombreCampoColumn" msprop:Generator_UserColumnName="NombreCampo" type="xs:string" minOccurs="0" />
+              <xs:element name="Desc" msprop:Generator_ColumnVarNameInTable="columnDesc" msprop:Generator_ColumnPropNameInRow="Desc" msprop:Generator_ColumnPropNameInTable="DescColumn" msprop:Generator_UserColumnName="Desc" type="xs:boolean" default="false" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TFuncSpVista" msprop:Generator_TableClassName="TFuncSpVistaDataTable" msprop:Generator_TableVarName="tableTFuncSpVista" msprop:Generator_TablePropName="TFuncSpVista" msprop:Generator_RowDeletingName="TFuncSpVistaRowDeleting" msprop:Generator_RowChangingName="TFuncSpVistaRowChanging" msprop:Generator_RowEvHandlerName="TFuncSpVistaRowChangeEventHandler" msprop:Generator_RowDeletedName="TFuncSpVistaRowDeleted" msprop:Generator_UserTableName="TFuncSpVista" msprop:Generator_RowChangedName="TFuncSpVistaRowChanged" msprop:Generator_RowEvArgName="TFuncSpVistaRowChangeEvent" msprop:Generator_RowClassName="TFuncSpVistaRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID_Funcion" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID_Funcion" msprop:Generator_ColumnPropNameInRow="ID_Funcion" msprop:Generator_ColumnPropNameInTable="ID_FuncionColumn" msprop:Generator_UserColumnName="ID_Funcion" type="xs:int" minOccurs="0" />
+              <xs:element name="Nombre" msprop:Generator_ColumnVarNameInTable="columnNombre" msprop:Generator_ColumnPropNameInRow="Nombre" msprop:Generator_ColumnPropNameInTable="NombreColumn" msprop:Generator_UserColumnName="Nombre" type="xs:string" minOccurs="0" />
+              <xs:element name="CodigoFuente" msprop:Generator_ColumnVarNameInTable="columnCodigoFuente" msprop:Generator_ColumnPropNameInRow="CodigoFuente" msprop:Generator_ColumnPropNameInTable="CodigoFuenteColumn" msprop:Generator_UserColumnName="CodigoFuente" type="xs:string" minOccurs="0" />
+              <xs:element name="ID_Objeto" msprop:Generator_ColumnVarNameInTable="columnID_Objeto" msprop:Generator_ColumnPropNameInRow="ID_Objeto" msprop:Generator_ColumnPropNameInTable="ID_ObjetoColumn" msprop:Generator_UserColumnName="ID_Objeto" type="xs:int" minOccurs="0" />
+              <xs:element name="Tipo" msprop:Generator_ColumnVarNameInTable="columnTipo" msprop:Generator_ColumnPropNameInRow="Tipo" msprop:Generator_ColumnPropNameInTable="TipoColumn" msprop:Generator_UserColumnName="Tipo" type="xs:int" minOccurs="0" />
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Nuevo" msprop:Generator_ColumnVarNameInTable="columnNuevo" msprop:Generator_ColumnPropNameInRow="Nuevo" msprop:Generator_ColumnPropNameInTable="NuevoColumn" msprop:Generator_UserColumnName="Nuevo" type="xs:boolean" default="false" minOccurs="0" />
+              <xs:element name="UserEdit" msprop:Generator_ColumnVarNameInTable="columnUserEdit" msprop:Generator_ColumnPropNameInRow="UserEdit" msprop:Generator_ColumnPropNameInTable="UserEditColumn" msprop:Generator_UserColumnName="UserEdit" type="xs:boolean" default="false" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TTrigger" msprop:Generator_TableClassName="TTriggerDataTable" msprop:Generator_TableVarName="tableTTrigger" msprop:Generator_TablePropName="TTrigger" msprop:Generator_RowDeletingName="TTriggerRowDeleting" msprop:Generator_RowChangingName="TTriggerRowChanging" msprop:Generator_RowEvHandlerName="TTriggerRowChangeEventHandler" msprop:Generator_RowDeletedName="TTriggerRowDeleted" msprop:Generator_UserTableName="TTrigger" msprop:Generator_RowChangedName="TTriggerRowChanged" msprop:Generator_RowEvArgName="TTriggerRowChangeEvent" msprop:Generator_RowClassName="TTriggerRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID_Trigger" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID_Trigger" msprop:Generator_ColumnPropNameInRow="ID_Trigger" msprop:Generator_ColumnPropNameInTable="ID_TriggerColumn" msprop:Generator_UserColumnName="ID_Trigger" type="xs:int" minOccurs="0" />
+              <xs:element name="Nombre" msprop:Generator_ColumnVarNameInTable="columnNombre" msprop:Generator_ColumnPropNameInRow="Nombre" msprop:Generator_ColumnPropNameInTable="NombreColumn" msprop:Generator_UserColumnName="Nombre" type="xs:string" minOccurs="0" />
+              <xs:element name="Momento" msprop:Generator_ColumnVarNameInTable="columnMomento" msprop:Generator_ColumnPropNameInRow="Momento" msprop:Generator_ColumnPropNameInTable="MomentoColumn" msprop:Generator_UserColumnName="Momento" type="xs:string" minOccurs="0" />
+              <xs:element name="Disparador" msprop:Generator_ColumnVarNameInTable="columnDisparador" msprop:Generator_ColumnPropNameInRow="Disparador" msprop:Generator_ColumnPropNameInTable="DisparadorColumn" msprop:Generator_UserColumnName="Disparador" type="xs:string" minOccurs="0" />
+              <xs:element name="Codigo" msprop:Generator_ColumnVarNameInTable="columnCodigo" msprop:Generator_ColumnPropNameInRow="Codigo" msprop:Generator_ColumnPropNameInTable="CodigoColumn" msprop:Generator_UserColumnName="Codigo" type="xs:string" minOccurs="0" />
+              <xs:element name="Tabla" msprop:Generator_ColumnVarNameInTable="columnTabla" msprop:Generator_ColumnPropNameInRow="Tabla" msprop:Generator_ColumnPropNameInTable="TablaColumn" msprop:Generator_UserColumnName="Tabla" type="xs:int" minOccurs="0" />
+              <xs:element name="ID_Objeto" msprop:Generator_ColumnVarNameInTable="columnID_Objeto" msprop:Generator_ColumnPropNameInRow="ID_Objeto" msprop:Generator_ColumnPropNameInTable="ID_ObjetoColumn" msprop:Generator_UserColumnName="ID_Objeto" type="xs:int" minOccurs="0" />
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Nuevo" msprop:Generator_ColumnVarNameInTable="columnNuevo" msprop:Generator_ColumnPropNameInRow="Nuevo" msprop:Generator_ColumnPropNameInTable="NuevoColumn" msprop:Generator_UserColumnName="Nuevo" type="xs:boolean" default="false" minOccurs="0" />
+              <xs:element name="UserEdit" msprop:Generator_ColumnVarNameInTable="columnUserEdit" msprop:Generator_ColumnPropNameInRow="UserEdit" msprop:Generator_ColumnPropNameInTable="UserEditColumn" msprop:Generator_UserColumnName="UserEdit" type="xs:boolean" default="false" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TObjeto" msprop:Generator_TableClassName="TObjetoDataTable" msprop:Generator_TableVarName="tableTObjeto" msprop:Generator_TablePropName="TObjeto" msprop:Generator_RowDeletingName="TObjetoRowDeleting" msprop:Generator_RowChangingName="TObjetoRowChanging" msprop:Generator_RowEvHandlerName="TObjetoRowChangeEventHandler" msprop:Generator_RowDeletedName="TObjetoRowDeleted" msprop:Generator_UserTableName="TObjeto" msprop:Generator_RowChangedName="TObjetoRowChanged" msprop:Generator_RowEvArgName="TObjetoRowChangeEvent" msprop:Generator_RowClassName="TObjetoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID_Objeto" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID_Objeto" msprop:Generator_ColumnPropNameInRow="ID_Objeto" msprop:Generator_ColumnPropNameInTable="ID_ObjetoColumn" msprop:Generator_UserColumnName="ID_Objeto" type="xs:int" minOccurs="0" />
+              <xs:element name="Nombre" msprop:Generator_ColumnVarNameInTable="columnNombre" msprop:Generator_ColumnPropNameInRow="Nombre" msprop:Generator_ColumnPropNameInTable="NombreColumn" msprop:Generator_UserColumnName="Nombre" type="xs:string" minOccurs="0" />
+              <xs:element name="TipoObjeto" msprop:Generator_ColumnVarNameInTable="columnTipoObjeto" msprop:Generator_ColumnPropNameInRow="TipoObjeto" msprop:Generator_ColumnPropNameInTable="TipoObjetoColumn" msprop:Generator_UserColumnName="TipoObjeto" type="xs:string" minOccurs="0" />
+              <xs:element name="ID_Conexion" msprop:Generator_ColumnVarNameInTable="columnID_Conexion" msprop:Generator_ColumnPropNameInRow="ID_Conexion" msprop:Generator_ColumnPropNameInTable="ID_ConexionColumn" msprop:Generator_UserColumnName="ID_Conexion" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:TGrupoConeccion" />
+      <xs:field xpath="mstns:ID_Grupo" />
+    </xs:unique>
+    <xs:unique name="TConexion_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:TConexion" />
+      <xs:field xpath="mstns:ID_Conexion" />
+    </xs:unique>
+    <xs:unique name="TTabla_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:TTabla" />
+      <xs:field xpath="mstns:ID_Tabla" />
+    </xs:unique>
+    <xs:unique name="TCampo_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:TCampo" />
+      <xs:field xpath="mstns:ID_Tabla" />
+      <xs:field xpath="mstns:Nombre" />
+    </xs:unique>
+    <xs:unique name="TForeignKey_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:TForeignKey" />
+      <xs:field xpath="mstns:ID_FK" />
+    </xs:unique>
+    <xs:unique name="TCheck_Constraint1" msdata:ConstraintName="Constraint1">
+      <xs:selector xpath=".//mstns:TCheck" />
+      <xs:field xpath="mstns:ID_Check" />
+    </xs:unique>
+    <xs:unique name="TPrimaryKey_Constraint1" msdata:ConstraintName="Constraint1">
+      <xs:selector xpath=".//mstns:TPrimaryKey" />
+      <xs:field xpath="mstns:ID_PrimaryKey" />
+    </xs:unique>
+    <xs:unique name="TCampoPK_Constraint1" msdata:ConstraintName="Constraint1">
+      <xs:selector xpath=".//mstns:TCampoPK" />
+      <xs:field xpath="mstns:ID_PrimaryKey" />
+    </xs:unique>
+    <xs:unique name="Constraint2">
+      <xs:selector xpath=".//mstns:TCampoPK" />
+      <xs:field xpath="mstns:NombreCampo" />
+    </xs:unique>
+    <xs:unique name="TIndex_Constraint1" msdata:ConstraintName="Constraint1">
+      <xs:selector xpath=".//mstns:TIndex" />
+      <xs:field xpath="mstns:ID_Index" />
+    </xs:unique>
+    <xs:unique name="TFuncSpVista_Constraint1" msdata:ConstraintName="Constraint1">
+      <xs:selector xpath=".//mstns:TFuncSpVista" />
+      <xs:field xpath="mstns:ID_Funcion" />
+    </xs:unique>
+    <xs:unique name="TTrigger_Constraint1" msdata:ConstraintName="Constraint1">
+      <xs:selector xpath=".//mstns:TTrigger" />
+      <xs:field xpath="mstns:ID_Trigger" />
+    </xs:unique>
+    <xs:unique name="TObjeto_Constraint1" msdata:ConstraintName="Constraint1">
+      <xs:selector xpath=".//mstns:TObjeto" />
+      <xs:field xpath="mstns:ID_Objeto" />
+    </xs:unique>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="GrupoConeccion_Conexion" msdata:parent="TGrupoConeccion" msdata:child="TConexion" msdata:parentkey="ID_Grupo" msdata:childkey="ID_Grupo" msprop:Generator_UserChildTable="TConexion" msprop:Generator_ChildPropName="GetTConexionRows" msprop:Generator_UserRelationName="GrupoConeccion_Conexion" msprop:Generator_ParentPropName="GrupoConeccionRow" msprop:Generator_RelationVarName="relationGrupoConeccion_Conexion" msprop:Generator_UserParentTable="TGrupoConeccion" />
+      <msdata:Relationship name="Tabla_Campo" msdata:parent="TTabla" msdata:child="TCampo" msdata:parentkey="ID_Tabla" msdata:childkey="ID_Tabla" msprop:Generator_UserChildTable="TCampo" msprop:Generator_ChildPropName="GetTCampoRows" msprop:Generator_UserRelationName="Tabla_Campo" msprop:Generator_ParentPropName="TablaRow" msprop:Generator_RelationVarName="relationTabla_Campo" msprop:Generator_UserParentTable="TTabla" />
+      <msdata:Relationship name="Tabla_ForeignKey1" msdata:parent="TTabla" msdata:child="TForeignKey" msdata:parentkey="ID_Tabla" msdata:childkey="ID_TablaHija" msprop:Generator_UserChildTable="TForeignKey" msprop:Generator_ChildPropName="GetTForeignKeyRowsByTabla_ForeignKey1" msprop:Generator_UserRelationName="Tabla_ForeignKey1" msprop:Generator_ParentPropName="TablaRowByTabla_ForeignKey1" msprop:Generator_RelationVarName="relationTabla_ForeignKey1" msprop:Generator_UserParentTable="TTabla" />
+      <msdata:Relationship name="ForeignKey_CampoFerenece" msdata:parent="TForeignKey" msdata:child="TCampoFerenece" msdata:parentkey="ID_FK" msdata:childkey="ID_FK" msprop:Generator_UserChildTable="TCampoFerenece" msprop:Generator_ChildPropName="GetTCampoFereneceRows" msprop:Generator_UserRelationName="ForeignKey_CampoFerenece" msprop:Generator_ParentPropName="ForeignKeyRow" msprop:Generator_RelationVarName="relationForeignKey_CampoFerenece" msprop:Generator_UserParentTable="TForeignKey" />
+      <msdata:Relationship name="Campo_CampoFerenece" msdata:parent="TCampo" msdata:child="TCampoFerenece" msdata:parentkey="Nombre" msdata:childkey="CampoPadre" msprop:Generator_UserChildTable="TCampoFerenece" msprop:Generator_ChildPropName="GetTCampoFereneceRowsByCampo_CampoFerenece" msprop:Generator_UserRelationName="Campo_CampoFerenece" msprop:Generator_ParentPropName="CampoRowByCampo_CampoFerenece" msprop:Generator_RelationVarName="relationCampo_CampoFerenece" msprop:Generator_UserParentTable="TCampo" />
+      <msdata:Relationship name="Campo_CampoFerenece1" msdata:parent="TCampo" msdata:child="TCampoFerenece" msdata:parentkey="Nombre" msdata:childkey="CampoHijo" msprop:Generator_UserChildTable="TCampoFerenece" msprop:Generator_ChildPropName="GetTCampoFereneceRowsByCampo_CampoFerenece1" msprop:Generator_UserRelationName="Campo_CampoFerenece1" msprop:Generator_ParentPropName="CampoRowByCampo_CampoFerenece1" msprop:Generator_RelationVarName="relationCampo_CampoFerenece1" msprop:Generator_UserParentTable="TCampo" />
+      <msdata:Relationship name="TTabla_TCheck" msdata:parent="TTabla" msdata:child="TCheck" msdata:parentkey="ID_Tabla" msdata:childkey="ID_Tabla" msprop:Generator_UserChildTable="TCheck" msprop:Generator_ChildPropName="GetTCheckRows" msprop:Generator_UserRelationName="TTabla_TCheck" msprop:Generator_ParentPropName="TTablaRow" msprop:Generator_RelationVarName="relationTTabla_TCheck" msprop:Generator_UserParentTable="TTabla" />
+      <msdata:Relationship name="TTabla_TUnique" msdata:parent="TTabla" msdata:child="TUnique" msdata:parentkey="ID_Tabla" msdata:childkey="ID_Tabla" msprop:Generator_UserChildTable="TUnique" msprop:Generator_ChildPropName="GetTUniqueRows" msprop:Generator_UserRelationName="TTabla_TUnique" msprop:Generator_ParentPropName="TTablaRow" msprop:Generator_RelationVarName="relationTTabla_TUnique" msprop:Generator_UserParentTable="TTabla" />
+      <msdata:Relationship name="TUnique_TCampoUnique" msdata:parent="TUnique" msdata:child="TCampoUnique" msdata:parentkey="ID_Unique" msdata:childkey="ID_Unique" msprop:Generator_UserChildTable="TCampoUnique" msprop:Generator_ChildPropName="GetTCampoUniqueRows" msprop:Generator_UserRelationName="TUnique_TCampoUnique" msprop:Generator_ParentPropName="TUniqueRow" msprop:Generator_RelationVarName="relationTUnique_TCampoUnique" msprop:Generator_UserParentTable="TUnique" />
+      <msdata:Relationship name="TTabla_TPrimaryKey" msdata:parent="TTabla" msdata:child="TPrimaryKey" msdata:parentkey="ID_Tabla" msdata:childkey="ID_Tabla" msprop:Generator_UserChildTable="TPrimaryKey" msprop:Generator_ChildPropName="GetTPrimaryKeyRows" msprop:Generator_UserRelationName="TTabla_TPrimaryKey" msprop:Generator_ParentPropName="TTablaRow" msprop:Generator_RelationVarName="relationTTabla_TPrimaryKey" msprop:Generator_UserParentTable="TTabla" />
+      <msdata:Relationship name="TPrimaryKey_TCampoPK" msdata:parent="TPrimaryKey" msdata:child="TCampoPK" msdata:parentkey="ID_PrimaryKey" msdata:childkey="ID_PrimaryKey" msprop:Generator_UserChildTable="TCampoPK" msprop:Generator_ChildPropName="GetTCampoPKRows" msprop:Generator_UserRelationName="TPrimaryKey_TCampoPK" msprop:Generator_ParentPropName="TPrimaryKeyRow" msprop:Generator_RelationVarName="relationTPrimaryKey_TCampoPK" msprop:Generator_UserParentTable="TPrimaryKey" />
+      <msdata:Relationship name="TTabla_TIndex" msdata:parent="TTabla" msdata:child="TIndex" msdata:parentkey="ID_Tabla" msdata:childkey="ID_Tabla" msprop:Generator_UserChildTable="TIndex" msprop:Generator_ChildPropName="GetTIndexRows" msprop:Generator_UserRelationName="TTabla_TIndex" msprop:Generator_ParentPropName="TTablaRow" msprop:Generator_RelationVarName="relationTTabla_TIndex" msprop:Generator_UserParentTable="TTabla" />
+      <msdata:Relationship name="TIndex_TCampoIndex" msdata:parent="TIndex" msdata:child="TCampoIndex" msdata:parentkey="ID_Index" msdata:childkey="ID_Index" msprop:Generator_UserChildTable="TCampoIndex" msprop:Generator_ChildPropName="GetTCampoIndexRows" msprop:Generator_UserRelationName="TIndex_TCampoIndex" msprop:Generator_ParentPropName="TIndexRow" msprop:Generator_RelationVarName="relationTIndex_TCampoIndex" msprop:Generator_UserParentTable="TIndex" />
+      <msdata:Relationship name="TConexion_TObjeto" msdata:parent="TConexion" msdata:child="TObjeto" msdata:parentkey="ID_Conexion" msdata:childkey="ID_Conexion" msprop:Generator_UserChildTable="TObjeto" msprop:Generator_ChildPropName="GetTObjetoRows" msprop:Generator_UserRelationName="TConexion_TObjeto" msprop:Generator_ParentPropName="TConexionRow" msprop:Generator_RelationVarName="relationTConexion_TObjeto" msprop:Generator_UserParentTable="TConexion" />
+      <msdata:Relationship name="TObjeto_TTabla" msdata:parent="TObjeto" msdata:child="TTabla" msdata:parentkey="ID_Objeto" msdata:childkey="ID_Objeto" msprop:Generator_UserChildTable="TTabla" msprop:Generator_ChildPropName="GetTTablaRows" msprop:Generator_UserRelationName="TObjeto_TTabla" msprop:Generator_RelationVarName="relationTObjeto_TTabla" msprop:Generator_UserParentTable="TObjeto" msprop:Generator_ParentPropName="TObjetoRow" />
+      <msdata:Relationship name="TObjeto_TFuncSpVista" msdata:parent="TObjeto" msdata:child="TFuncSpVista" msdata:parentkey="ID_Objeto" msdata:childkey="ID_Objeto" msprop:Generator_UserChildTable="TFuncSpVista" msprop:Generator_ChildPropName="GetTFuncSpVistaRows" msprop:Generator_UserRelationName="TObjeto_TFuncSpVista" msprop:Generator_RelationVarName="relationTObjeto_TFuncSpVista" msprop:Generator_UserParentTable="TObjeto" msprop:Generator_ParentPropName="TObjetoRow" />
+      <msdata:Relationship name="TObjeto_TTrigger" msdata:parent="TObjeto" msdata:child="TTrigger" msdata:parentkey="ID_Objeto" msdata:childkey="ID_Objeto" msprop:Generator_UserChildTable="TTrigger" msprop:Generator_ChildPropName="GetTTriggerRows" msprop:Generator_UserRelationName="TObjeto_TTrigger" msprop:Generator_RelationVarName="relationTObjeto_TTrigger" msprop:Generator_UserParentTable="TObjeto" msprop:Generator_ParentPropName="TObjetoRow" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

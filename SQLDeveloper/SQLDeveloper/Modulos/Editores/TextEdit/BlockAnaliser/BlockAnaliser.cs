@@ -1,0 +1,389 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ICSharpCode.TextEditor.Document;
+using System.Data;
+using System.Windows.Forms;
+namespace SQLDeveloper.Modulos.Editores
+{
+    /*
+    //clase encarghada de analizar el texto y buscar todos los bloques colapsables
+    los tipos de bloques que va a anlizar son:
+    Comentarios definicods por /* y */
+    /*
+    blque begin  definidos por begin y end
+    bloque case definido por case y end
+    llabes  definido por { y }
+    parentesis definidos por ( y )
+    corchetes definidos por [ y ]
+    definie definido por #define y #enddefine
+    define2 definido por --define y --enddefine
+    cadenas definicdas por ' y '
+*/
+    public class BlockAnaliser
+    {
+        string Buffer;
+        int BufferPos;
+        private List<string> Secuencias;
+        private List<CBlock> Lista;
+        private List<CTocken> Pila;
+        private List<CBloqueMach> ListaMatch;
+        private int TotalLineas;
+        private int LineaActual;
+        CNodo Arbol;
+        private string NombreArchivo
+        {
+            get
+            {
+                return Application.StartupPath + "\\Colores\\bloques.xml";
+            }
+        }
+        public BlockAnaliser()
+        {
+            //inicializa las secuencias a tomar en cuenta
+            Arbol = new CNodo();
+            Arbol.Raiz = true;
+            //inicializo la lista de match
+            ListaMatch = new List<CBloqueMach>();
+            DataSet ds = new DataSet();
+            try
+            {
+                ds.ReadXml(NombreArchivo);
+                DataTable dt = ds.Tables["Bloques"];
+                foreach(DataRow dr in dt.Rows)
+                {
+                    string Nombre = dr["Nombre"].ToString();
+                    string InicioMatch = dr["InicioMatch"].ToString();
+                    string FinMatch = dr["FinMatch"].ToString();
+                    string TextoRemplazo = dr["TextoRemplazo"].ToString();
+                    bool UseTextLine = bool.Parse(dr["UseTextLine"].ToString());
+                   int MinimumLength = int.Parse(dr["MinimumLength"].ToString());
+                    bool ApliaTabulador = bool.Parse(dr["ApliaTabulador"].ToString());
+                    AddBloque(InicioMatch,FinMatch,TextoRemplazo,UseTextLine,MinimumLength,ApliaTabulador);
+                }
+            }
+            catch(System.Exception)
+            {
+                return;
+            }
+            
+            //AddBloque("/*", "*/","/*..*/");
+            //AddBloque("begin ", "end ","Begin...End",false,0,true);
+            //AddBloque("case ", "break ", "Case..Break", false, 0, true);
+            //AddBloque("case ", "end ", "Case..End", false, 0, true);
+            //AddBloque("{", "}","{..}",false,0,true);
+            //AddBloque("(", ")","(..)",false,50,true);
+            //AddBloque("[", "]","[..]");
+            //AddBloque("#region ", "#endregion ","",true);
+            //AddBloque("--#region ", "--#endregion ","",true);
+
+        }
+        public IDocument Document
+        {
+            get;
+            set;
+        }
+        private void IncializaAnalisis()
+        {
+            if (Lista == null)
+                Lista = new List<CBlock>();
+            else
+                Lista.Clear();
+            if (Pila == null)
+                Pila = new List<CTocken>();
+            else
+                Pila.Clear();
+            LineaActual = -1; //no tengo ninguna liena
+            TotalLineas = Document.TotalNumberOfLines;
+            Buffer = "";
+            BufferPos = 0;
+        }
+        private string QuitaComentariosSimples(string cadena)
+        {
+            int n = cadena.IndexOf("--");
+            if (n > -1)
+            {
+                //si hay un comentario, pero veo si no es --#
+                try
+                {
+                    if (cadena.Substring(n + 2, 1) == "#")
+                    {
+                        //si es por lo que regreso la cadena sin cambios
+                        return cadena;
+                    }
+                }catch(System.Exception ex)
+                {
+                    return cadena;
+                }
+                //es solo un comentario simple, por lo que lo elimino de la cadena
+                return cadena.Substring(0, n);
+            }
+            //no tiene comentarios.
+            return cadena;
+        }
+        private void LLenaPila()
+        {
+            //recorro todas las lineas del documento buscando los itemns
+            for (int linea = 0; linea < Document.TotalNumberOfLines; linea++)
+            {
+                string buffer = QuitaComentariosSimples(Document.GetText(Document.GetLineSegment(linea)).ToLower()) + "\n";
+                //recorro caracter por caracter buscando los tockens
+                for (int i = 0; i < buffer.Length; i++)
+                {
+                    bool agregar = true;
+                    CTocken obj = null;
+                    obj = Arbol.Encuentra(buffer, i);
+                    if (obj != null)
+                    {
+                        //antes e agregar la linea, verifico si es begin, case o end para evitar falsos positivos
+                        if (obj.ValidarLetraINicial)
+                        {
+                            //veo si el caracter anterior es una letra
+                            if (obj.X - 1 > 0)
+                            {
+                                //no esta al principio de la linea
+                                if (char.IsLetter(buffer[obj.X - 1]))
+                                {
+                                    agregar = false;
+                                }
+                            }
+
+                        }
+                        if (agregar)
+                        {
+                            //le agrego la linea en la que lo encontre
+                            obj.Y = linea;
+                            Pila.Add(obj);
+                        }
+                        //me salto el resto de la cadena que compone el tocken
+                        i += obj.Cadena.Trim().Length - 1;
+                    }
+                }
+            }
+        }
+        
+        private bool HaceMatch(CTocken obj1, CTocken obj2)
+        {
+            foreach( CBloqueMach obj in ListaMatch)
+            {
+                if(obj.HaceMatch(obj1,obj2))
+                    return true;
+            }
+            return false;
+        }
+        private string AsignaCadena(CTocken obj1,CTocken obj2)
+        {
+            string buffer = Document.GetText(Document.GetLineSegment(obj1.Y));
+            //busco su bloque
+            foreach (CBloqueMach obj in ListaMatch)
+            {
+                if (obj.HaceMatch(obj1, obj2))
+                    return obj.GetCadena(obj1, obj2,buffer);
+            }
+            return "...";
+        }
+        private void AgregaBloque(CTocken inicio, CTocken final)
+        {
+            if (Lista == null)
+                Lista = new List<CBlock>();
+            CBlock obj = new CBlock();
+            obj.Text = AsignaCadena(inicio,final);
+            obj.Final = final.Posicion;
+            obj.Inicio = inicio.Posicion;
+            obj.AplicaTabulador = inicio.AplicaTabulador;
+            if (obj.Text!="")
+                Lista.Add(obj);
+        }
+        public List<CBlock> Analiza()
+        {
+            //iniciaizo el analisis
+            IncializaAnalisis();
+            //lleno la pila de tockens
+            LLenaPila();
+            //separo los datos de la pila para ir llenando la lista
+            int inicios, finales;
+            inicios = 0;
+            //hace esto mientras existan elemntos en la pila
+            do
+            {
+                if (Pila.Count == 1)
+                {
+                    //ya no hay pares en la pila
+                    //elimino el dato
+                    Pila.RemoveAt(0);
+                }
+                else
+                {
+                    //recorro toda la pila para buscar el match
+                    bool encontrado = false;
+                    for (finales = inicios + 1; finales < Pila.Count; finales++)
+                    {
+                        CTocken obj1 = Pila[inicios];
+                        CTocken obj2 = Pila[finales];
+                        if (HaceMatch(obj1, obj2))
+                        {
+                            //si hacen match, por lo que creo el bloque
+                            AgregaBloque(obj1, obj2);
+                            //ahora los elimino de la pila
+                            Pila.RemoveAt(finales);
+                            Pila.RemoveAt(inicios);
+                            //reinicio el proceso
+                            inicios = 0;
+                            encontrado = true;
+                            break;
+                        }
+                        else
+                        {
+                            if (obj2.Opener)
+                            {
+                                //es un opener, por lo que lo pongo como inicio para que busque su match
+                                inicios = finales;
+                            }
+                        }
+                    }
+                    if (encontrado == false)
+                    {
+                        //no encontre ningun bloque con el inico, por lo que lo elimino y reinicio
+                        //en este momento hay que tener en cuenta que estoy analizando el inico mas 
+                        //profundo de la lista
+                        if (Pila.Count>0)
+                            Pila.RemoveAt(inicios);
+                        inicios = 0;
+                    }
+                }
+            }
+            while (Pila.Count > 0);
+            //ya termine, por lo que regreso el resultado del analisis
+            return Lista;
+        }
+        private string QuitaEspacios(string cadena)
+        {
+            string s2 = "";
+            //quita los espacios en blanco que se encuentran al inicio de cada cadena
+            //se paro la cadena en lineas
+            string[] lista = cadena.Split('\n');
+            //recorro cada linea y voy quitando los espacios en blanco que tiene al prinicipio
+            foreach (string l in lista)
+            {
+                int pos = 0;
+                //si es tabulador o espacio lo ignora
+                int n = l.Length;
+                while (pos < n && (l[pos] == ' ' || l[pos] == '\t'))
+                {
+                    pos++;
+                }
+                s2 += l.Substring(pos)+"\n";
+            }
+            return s2;
+        }
+        public string AnalizaTabuladores()
+        {
+            //primero quito los espacios
+            Document.TextContent = QuitaEspacios(Document.TextContent);
+            //iniciaizo el analisis
+            IncializaAnalisis();
+            //lleno la pila de tockens
+            LLenaPila();
+            //separo los datos de la pila para ir llenando la lista
+            int inicios, finales;
+            inicios = 0;
+            //hace esto mientras existan elemntos en la pila
+            do
+            {
+                if (Pila.Count == 1)
+                {
+                    //ya no hay pares en la pila
+                    //elimino el dato
+                    Pila.RemoveAt(0);
+                }
+                else
+                {
+                    //recorro toda la pila para buscar el match
+                    bool encontrado = false;
+                    for (finales = inicios + 1; finales < Pila.Count; finales++)
+                    {
+                        CTocken obj1 = Pila[inicios];
+                        CTocken obj2 = Pila[finales];
+                        if (HaceMatch(obj1, obj2))
+                        {
+                            //si hacen match, por lo que creo el bloque
+                            AgregaBloque(obj1, obj2);
+                            //ahora los elimino de la pila
+                            Pila.RemoveAt(finales);
+                            Pila.RemoveAt(inicios);
+                            //reinicio el proceso
+                            inicios = 0;
+                            encontrado = true;
+                            break;
+                        }
+                        else
+                        {
+                            if (obj2.Opener)
+                            {
+                                //es un opener, por lo que lo pongo como inicio para que busque su match
+                                inicios = finales;
+                            }
+                        }
+                    }
+                    if (encontrado == false)
+                    {
+                        //no encontre ningun bloque con el inico, por lo que lo elimino y reinicio
+                        //en este momento hay que tener en cuenta que estoy analizando el inico mas 
+                        //profundo de la lista
+                        if (Pila.Count > 0)
+                        {
+                            Pila.RemoveAt(inicios);
+                            inicios = 0;
+                        }
+                    }
+                }
+            }
+            while (Pila.Count > 0);
+            //ya termine, de analizar, ahora voy aplicando los tabuladores como corresponden
+            return AplicaTabuladores();
+        }
+        private string AplicaTabuladores()
+        {
+            //recorro todas las lineas para ir aplicando los tabuladores
+            string cadena = "";
+            int NTabuladores = 0;
+            int linea = 0;
+            List<string> cadenas = new List<string>();
+            //inicializo el numero de lineas
+            for (int i = 0; i < Document.TotalNumberOfLines; i++)
+            {
+                cadenas.Add(Document.GetText(Document.GetLineSegment(i)));
+            }
+            //se supone que los bloques estan en el orden en que aparecen en el documento
+            foreach (CBlock obj in Lista)
+            {
+                //veo el tipo de bloque
+                if (obj.AplicaTabulador)
+                {
+                    //recorro las lineas que corresponden al bloque
+                    for (linea = obj.Inicio.Y + 1; linea < obj.Final.Y; linea++)
+                    {
+                        cadenas[linea] = "\t" + cadenas[linea];
+                    }
+                }
+            }
+            //ya termine de aplicar los tabuladores
+            foreach(string s in cadenas)
+            {
+                cadena = cadena + s+"\n";
+            }
+            return cadena;
+        }
+        private void AddBloque(string inicio, string fin, string textoRemplazo, bool useTextLine = false, int minimumLength = 0, bool apliaTabulador = false)
+        {
+            //agrego el inicio al arbol
+            Arbol.Add(inicio.ToLower(), true);
+            //agrego el final al arbol
+            Arbol.Add(fin.ToLower(), false);
+            //lo agrego a la lista de matchs
+            ListaMatch.Add(new CBloqueMach(inicio,fin,textoRemplazo,useTextLine,minimumLength,apliaTabulador));
+        }
+    }
+}

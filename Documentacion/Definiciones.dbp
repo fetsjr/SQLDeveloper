@@ -1,0 +1,92 @@
+<?xml version="1.0" standalone="yes"?>
+<ModeloBasico xmlns="http://tempuri.org/ModeloBasico.xsd">
+  <Servidor>
+    <Nombre>ACCIPRODC1</Nombre>
+    <ID_Servidor>-1</ID_Servidor>
+  </Servidor>
+  <Conexion>
+    <ID_Conexion>-1</ID_Conexion>
+    <ID_Servidor>-1</ID_Servidor>
+    <Nombre>SIAR</Nombre>
+    <ConecctionString>Data Source="AcciDevSQL01.lac.nsroot.net, 2431 ";Initial Catalog=SIAR;Integrated Security=True;Persist Security Info=False;User ID=;Password=</ConecctionString>
+    <MotorDB>SQLSERVER</MotorDB>
+  </Conexion>
+  <Carpeta>
+    <ID_Carpeta>-1</ID_Carpeta>
+    <Nombre>DEFINICIONES</Nombre>
+    <ID_Conexion>-1</ID_Conexion>
+    <ID_CarpetaPadre>0</ID_CarpetaPadre>
+  </Carpeta>
+  <Carpeta>
+    <ID_Carpeta>-2</ID_Carpeta>
+    <Nombre>SELECT</Nombre>
+    <ID_Conexion>-1</ID_Conexion>
+    <ID_CarpetaPadre>-1</ID_CarpetaPadre>
+  </Carpeta>
+  <Document>
+    <ID_Document>-1</ID_Document>
+    <ID_Conexion>-1</ID_Conexion>
+    <ID_Carpeta>-2</ID_Carpeta>
+    <Texto>{\rtf1\fbidis\ansi\ansicpg1252\deff0\deflang2058{\fonttbl{\f0\fswiss\fprq2\fcharset0 Calibri;}{\f1\fnil\fcharset0 Microsoft Sans Serif;}}
+{\colortbl ;\red255\green0\blue0;}
+\viewkind4\uc1\pard\ltrpar\fi-708\li708\sa200\sl276\slmult1\lang1033\f0\fs18 &lt;SELECT statement&gt; ::=  \par
+\pard\ltrpar\sa200\sl276\slmult1     [ \cf1 WITH \cf0\{ [ XMLNAMESPACES ,] [ &lt;common_table_expression&gt; [,...n] ] \} ]\par
+    &lt;query_expression&gt; \par
+    [ \cf1 ORDER BY \cf0\{ order_by_expression | column_position [ \cf1 ASC \cf0 | \cf1 DESC \cf0 ] \} \par
+  [ ,...n ] ] \par
+    [ &lt;FOR Clause&gt;] \par
+    [ OPTION ( &lt;query_hint&gt; [ ,...n ] ) ] \par
+\pard\ltrpar\lang2058\f1\fs24\par
+}
+</Texto>
+    <Nombre>SELECT statement</Nombre>
+  </Document>
+  <Document>
+    <ID_Document>-2</ID_Document>
+    <ID_Conexion>-1</ID_Conexion>
+    <ID_Carpeta>-2</ID_Carpeta>
+    <Texto>{\rtf1\fbidis\ansi\ansicpg1252\deff0\deflang2058{\fonttbl{\f0\fswiss\fprq2\fcharset0 Calibri;}{\f1\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\ltrpar\sa200\sl276\slmult1\lang1033\f0\fs18 &lt;query_expression&gt; ::= \par
+    \{ &lt;query_specification&gt; | ( &lt;query_expression&gt; ) \} \par
+    [  \{ UNION [ ALL ] | EXCEPT | INTERSECT \}\par
+        &lt;query_specification&gt; | ( &lt;query_expression&gt; ) [...n ] ] \par
+\pard\ltrpar\lang2058\f1\fs24\par
+}
+</Texto>
+    <Nombre>query_expression</Nombre>
+  </Document>
+  <Document>
+    <ID_Document>-3</ID_Document>
+    <ID_Conexion>-1</ID_Conexion>
+    <ID_Carpeta>-2</ID_Carpeta>
+    <Texto>{\rtf1\fbidis\ansi\ansicpg1252\deff0\deflang2058{\fonttbl{\f0\fswiss\fprq2\fcharset0 Calibri;}{\f1\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\ltrpar\sa200\sl276\slmult1\lang1033\f0\fs22 &lt;query_specification&gt; ::= \par
+SELECT [ ALL | DISTINCT ] \par
+    [TOP (expression) [PERCENT] [ WITH TIES ] ] \par
+    &lt; select_list &gt; \par
+    [ INTO new_table ] \par
+    [ FROM \{ &lt;table_source&gt; \} [ ,...n ] ] \par
+    [ WHERE &lt;search_condition&gt; ] \par
+    \lang2058 [ &lt;GROUP BY&gt; ] \par
+    [ HAVING &lt; search_condition &gt; ]\par
+\pard\ltrpar\f1\fs24\par
+}
+</Texto>
+    <Nombre>query_specification</Nombre>
+  </Document>
+  <Document>
+    <ID_Document>-4</ID_Document>
+    <ID_Conexion>-1</ID_Conexion>
+    <ID_Carpeta>-2</ID_Carpeta>
+    <Texto>{\rtf1\ansi\ansicpg1252\deff0\deflang2058{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs24 [ WITH &lt;common_table_expression&gt; [ ,...n ] ]  \par
+\par
+&lt;common_table_expression&gt;::=  \par
+    expression_name [ ( column_name [ ,...n ] ) ]  \par
+    AS  \par
+    ( CTE_query_definition ) \par
+}
+</Texto>
+    <Nombre>common_table_expression</Nombre>
+  </Document>
+</ModeloBasico>

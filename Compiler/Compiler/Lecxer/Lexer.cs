@@ -1,0 +1,824 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Collections;
+
+namespace Lexer
+{
+    /// <summary>
+    /// componente que realiza todo el analisi lexico de una cadena cualquiera
+    /// </summary>
+    public partial class Lecxer : Component, IEnumerable
+    {
+        private static Dictionary<PALABRASRESERVADAS, string> PalabrasReservadas;
+        #region Codigo generado por VS
+        public Lecxer()
+        {
+            InicializaPalabrasReservadas();
+            lexemas = new List<Lexema>();
+            InitializeComponent();
+        }
+
+        public Lecxer(IContainer container)
+        {
+            InicializaPalabrasReservadas();
+            lexemas = new List<Lexema>();
+            container.Add(this);
+
+            InitializeComponent();
+        }
+        #endregion
+        #region Variables internas
+        List<Lexema> lexemas;
+        private int posicion = 0;
+        private int nLinea = 0;
+        private string FCadena = "";
+        private int FLongitudCadena;
+        #endregion
+        #region Propiedades
+        /// <summary>
+        /// Asigna o regresa la cadena que hay que separar en lexemas
+        /// </summary>
+        public string Cadena
+        {
+            get
+            {
+                return FCadena;
+            }
+            set
+            {
+                if (value == null)
+                    return;
+                FCadena = value;
+                FLongitudCadena = FCadena.Length;
+                Analiza();
+                BuscaPalabrasReservadas();
+            }
+        }
+        /// <summary>
+        /// regresa la longitud de la cadena a analizar
+        /// </summary>
+        public int LongitudCadena
+        {
+            get
+            {
+                return FLongitudCadena;
+            }
+        }
+        #endregion
+        #region Impelentacion de IEnumerable
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return (IEnumerator)new LexEnumerable(lexemas);
+        }
+        #endregion
+        #region Funciones publicas
+        #endregion
+        #region Funciones internas
+        /// <summary>
+        /// regresa true si el caracter es una letra o un _
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        private bool EsLetra(char c)
+        {
+            if (c >= 'a' && c <= 'z')
+                return true;
+            if (c >= 'A' && c <= 'Z')
+                return true;
+            if (c == '_')
+                return true;
+            if (c == 'ñ' || c == 'Ñ')
+                return true;
+            return false;
+        }
+        /// <summary>
+        /// regresa true si el caracter es un digito
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        private bool EsDigito(char c)
+        {
+            if (c >= '0' && c <= '9')
+                return true;
+            return false;
+        }
+        /// <summary>
+        /// regresa true si es un simbolo simple
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        private bool EsSimboloSimple(char c)
+        {
+            //verifica si es uno se los simbolos simples que se reconocen
+            switch (c)
+            {
+                case ',':
+                    return true;
+                case '[':
+                    return true;
+                case ']':
+                    return true;
+                case '{':
+                    return true;
+                case '}':
+                    return true;
+                case '(':
+                    return true;
+                case ')':
+                    return true;
+                case '.':
+                    return true;
+                case '+':
+                    return true;
+                case '*':
+                    return true;
+                case '=':
+                    return true;
+                case '&':
+                    return true;
+                case '%':
+                    return true;
+                case '|':
+                    return true;
+                case '^':
+                    return true;
+                case '~':
+                    return true;
+                case ';':
+                    return true;
+                //nuevos simbolos
+                case '/':
+                    return true;
+                case '!':
+                    return true;
+                case '<':
+                    return true;
+                case '>':
+                    return true;
+                case '@':
+                    return true;
+                case '\'':
+                    return true;
+                case ':':
+                    return true;
+                case '-':
+                    return true;
+                case '"':
+                    return true;
+            }
+            return false;
+        }
+        private LEXTIPE TipoSimbolo(char c)
+        {
+            //regresa el tipo de simbolo
+            switch (c)
+            {
+                case ',':
+                    return LEXTIPE.COMA;
+                case '[':
+                    return LEXTIPE.CORCHETEABRE;
+                case ']':
+                    return LEXTIPE.CORCHETECIERRA;
+                case '{':
+                    return LEXTIPE.LLAVEABRE;
+                case '}':
+                    return LEXTIPE.LLAVECIERRA;
+                case '(':
+                    return LEXTIPE.PARENTESISABRE;
+                case ')':
+                    return LEXTIPE.PARENTESISCIERRA;
+                case '.':
+                    return LEXTIPE.PUNTO;
+                case '+':
+                    return LEXTIPE.SUMA;
+                case '*':
+                    return LEXTIPE.MULTIPLICACION;
+                case '=':
+                    return LEXTIPE.ASIGNACION;
+                case '&':
+                    return LEXTIPE.AMPERSON;
+                case '%':
+                    return LEXTIPE.MODULO;
+                case '|':
+                    return LEXTIPE.BARRA;
+                case '^':
+                    return LEXTIPE.EXPONENCIAL;
+                case '~':
+                    return LEXTIPE.TILDE;
+                case ';':
+                    return LEXTIPE.PUNTOYCOMA;
+                //nuevos simbolos
+                case '/':
+                    return LEXTIPE.DIVICION;
+                case '!':
+                    return LEXTIPE.NEGACION;
+                case '<':
+                    return LEXTIPE.MENORQUE;
+                case '>':
+                    return LEXTIPE.MAYORQUE;
+                case '@':
+                    return LEXTIPE.ARROBA;
+                case '\'':
+                    return LEXTIPE.COMILLASIMPLE;
+                case ':':
+                    return LEXTIPE.DOSPUNTOS;
+                case '-':
+                    return LEXTIPE.RESTA;
+                case '"':
+                    return LEXTIPE.COMILLADOBLE;
+            }
+            return LEXTIPE.INDEFINIDO;
+        }
+        /// <summary>
+        /// inicializa la lista de palabras reservadas
+        /// </summary>
+        private void InicializaPalabrasReservadas()
+        {
+            if (PalabrasReservadas == null)
+            {
+                PalabrasReservadas = new Dictionary<PALABRASRESERVADAS, string>();
+                foreach (string s in Enum.GetNames(typeof(PALABRASRESERVADAS)).ToList())
+                {
+                    PALABRASRESERVADAS p = (PALABRASRESERVADAS)Enum.Parse(typeof(PALABRASRESERVADAS), s);
+                    PalabrasReservadas.Add(p, s);
+                }
+            }
+
+        }
+        /// <summary>
+        /// regresa true si la palabra coincide con una palabra reservada
+        /// </summary>
+        /// <param name="palabra"></param>
+        /// <returns></returns>
+        private bool EsPalabraReservada(string palabra)
+        {
+            foreach (KeyValuePair<PALABRASRESERVADAS, string> obj in PalabrasReservadas)
+            {
+                if (palabra.ToUpper().Trim() == obj.Value.ToUpper().Trim())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        /// <summary>
+        /// regresa el valor del ENUM si es una palabra reservada y PALABRASRESERVADAS.NO_DEFINIDO en caso contrario
+        /// </summary>
+        /// <param name="palabra"></param>
+        /// <returns></returns>
+        private PALABRASRESERVADAS DamePalabraReservada(string palabra)
+        {
+            foreach (KeyValuePair<PALABRASRESERVADAS, string> obj in PalabrasReservadas)
+            {
+                if (palabra.ToUpper().Trim() == obj.Value.ToUpper().Trim())
+                {
+                    return obj.Key;
+                }
+            }
+            return PALABRASRESERVADAS.NO_DEFINIDO;
+        }
+        /// <summary>
+        /// indica si el caractes es o no un separador
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        private bool EsSeparador(char x)
+        {
+            if (x == '\t')
+                return true;
+            if (x == ' ')
+                return true;
+            return false;
+        }
+        /// <summary>
+        /// Coienza con el analisi de la cadena
+        /// </summary>
+        private void Analiza()
+        {
+            lexemas.Clear();
+            posicion = 0;
+            nLinea = 0;
+            Lexema lex = null;
+            int posLine = 0;
+            int tmpposicion = 0;
+            int tmpnLinea = 0;
+            int tmpposLine = 0;
+            //recorro toda la cadena hasta el final
+            //las expresiones regulares que se van a identificar son
+            //1. letra+_+numero paraidentificadores
+            //2. numeros digito+.+digito
+            //simbolos 
+            while (posicion < LongitudCadena)
+            {
+                #region identificador
+                if (EsLetra(FCadena[posicion]))
+                {
+                    //encontre el inicio de un identificador
+                    lex = new Lexema();
+                    //asigno la posicion inicial
+                    lex.PosicionInicial.PosicionLinea = posLine;
+                    lex.PosicionInicial.Linea = nLinea;
+                    lex.PosicionInicial.PosicionGeneral = posicion;
+                    //mientras sea letra o numero es valido
+                    while ((posicion < LongitudCadena) && (EsLetra(FCadena[posicion]) || EsDigito(FCadena[posicion])))
+                    {
+                        lex.Texto += FCadena[posicion].ToString();
+                        posicion++;
+                        posLine++;
+                    }
+                    lex.Tipo = LEXTIPE.IDENTIFICADOR;
+                    lex.PosicionFinal.PosicionLinea = posLine - 1;
+                    lex.PosicionFinal.Linea = nLinea;
+                    lex.PosicionFinal.PosicionGeneral = posicion - 1;
+                    //lo agrego a la lista
+                    lexemas.Add(lex);
+                }
+                #endregion
+                #region Numeros
+                else if (EsDigito(FCadena[posicion]))
+                {
+                    lex = new Lexema();
+                    lex.PosicionInicial.PosicionLinea = posLine;
+                    lex.PosicionInicial.Linea = nLinea;
+                    lex.PosicionInicial.PosicionGeneral = posicion;
+                    bool pd = false;
+                    //es valido mientras siga siendo digito o '.' siempre y cuando solo exista un '.'
+                    while ((posicion < LongitudCadena) && (EsDigito(FCadena[posicion]) || (FCadena[posicion] == '.' && pd == false)))
+                    {
+                        lex.Texto += FCadena[posicion].ToString();
+                        if (FCadena[posicion] == '.')
+                            pd = true;
+                        posicion++;
+                        posLine++;
+                    }
+                    lex.Tipo = LEXTIPE.NUMERO;
+                    lex.PosicionFinal.PosicionLinea = posLine - 1;
+                    lex.PosicionFinal.Linea = nLinea;
+                    lex.PosicionFinal.PosicionGeneral = posicion - 1;
+                    //lo agrego a la lista
+                    lexemas.Add(lex);
+                }
+                #endregion
+                #region simbolos
+                else if (EsSimboloSimple(FCadena[posicion]))
+                {
+                    lex = new Lexema();
+                    lex.PosicionInicial.PosicionLinea = posLine;
+                    lex.PosicionInicial.Linea = nLinea;
+                    lex.PosicionInicial.PosicionGeneral = posicion;
+                    lex.Texto += FCadena[posicion].ToString();
+                    lex.Tipo = TipoSimbolo(FCadena[posicion]);
+                    lex.PosicionFinal.PosicionLinea = posLine;
+                    lex.PosicionFinal.Linea = nLinea;
+                    lex.PosicionFinal.PosicionGeneral = posicion;
+                    //verifico si hay que revisar algo mas a fondo, por los casos donde el simbolo corresponde a dos caracteres
+                    if ((posicion + 1) < LongitudCadena)
+                    {
+                        switch (lex.Tipo)
+                        {
+                            #region INCREMENTO ++ o SUMAASIGNA +=
+                            case LEXTIPE.SUMA: // puede ser ++ o += 
+                                #region INCREMENTO ++
+                                if (FCadena[posicion + 1] == '+')
+                                {
+                                    lex.Tipo = LEXTIPE.INCREMENTO;
+                                    posicion++;
+                                    posLine++;
+                                    lex.Texto += FCadena[posicion].ToString();
+                                    lex.PosicionFinal.PosicionLinea = posLine;
+                                    lex.PosicionFinal.Linea = nLinea;
+                                    lex.PosicionFinal.PosicionGeneral = posicion;
+                                }
+                                #endregion
+                                #region SUMAASIGNA +=
+                                else if (FCadena[posicion + 1] == '=')
+                                {
+                                    lex.Tipo = LEXTIPE.SUMAASIGNA;
+                                    posicion++;
+                                    posLine++;
+                                    lex.Texto += FCadena[posicion].ToString();
+                                    lex.PosicionFinal.PosicionLinea = posLine;
+                                    lex.PosicionFinal.Linea = nLinea;
+                                    lex.PosicionFinal.PosicionGeneral = posicion;
+                                }
+                                #endregion
+                                break;
+                            #endregion
+                            #region COMENTARIOLINEASQL -- o RESTAASIGNA -=
+                            case LEXTIPE.RESTA: // puede ser -- o -= o 
+                                #region COMENTARIOLINEASQL --
+                                if (FCadena[posicion + 1] == '-')
+                                {
+                                    // podria ser un decremento pero se asume que es un comentario sql por ser el lenguaje al que esta orientado en analizador
+                                    lex.Tipo = LEXTIPE.COMENTARIOLINEASQL;
+                                    posicion++;
+                                    posLine++;
+                                    while ((posicion < LongitudCadena) && (FCadena[posicion] != '\n' && FCadena[posicion] != '\0'))
+                                    {
+                                        //mientras no sea fin de cadena o fin de linea agrego los caracteres a la cadena
+                                        lex.Texto += FCadena[posicion].ToString();
+                                        posicion++;
+                                        posLine++;
+                                    }
+                                    lex.PosicionFinal.PosicionLinea = posLine - 1;
+                                    lex.PosicionFinal.Linea = nLinea;
+                                    lex.PosicionFinal.PosicionGeneral = posicion - 1;
+                                    lexemas.Add(lex);
+                                    continue; //me paso a analizar el siguiente caracter
+                                }
+                                #endregion
+                                #region RESTAASIGNA -=
+                                else if (FCadena[posicion + 1] == '=')
+                                {
+                                    lex.Tipo = LEXTIPE.RESTAASIGNA;
+                                    posicion++;
+                                    posLine++;
+                                    lex.Texto += FCadena[posicion].ToString();
+                                    lex.PosicionFinal.PosicionLinea = posLine;
+                                    lex.PosicionFinal.Linea = nLinea;
+                                    lex.PosicionFinal.PosicionGeneral = posicion;
+                                    continue; //me paso a analizar el siguiente caracter
+                                }
+                                #endregion
+                                break;
+                            #endregion
+                            #region MAYOROIGUALQUE >=
+                            case LEXTIPE.MAYORQUE:
+                                if (FCadena[posicion + 1] == '=')
+                                {
+                                    lex.Tipo = LEXTIPE.MAYOROIGUALQUE;
+                                    posicion++;
+                                    posLine++;
+                                    lex.Texto += FCadena[posicion].ToString();
+                                    lex.PosicionFinal.PosicionLinea = posLine;
+                                    lex.PosicionFinal.Linea = nLinea;
+                                    lex.PosicionFinal.PosicionGeneral = posicion;
+                                }
+                                break;
+                            #endregion
+                            #region MENOROIGUALQUE <= o DIFERENTESQL <>
+                            case LEXTIPE.MENORQUE:
+                                if (FCadena[posicion + 1] == '=')
+                                {
+                                    lex.Tipo = LEXTIPE.MENOROIGUALQUE;
+                                    posicion++;
+                                    posLine++;
+                                    lex.Texto += FCadena[posicion].ToString();
+                                    lex.PosicionFinal.PosicionLinea = posLine;
+                                    lex.PosicionFinal.Linea = nLinea;
+                                    lex.PosicionFinal.PosicionGeneral = posicion;
+                                }
+                                else if (FCadena[posicion + 1] == '>')
+                                {
+                                    lex.Tipo = LEXTIPE.DIFERENTESQL;
+                                    posicion++;
+                                    posLine++;
+                                    lex.Texto += FCadena[posicion].ToString();
+                                    lex.PosicionFinal.PosicionLinea = posLine;
+                                    lex.PosicionFinal.Linea = nLinea;
+                                    lex.PosicionFinal.PosicionGeneral = posicion;
+                                }
+                                break;
+                            #endregion
+                            #region DIFERENTEC !=
+                            case LEXTIPE.NEGACION:
+                                if (FCadena[posicion + 1] == '=')
+                                {
+                                    lex.Tipo = LEXTIPE.DIFERENTEC;
+                                    posicion++;
+                                    posLine++;
+                                    lex.Texto += FCadena[posicion].ToString();
+                                    lex.PosicionFinal.PosicionLinea = posLine;
+                                    lex.PosicionFinal.Linea = nLinea;
+                                    lex.PosicionFinal.PosicionGeneral = posicion;
+                                }
+                                break;
+                            #endregion
+                            #region MULTIPLICAASIGNA *=
+                            case LEXTIPE.MULTIPLICACION:
+                                #region MULTIPLICAASIGNA
+                                if (FCadena[posicion + 1] == '=')
+                                {
+                                    lex.Tipo = LEXTIPE.MULTIPLICAASIGNA;
+                                    posicion++;
+                                    posLine++;
+                                    lex.Texto += FCadena[posicion].ToString();
+                                    lex.PosicionFinal.PosicionLinea = posLine;
+                                    lex.PosicionFinal.Linea = nLinea;
+                                    lex.PosicionFinal.PosicionGeneral = posicion;
+                                }
+                                #endregion/*
+                                break;
+                            #endregion
+                            #region DIVIDEASIGNA /= o COMENTARIOLINEAC // comentario o COMENTARIOMULTIL /* comentario */
+                            case LEXTIPE.DIVICION:
+                                #region DIVIDEASIGNA /=
+                                if (FCadena[posicion + 1] == '=')
+                                {
+                                    lex.Tipo = LEXTIPE.DIVIDEASIGNA;
+                                    posicion++;
+                                    posLine++;
+                                    lex.Texto += FCadena[posicion].ToString();
+                                    lex.PosicionFinal.PosicionLinea = posLine;
+                                    lex.PosicionFinal.Linea = nLinea;
+                                    lex.PosicionFinal.PosicionGeneral = posicion;
+                                }
+                                #endregion
+                                #region COMENTARIOLINEAC //comentario
+
+                                else if (FCadena[posicion + 1] == '/')
+                                {
+                                    lex.Tipo = LEXTIPE.COMENTARIOLINEAC;
+                                    posicion++;
+                                    posLine++;
+                                    while (FCadena[posicion] != '\n' && FCadena[posicion] != '\0')
+                                    {
+                                        //mientras no sea fin de cadena o fin de linea agrego los caracteres a la cadena
+                                        lex.Texto += FCadena[posicion].ToString();
+                                        posicion++;
+                                        posLine++;
+                                    }
+                                    lex.PosicionFinal.PosicionLinea = posLine - 1;
+                                    lex.PosicionFinal.Linea = nLinea;
+                                    lex.PosicionFinal.PosicionGeneral = posicion - 1;
+                                    continue; //me paso a analizar el siguiente caracter
+
+                                }
+                                #endregion
+                                #region COMENTARIOMULTIL /* comentario */
+                                else if (FCadena[posicion + 1] == '*')
+                                {
+                                    tmpposLine = posLine;
+                                    tmpposicion = posicion;
+                                    tmpnLinea = nLinea;
+
+                                    posicion++;
+                                    posLine++;
+                                    //recorro la cadena hasta encontrar el fin de la cadena
+                                    while ((posicion + 1 < LongitudCadena) && (FCadena[posicion] != '*' || FCadena[posicion + 1] != '/'))
+                                    {
+                                        lex.Texto += FCadena[posicion].ToString();
+                                        posicion++;
+                                        posLine++;
+                                        //tomo en cuenta el numero de linea
+                                        if (posicion >= LongitudCadena)
+                                            break;
+                                        if (FCadena[posicion] == '\n')
+                                        {
+                                            nLinea++;
+                                            posLine = 0;
+                                        }
+                                    }
+                                    //en este punto tengo el final del comentario */
+                                    if ((posicion + 1 < LongitudCadena) && (FCadena[posicion] == '*' && FCadena[posicion + 1] == '/'))
+                                    {
+                                        lex.Texto += FCadena[posicion].ToString(); //agrego el *
+                                        posicion++;
+                                        posLine++;
+                                        lex.Texto += FCadena[posicion].ToString(); // agrego el /
+                                        lex.Tipo = LEXTIPE.COMENTARIOMULTIL;
+
+                                    }
+                                    else
+                                    {
+                                        //se llego al final de la cadena y no se encontro el cierre del comentario
+                                        //por lo que hay que echar para atras todo
+                                        posLine = tmpposLine;
+                                        posicion = tmpposicion;
+                                        nLinea = tmpnLinea;
+                                        lex.Texto = "/";
+                                    }
+                                    lex.PosicionFinal.PosicionLinea = posLine - 1;
+                                    lex.PosicionFinal.Linea = nLinea;
+                                    lex.PosicionFinal.PosicionGeneral = posicion - 1;
+                                }
+                                #endregion
+                                break;
+                            #endregion
+                            #region CADENASIMPLE 'cadena'
+                            case LEXTIPE.COMILLASIMPLE:
+                                tmpposLine = posLine;
+                                tmpposicion = posicion;
+                                tmpnLinea = nLinea;
+                                posicion++;
+                                posLine++;
+                                //recorro la cadena hasta encontrar el fin de la cadena
+                                while ((posicion < LongitudCadena) && FCadena[posicion] != '\'')
+                                {
+                                    lex.Texto += FCadena[posicion].ToString();
+                                    posicion++;
+                                    posLine++;
+                                    //tomo en cuenta el numero de linea
+                                    if (posicion >= LongitudCadena - 1)
+                                        break;
+                                    if (FCadena[posicion] == '\n')
+                                    {
+                                        nLinea++;
+                                        posLine = 0;
+                                    }
+                                }
+                                //en este punto se tiene la comiila
+                                if ((posicion < LongitudCadena) && (FCadena[posicion] == '\''))
+                                {
+                                    lex.Tipo = LEXTIPE.CADENASIMPLE;
+                                    //la agrego y me salto al siguiente caracter
+                                    lex.Texto += FCadena[posicion].ToString();
+                                    //                                posicion++;
+                                    //                              posLine++;
+                                }
+                                else
+                                {
+                                    //se llego al final del texto y no se encontro el cierre de la cadena
+                                    //por lo que hay que echar para atras todo
+                                    posLine = tmpposLine;
+                                    posicion = tmpposicion;
+                                    nLinea = tmpnLinea;
+                                    lex.Texto = "\'";
+                                }
+                                lex.PosicionFinal.PosicionLinea = posLine - 1;
+                                lex.PosicionFinal.Linea = nLinea;
+                                lex.PosicionFinal.PosicionGeneral = posicion - 1;
+                                break;
+                            #endregion
+                            #region CADENADOBLE "cadena"
+                            case LEXTIPE.COMILLADOBLE:
+                                tmpposLine = posLine;
+                                tmpposicion = posicion;
+                                tmpnLinea = nLinea;
+                                posicion++;
+                                posLine++;
+                                //recorro la cadena hasta encontrar el fin de la cadena
+                                while ((posicion < LongitudCadena) && FCadena[posicion] != '\"')
+                                {
+                                    lex.Texto += FCadena[posicion].ToString();
+                                    posicion++;
+                                    posLine++;
+                                    //tomo en cuenta el numero de linea
+                                    if (posicion >= LongitudCadena)
+                                        break;
+                                    if (FCadena[posicion] == '\n')
+                                    {
+                                        nLinea++;
+                                        posLine = 0;
+                                    }
+                                }
+                                //en este punto se tiene la comiila
+                                if ((posicion < LongitudCadena) && (FCadena[posicion] == '\"'))
+                                {
+                                    lex.Tipo = LEXTIPE.CADENADOBLE;
+                                    //la agrego y me salto al siguiente caracter
+                                    lex.Texto += FCadena[posicion].ToString();
+                                    lex.PosicionFinal.PosicionLinea = posLine - 1;
+                                    lex.PosicionFinal.Linea = nLinea;
+                                    lex.PosicionFinal.PosicionGeneral = posicion - 1;
+                                }
+                                else
+                                {
+                                    //se llego al final del texto y no se encontro el cierre de la cadena
+                                    //por lo que hay que echar para atras todo
+                                    posLine = tmpposLine;
+                                    posicion = tmpposicion;
+                                    nLinea = tmpnLinea;
+                                    lex.Texto = "\"";
+                                }
+                                break;
+                            #endregion
+                            #region SQLVARIABLE @nombre o SQLVARIABLESISTEMA @@nombre
+                            case LEXTIPE.ARROBA:
+                                //el siguiente caracter debe de ser un caracter
+                                if(EsLetra(FCadena[posicion+1]))
+                                {
+                                    posicion++;
+                                    while ((posicion < LongitudCadena) && (EsLetra(FCadena[posicion]) || EsDigito(FCadena[posicion])))
+                                    {
+                                        lex.Texto += FCadena[posicion].ToString();
+                                        posicion++;
+                                        posLine++;
+                                    }
+                                    lex.Tipo = LEXTIPE.SQLVARIABLE;
+                                    lex.PosicionFinal.PosicionLinea = posLine - 1;
+                                    lex.PosicionFinal.Linea = nLinea;
+                                    lex.PosicionFinal.PosicionGeneral = posicion - 1;
+                                    //lo agrego a la lista
+                                    lexemas.Add(lex);
+                                    continue;
+                                }
+                                else if(FCadena[posicion+1]=='@')
+                                {
+                                    posicion++;
+                                    lex.Texto += FCadena[posicion].ToString();
+                                    posicion++;
+                                    while ((posicion < LongitudCadena) && (EsLetra(FCadena[posicion]) || EsDigito(FCadena[posicion])))
+                                    {
+                                        lex.Texto += FCadena[posicion].ToString();
+                                        posicion++;
+                                        posLine++;
+                                    }
+                                    lex.Tipo = LEXTIPE.SQLVARIABLESISTEMA;
+                                    lex.PosicionFinal.PosicionLinea = posLine - 1;
+                                    lex.PosicionFinal.Linea = nLinea;
+                                    lex.PosicionFinal.PosicionGeneral = posicion - 1;
+                                    //lo agrego a la lista
+                                    lexemas.Add(lex);
+                                    continue;
+
+                                }
+                                break;
+                            #endregion
+                        }
+                    }
+                    //lo agrego a la lista
+                    lexemas.Add(lex);
+                    posicion++;
+                    posLine++;
+                }
+                #endregion
+                #region separadores
+                else if (FCadena[posicion] == '\n')
+                {
+                    //es una nueva linea
+                    lex = new Lexema();
+                    lex.PosicionInicial.PosicionLinea = posLine;
+                    lex.PosicionInicial.Linea = nLinea;
+                    lex.PosicionInicial.PosicionGeneral = posicion;
+                    lex.Texto += FCadena[posicion].ToString();
+                    lex.Tipo = LEXTIPE.FINLINEA;
+                    lex.PosicionFinal.PosicionLinea = posLine;
+                    lex.PosicionFinal.Linea = nLinea;
+                    lex.PosicionFinal.PosicionGeneral = posicion;
+                    //lo agrego a la lista
+                    lexemas.Add(lex);
+                    posicion++;
+                    posLine = 0;
+                    nLinea++;
+                }
+                else if (FCadena[posicion] == '\r')
+                {
+                    //solo loignoro
+                    posicion++;
+                    posLine++;
+                }
+                else if (EsSeparador(FCadena[posicion]))
+                {
+                    lex = new Lexema();
+                    lex.PosicionInicial.PosicionLinea = posLine;
+                    lex.PosicionInicial.Linea = nLinea;
+                    lex.PosicionInicial.PosicionGeneral = posicion;
+                    //sigo separando los demas separadores
+                    while ((posicion < LongitudCadena) && EsSeparador(FCadena[posicion]))
+                    {
+                        lex.Texto += FCadena[posicion].ToString();
+                        posicion++;
+                        posLine++;
+                    }
+                    lex.Tipo = LEXTIPE.SEPARADOR;
+                    lex.PosicionFinal.PosicionLinea = posLine;
+                    lex.PosicionFinal.Linea = nLinea;
+                    lex.PosicionFinal.PosicionGeneral = posicion;
+                    //lo agrego a la lista
+                    lexemas.Add(lex);
+                }
+                else
+                {
+                    //no se que sea
+                    lex = new Lexema();
+                    lex.PosicionInicial.PosicionLinea = posLine;
+                    lex.PosicionInicial.Linea = nLinea;
+                    lex.PosicionInicial.PosicionGeneral = posicion;
+                    lex.Texto += FCadena[posicion].ToString();
+                    posicion++;
+                    posLine++;
+                    lex.Tipo = LEXTIPE.INDEFINIDO;
+                    lex.PosicionFinal.PosicionLinea = posLine;
+                    lex.PosicionFinal.Linea = nLinea;
+                    lex.PosicionFinal.PosicionGeneral = posicion;
+                    //lo agrego a la lista
+                    lexemas.Add(lex);
+                }
+
+                #endregion
+            }
+        }
+        private void BuscaPalabrasReservadas()
+        {
+            foreach (Lexema lex in lexemas)
+            {
+                if (lex.Tipo == LEXTIPE.IDENTIFICADOR)
+                {
+                    if (EsPalabraReservada(lex.Texto) == true)
+                    {
+                        lex.Tipo = LEXTIPE.PALABRARESERVADA;
+                        lex.PalabraReservada = DamePalabraReservada(lex.Texto);
+                    }
+                }
+            }
+        }
+
+        #endregion
+    }
+}
