@@ -30,6 +30,7 @@ namespace Compiler
             dt.Columns.Add("Tip");
             dt.Columns.Add("Texto");
             lecxer1.Cadena = textBox1.Text;
+            lecxer1[1].Texto = "";
             foreach(Lexer.Lexema lex in lecxer1)
             {
                 DataRow dr = dt.NewRow();

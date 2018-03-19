@@ -45,6 +45,7 @@
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gestorDeTabuladoresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuTemas = new System.Windows.Forms.ToolStripMenuItem();
+            this.generadorLiberiaCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowsMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.newWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cascadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -86,7 +87,7 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.cProjectManager1 = new SQLDeveloper.Modulos.ProyectAdmin.CProjectManager(this.components);
-            this.generadorLiberiaCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.configuradorApp1 = new SQLDeveloper.ConfiguradorApp(this.components);
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -222,6 +223,13 @@
             this.MenuTemas.Size = new System.Drawing.Size(210, 22);
             this.MenuTemas.Text = "Configurar editor de texto";
             this.MenuTemas.Click += new System.EventHandler(this.MenuTemas_Click);
+            // 
+            // generadorLiberiaCToolStripMenuItem
+            // 
+            this.generadorLiberiaCToolStripMenuItem.Name = "generadorLiberiaCToolStripMenuItem";
+            this.generadorLiberiaCToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.generadorLiberiaCToolStripMenuItem.Text = "Generador Liberia  C#";
+            this.generadorLiberiaCToolStripMenuItem.Click += new System.EventHandler(this.generadorLiberiaCToolStripMenuItem_Click);
             // 
             // windowsMenu
             // 
@@ -545,13 +553,6 @@
             // 
             this.cProjectManager1.OnProjectHistoruChange += new SQLDeveloper.Modulos.ProyectAdmin.CProjectManagerEvent(this.LoadHistoryproyects);
             // 
-            // generadorLiberiaCToolStripMenuItem
-            // 
-            this.generadorLiberiaCToolStripMenuItem.Name = "generadorLiberiaCToolStripMenuItem";
-            this.generadorLiberiaCToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
-            this.generadorLiberiaCToolStripMenuItem.Text = "Generador Liberia  C#";
-            this.generadorLiberiaCToolStripMenuItem.Click += new System.EventHandler(this.generadorLiberiaCToolStripMenuItem_Click);
-            // 
             // FormPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -640,6 +641,7 @@
         private System.Windows.Forms.ToolStripMenuItem MenuProyectoReciente;
         private System.Windows.Forms.ToolStripButton BBuscaAvanzado;
         private System.Windows.Forms.ToolStripMenuItem generadorLiberiaCToolStripMenuItem;
+        private ConfiguradorApp configuradorApp1;
     }
 }
 

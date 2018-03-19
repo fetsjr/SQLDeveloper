@@ -249,6 +249,23 @@ namespace SQLDeveloper.Modulos.Editores.TextEdit.Buffer
             }
             return l;
         }
+        public List<string> GetFields(string tabla)
+        {
+            List<string> l = new List<string>();
+            //regresa el listado de campos pertenecientes a la tabla
+            foreach(CTabla obj in LTablas)
+            {
+                if(obj.Nombre.ToUpper().Trim()==tabla.ToUpper().Trim())
+                {
+                    //ahora obtengo los campos
+                    foreach (CCampo campo in obj.Campos)
+                    {
+                        l.Add(campo.Nombre);
+                    }
+                }
+            }
+            return l;
+        }
         #endregion
     }
 }

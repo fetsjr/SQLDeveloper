@@ -18,6 +18,8 @@ namespace SQLDeveloper
         {
             get
             {
+                if (System.IO.Directory.Exists(Application.StartupPath + "\\Colores") == false)
+                    System.IO.Directory.CreateDirectory(Application.StartupPath + "\\Colores");
                 return Application.StartupPath + "\\Colores\\Config.xml";
             }
         }

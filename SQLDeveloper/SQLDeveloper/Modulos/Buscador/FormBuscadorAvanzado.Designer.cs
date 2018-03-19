@@ -33,10 +33,14 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.ListaFiltros = new System.Windows.Forms.ListBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.BAgregarFiltro = new System.Windows.Forms.ToolStripButton();
             this.BQuitarFiltro = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -46,18 +50,16 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.verTodosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList2 = new System.Windows.Forms.ImageList(this.components);
-            this.TimerLLena = new System.Windows.Forms.Timer(this.components);
-            this.cBuscadorAvanzado1 = new SQLDeveloper.Modulos.Buscador.CBuscadorAvanzado();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.toolStrip3 = new System.Windows.Forms.ToolStrip();
             this.LResultado = new System.Windows.Forms.ToolStripLabel();
+            this.TimerLLena = new System.Windows.Forms.Timer(this.components);
+            this.BEditar = new System.Windows.Forms.ToolStripButton();
+            this.cBuscadorAvanzado1 = new SQLDeveloper.Modulos.Buscador.CBuscadorAvanzado();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -65,7 +67,6 @@
             this.panel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
-            this.toolStrip2.SuspendLayout();
             this.toolStrip3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -109,6 +110,22 @@
             this.imageList1.Images.SetKeyName(0, "file-manager.png");
             this.imageList1.Images.SetKeyName(1, "Shaded Right Tab.ico");
             this.imageList1.Images.SetKeyName(2, "kedit2.png");
+            // 
+            // toolStrip2
+            // 
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel2});
+            this.toolStrip2.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Size = new System.Drawing.Size(284, 25);
+            this.toolStrip2.TabIndex = 2;
+            this.toolStrip2.Text = "toolStrip2";
+            // 
+            // toolStripLabel2
+            // 
+            this.toolStripLabel2.Name = "toolStripLabel2";
+            this.toolStripLabel2.Size = new System.Drawing.Size(68, 22);
+            this.toolStripLabel2.Text = "Conexiones";
             // 
             // splitContainer2
             // 
@@ -157,6 +174,7 @@
             this.toolStripSeparator2,
             this.BAgregarFiltro,
             this.BQuitarFiltro,
+            this.BEditar,
             this.toolStripSeparator1,
             this.BBuscar});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
@@ -164,6 +182,17 @@
             this.toolStrip1.Size = new System.Drawing.Size(284, 25);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(39, 22);
+            this.toolStripLabel1.Text = "Filtros";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // BAgregarFiltro
             // 
@@ -261,45 +290,6 @@
             this.imageList2.Images.SetKeyName(10, "desconocido.jpg");
             this.imageList2.Images.SetKeyName(11, "molde2.png");
             // 
-            // TimerLLena
-            // 
-            this.TimerLLena.Enabled = true;
-            this.TimerLLena.Tick += new System.EventHandler(this.TimerLLena_Tick);
-            // 
-            // cBuscadorAvanzado1
-            // 
-            this.cBuscadorAvanzado1.OnFiltroChange += new SQLDeveloper.Modulos.Buscador.OnBusquedaAvanzadaEvent(this.cBuscadorAvanzado1_OnFiltroChange);
-            this.cBuscadorAvanzado1.OnObjetoEncontrado += new SQLDeveloper.Modulos.Buscador.OnObjetoEncontradoEvent(this.cBuscadorAvanzado1_OnObjetoEncontrado);
-            this.cBuscadorAvanzado1.OnInicioBusqueda += new SQLDeveloper.Modulos.Buscador.OnBusquedaAvanzadaEvent(this.cBuscadorAvanzado1_OnInicioBusqueda);
-            this.cBuscadorAvanzado1.OnFinBusqueda += new SQLDeveloper.Modulos.Buscador.OnBusquedaAvanzadaEvent(this.cBuscadorAvanzado1_OnFinBusqueda);
-            // 
-            // toolStripLabel1
-            // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(39, 22);
-            this.toolStripLabel1.Text = "Filtros";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStrip2
-            // 
-            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel2});
-            this.toolStrip2.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(284, 25);
-            this.toolStrip2.TabIndex = 2;
-            this.toolStrip2.Text = "toolStrip2";
-            // 
-            // toolStripLabel2
-            // 
-            this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(68, 22);
-            this.toolStripLabel2.Text = "Conexiones";
-            // 
             // toolStrip3
             // 
             this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -316,6 +306,28 @@
             this.LResultado.Size = new System.Drawing.Size(59, 22);
             this.LResultado.Text = "Resultado";
             // 
+            // TimerLLena
+            // 
+            this.TimerLLena.Enabled = true;
+            this.TimerLLena.Tick += new System.EventHandler(this.TimerLLena_Tick);
+            // 
+            // BEditar
+            // 
+            this.BEditar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BEditar.Image = ((System.Drawing.Image)(resources.GetObject("BEditar.Image")));
+            this.BEditar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BEditar.Name = "BEditar";
+            this.BEditar.Size = new System.Drawing.Size(23, 22);
+            this.BEditar.Text = "Modificar";
+            this.BEditar.Click += new System.EventHandler(this.BEditar_Click);
+            // 
+            // cBuscadorAvanzado1
+            // 
+            this.cBuscadorAvanzado1.OnFiltroChange += new SQLDeveloper.Modulos.Buscador.OnBusquedaAvanzadaEvent(this.cBuscadorAvanzado1_OnFiltroChange);
+            this.cBuscadorAvanzado1.OnObjetoEncontrado += new SQLDeveloper.Modulos.Buscador.OnObjetoEncontradoEvent(this.cBuscadorAvanzado1_OnObjetoEncontrado);
+            this.cBuscadorAvanzado1.OnInicioBusqueda += new SQLDeveloper.Modulos.Buscador.OnBusquedaAvanzadaEvent(this.cBuscadorAvanzado1_OnInicioBusqueda);
+            this.cBuscadorAvanzado1.OnFinBusqueda += new SQLDeveloper.Modulos.Buscador.OnBusquedaAvanzadaEvent(this.cBuscadorAvanzado1_OnFinBusqueda);
+            // 
             // FormBuscadorAvanzado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -324,11 +336,14 @@
             this.Controls.Add(this.splitContainer1);
             this.Name = "FormBuscadorAvanzado";
             this.Text = "Busqueda Avanzada";
+            this.Load += new System.EventHandler(this.FormBuscadorAvanzado_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             this.splitContainer2.Panel2.PerformLayout();
@@ -339,8 +354,6 @@
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
-            this.toolStrip2.ResumeLayout(false);
-            this.toolStrip2.PerformLayout();
             this.toolStrip3.ResumeLayout(false);
             this.toolStrip3.PerformLayout();
             this.ResumeLayout(false);
@@ -373,5 +386,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStrip toolStrip3;
         private System.Windows.Forms.ToolStripLabel LResultado;
+        private System.Windows.Forms.ToolStripButton BEditar;
     }
 }

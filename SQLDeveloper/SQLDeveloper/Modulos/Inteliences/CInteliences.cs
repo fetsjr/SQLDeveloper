@@ -15,6 +15,7 @@ using System.Data;
 using System.IO;
 
 
+
 namespace SQLDeveloper.Modulos.Inteliences
 {
     public delegate System.Windows.Forms.Form OnParentFormEvent();
@@ -82,6 +83,8 @@ namespace SQLDeveloper.Modulos.Inteliences
             {
                 FDB = value;
                 cBuffer1 = cBufferProvider1.GetBuffer(FDB);
+                if (AnalizadorTexto != null)
+                    AnalizadorTexto.SetBuffer(cBuffer1);
                 if (FDB != null)
                 {
                     AnalizadorTexto = cAnaliseManager1.GetAnaliser(FDB.GetMotor().ToString());
@@ -268,6 +271,11 @@ namespace SQLDeveloper.Modulos.Inteliences
                     case System.Windows.Forms.Keys.Back | System.Windows.Forms.Keys.ShiftKey | System.Windows.Forms.Keys.Space:
                     case System.Windows.Forms.Keys.LButton | System.Windows.Forms.Keys.Back | System.Windows.Forms.Keys.ShiftKey | System.Windows.Forms.Keys.Space:
                     case System.Windows.Forms.Keys.ShiftKey | System.Windows.Forms.Keys.Space:
+                    case System.Windows.Forms.Keys.RButton | System.Windows.Forms.Keys.MButton | System.Windows.Forms.Keys.Back | System.Windows.Forms.Keys.ShiftKey | System.Windows.Forms.Keys.Space | System.Windows.Forms.Keys.F17:
+                        //es el .
+                        if (keyData == (System.Windows.Forms.Keys.RButton | System.Windows.Forms.Keys.MButton | System.Windows.Forms.Keys.Back | System.Windows.Forms.Keys.ShiftKey | System.Windows.Forms.Keys.Space | System.Windows.Forms.Keys.F17))
+                            FilterString += ".";
+                        else
                         FilterString += ((char)keyData).ToString();
                         ShowIntellisense();
                         return false;
@@ -298,53 +306,11 @@ namespace SQLDeveloper.Modulos.Inteliences
                         return true;
                     case Keys.Space:
                         string WordBehind = GetWordAtOffset();
-                        int auxoffset2 = FEditor.Document.PositionToOffset(FEditor.ActiveTextAreaControl.Caret.Position);
-                        if (WordBehind.Equals("FROM", StringComparison.CurrentCultureIgnoreCase) || WordBehind.Equals("JOIN", StringComparison.CurrentCultureIgnoreCase) || WordBehind.Equals("UPDATE", StringComparison.CurrentCultureIgnoreCase))
-                        {
-                            //si es un FROM o un ON sacar la lista de tablas y vistas
-                            FEditor.Document.Insert(auxoffset2, " ");
-                            FEditor.ActiveTextAreaControl.Caret.Column += 1;
-                            auxoffset2++;
-                            CurOffset = auxoffset2;
-
-                            CurrentFilter = FilteringTypeValues.Fields;
-                            FilterString = "";
-                            FireAt = CurOffset;
-                            CargaTablasVistas();
-                            ShowIntellisense();
-                            return true;
-                        }
-                        else if (WordBehind.Equals("DELETE", StringComparison.CurrentCultureIgnoreCase) || WordBehind.Equals("UPDATE", StringComparison.CurrentCultureIgnoreCase) || WordBehind.Equals("INTO", StringComparison.CurrentCultureIgnoreCase))
-                        {
-                            //si es un DELETE, un UPDATE o un INTO sacar la lista de tablas
-                            FEditor.Document.Insert(auxoffset2, " ");
-                            FEditor.ActiveTextAreaControl.Caret.Column += 1;
-                            auxoffset2++;
-                            CurOffset = auxoffset2;
-                            CurrentFilter = FilteringTypeValues.Fields;
-                            FilterString = "";
-                            FireAt = CurOffset;
-                            CargaTablas();
-                            ShowIntellisense();
-                            return true;
-                        }
-                        else if (WordBehind.Equals("INSERT", StringComparison.CurrentCultureIgnoreCase))
-                        {
-                            CargaTablas();
-                            ShowIntellisense();
-                            //si es un DELETE, un UPDATE o un INTO sacar la lista de tablas
-                            return false;
-                        }
-                        else if (WordBehind.Equals("SELECT", StringComparison.CurrentCultureIgnoreCase) || WordBehind.Equals("WHERE", StringComparison.CurrentCultureIgnoreCase) || WordBehind.Equals("OR", StringComparison.CurrentCultureIgnoreCase) || WordBehind.Equals("AND", StringComparison.CurrentCultureIgnoreCase)  || WordBehind.Equals("BY", StringComparison.CurrentCultureIgnoreCase))
-                        {
-                            if (CargaCampos())
-                                ShowIntellisense();
-                            return false;
-                        }
-                        return false;
-                    case Keys.OemPeriod:
-                    case Keys.Decimal:
-                        return ValidaPunto();
+            int auxoffset2 = FEditor.Document.PositionToOffset(FEditor.ActiveTextAreaControl.Caret.Position);
+                        return AnalizaEspacio();
+//                    case Keys.OemPeriod:
+                    //case Keys.Decimal: 
+                      //  return ValidaPunto();
                     case Keys.T | Keys.Control://ctrl + t , mostrar tablas + vistas
                         CurrentFilter = FilteringTypeValues.Fields;
                         CurWord = GetWordAtOffsetMinusOne();
@@ -548,11 +514,19 @@ namespace SQLDeveloper.Modulos.Inteliences
                 obj.Text = s;
                 LInteliencesObject.Add(obj);
             }
+            List<string> l2 = AnalizadorTexto.GetTablesNames();
+            foreach (string s in l2)
+            {
+                CInteliencesObject obj = new CInteliencesObject();
+                obj.Text = s;
+                LInteliencesObject.Add(obj);
+            }
         }
         private bool CargaCampos()
         {
             if (cBuffer1 == null)
                 return false;
+            AnalizadorTexto.SetBuffer(cBuffer1);
             LInteliencesObject = new List<CInteliencesObject>();
             List<string> l = cBuffer1.GetAllFields();
             if (l.Count() > 0)
@@ -567,6 +541,16 @@ namespace SQLDeveloper.Modulos.Inteliences
             }
             //me traigo tambien las variables
             l = AnalizadorTexto.GetVariableNames();
+            if (l.Count > 0)
+            {
+                foreach (string s in l)
+                {
+                    CInteliencesObject obj = new CInteliencesObject();
+                    obj.Text = s;
+                    LInteliencesObject.Add(obj);
+                }
+            }
+            l = AnalizadorTexto.GetAllFields();
             if (l.Count > 0)
             {
                 foreach (string s in l)
@@ -598,6 +582,98 @@ namespace SQLDeveloper.Modulos.Inteliences
                     return false;
             }
             return true;
+        }
+        private bool AnalizaEspacio()
+        {
+            AnalizadorTexto.SetTextEditor(FEditor);
+            int auxoffset = FEditor.Document.PositionToOffset(FEditor.ActiveTextAreaControl.Caret.Position);
+            string comando = AnalizadorTexto.GetSincronizadorAnterior(auxoffset);
+            #region FROM, JOIN, DELETE, UPDATE
+            if (comando == "FROM" || comando == "JOIN" || comando == "DELETE" || comando == "UPDATE")
+            {
+                //si es un FROM o un ON sacar la lista de tablas y vistas
+                FEditor.Document.Insert(auxoffset, " ");
+                FEditor.ActiveTextAreaControl.Caret.Column += 1;
+                auxoffset++;
+                CurOffset = auxoffset;
+
+                CurrentFilter = FilteringTypeValues.Fields;
+                FilterString = "";
+                FireAt = CurOffset;
+                if (comando == "DELETE" || comando == "UPDATE")
+                    CargaTablas();
+                else
+                    CargaTablasVistas();
+                ShowIntellisense();
+                return true;
+            }
+            if (comando == "SET" || comando == "WHERE" || comando == "AND" || comando == "OR" || comando == "ON" || comando == "SELECT")
+            {
+                FEditor.Document.Insert(auxoffset, " ");
+                FEditor.ActiveTextAreaControl.Caret.Column += 1;
+                auxoffset++;
+                CurOffset = auxoffset;
+
+                CurrentFilter = FilteringTypeValues.Fields;
+                FilterString = "";
+                FireAt = CurOffset;
+                CargaCampos();
+                ShowIntellisense();
+                return true;
+            }
+            #endregion
+            return false;
+        }
+        private bool AnalizaEspacio1()
+        {
+            //me traigo la posicion de donde se dio el espacio
+            #region codigo original
+            string WordBehind = GetWordAtOffset();
+            int auxoffset2 = FEditor.Document.PositionToOffset(FEditor.ActiveTextAreaControl.Caret.Position);
+            if (WordBehind.Equals("FROM", StringComparison.CurrentCultureIgnoreCase) || WordBehind.Equals("JOIN", StringComparison.CurrentCultureIgnoreCase) || WordBehind.Equals("UPDATE", StringComparison.CurrentCultureIgnoreCase))
+            {
+                //si es un FROM o un ON sacar la lista de tablas y vistas
+                FEditor.Document.Insert(auxoffset2, " ");
+                FEditor.ActiveTextAreaControl.Caret.Column += 1;
+                auxoffset2++;
+                CurOffset = auxoffset2;
+
+                CurrentFilter = FilteringTypeValues.Fields;
+                FilterString = "";
+                FireAt = CurOffset;
+                CargaTablasVistas();
+                ShowIntellisense();
+                return true;
+            }
+            else if (WordBehind.Equals("DELETE", StringComparison.CurrentCultureIgnoreCase) || WordBehind.Equals("UPDATE", StringComparison.CurrentCultureIgnoreCase) || WordBehind.Equals("INTO", StringComparison.CurrentCultureIgnoreCase))
+            {
+                //si es un DELETE, un UPDATE o un INTO sacar la lista de tablas
+                FEditor.Document.Insert(auxoffset2, " ");
+                FEditor.ActiveTextAreaControl.Caret.Column += 1;
+                auxoffset2++;
+                CurOffset = auxoffset2;
+                CurrentFilter = FilteringTypeValues.Fields;
+                FilterString = "";
+                FireAt = CurOffset;
+                CargaTablas();
+                ShowIntellisense();
+                return true;
+            }
+            else if (WordBehind.Equals("INSERT", StringComparison.CurrentCultureIgnoreCase))
+            {
+                CargaTablas();
+                ShowIntellisense();
+                //si es un DELETE, un UPDATE o un INTO sacar la lista de tablas
+                return false;
+            }
+            else if (WordBehind.Equals("SELECT", StringComparison.CurrentCultureIgnoreCase) || WordBehind.Equals("WHERE", StringComparison.CurrentCultureIgnoreCase) || WordBehind.Equals("OR", StringComparison.CurrentCultureIgnoreCase) || WordBehind.Equals("AND", StringComparison.CurrentCultureIgnoreCase) || WordBehind.Equals("BY", StringComparison.CurrentCultureIgnoreCase))
+            {
+                if (CargaCampos())
+                    ShowIntellisense();
+                return false;
+            }
+            return false;
+            #endregion
         }
     }
 }

@@ -14,5 +14,13 @@ namespace SQLDeveloper.Modulos.Inteliences.TextAnaliser
         List<string> GetTablesNames(); //regresa la lista de tablas variables, tablas temporales y alias que se tengan en eltexto
         List<string> GetTableFields(string tabla); //regresa los campos de las tablas
         int GetDeclarationLine(string nombre); //regresa la linea donde el objeto fue declarado
+        /// <summary>
+        /// regresa la palabra clave de sincronizacion inmediatamente anterior a offset
+        /// </summary>
+        /// <param name="offset"></param>
+        /// <returns></returns>
+        string GetSincronizadorAnterior(int offset); //regresa la palabra clave de sincronizacion inmediatamente anterior a offset
+        void SetBuffer(SQLDeveloper.Modulos.Editores.TextEdit.Buffer.CBuffer buffer);
+        List<string> GetAllFields();
     }
 }

@@ -53,5 +53,57 @@ namespace SQLDeveloper.Modulos.Buscador
         {
             return !(a == b);
         }
+        public override string ToString()
+        {
+            string s="";
+            switch(operador )
+            {
+                case OPERADOR.AND:
+                    s = "Y ";
+                    break;
+                case OPERADOR.NONE:
+                    s = "";
+                    break;
+                case OPERADOR.NOT:
+                    s = "Excepto ";
+                    break;
+                case OPERADOR.OR:
+                    s = "O ";
+                    break;
+            }
+            switch(Tipo)
+            {
+                case MotorDB.EnumTipoObjeto.NONE:
+                    s+="Todos;";
+                    break;
+                case MotorDB.EnumTipoObjeto.TABLE:
+                    s+="Tablas;";
+                    break;
+                case MotorDB.EnumTipoObjeto.TYPE_TABLE:
+                    s+="Type Table;";
+                    break;
+                case MotorDB.EnumTipoObjeto.VIEW:
+                    s+="Vistas;";
+                    break;
+                case MotorDB.EnumTipoObjeto.PROCEDURE:
+                    s+="Procediientos almacenados;";
+                    break;
+                case MotorDB.EnumTipoObjeto.FUNCION:
+                    s+="Funciones;";
+                    break;
+                case MotorDB.EnumTipoObjeto.TRIGER:
+                    s+="Trigers;";
+                    break;
+                case MotorDB.EnumTipoObjeto.CAMPO:
+                    s+="Campos en objetos;";
+                    break;
+                case MotorDB.EnumTipoObjeto.CODE:
+                    s+="En el codigo;";
+                    break;
+            }
+                
+            s += "\"" + Cadena+"\"";
+            return s;
+        }
     }
 }

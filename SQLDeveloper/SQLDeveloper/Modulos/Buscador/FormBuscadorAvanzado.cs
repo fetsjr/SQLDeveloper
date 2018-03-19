@@ -101,6 +101,7 @@ namespace SQLDeveloper.Modulos.Buscador
                 MessageBox.Show("Tiene que agregar los filtros de busqueda", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            EnableButtons = false;
             cBuscadorAvanzado1.Buscar();
         }
 
@@ -115,6 +116,7 @@ namespace SQLDeveloper.Modulos.Buscador
         private void cBuscadorAvanzado1_OnFinBusqueda(CBuscadorAvanzado sender)
         {
             waitControl1.Animar = false;
+            EnableButtons = true;
 
         }
 
@@ -160,6 +162,43 @@ namespace SQLDeveloper.Modulos.Buscador
                 OnVerObjeto(nodo.Motor,nodo.Nombre, nodo.Tipo);
             }
 
+        }
+
+        private void BEditar_Click(object sender, EventArgs e)
+        {
+            if(ListaFiltros.SelectedIndex==-1)
+                return;
+            CFiltro obj =(CFiltro )ListaFiltros.SelectedItem;
+
+            bool tipos = true;
+            if (obj.operador==  OPERADOR.NONE)
+                tipos = false;
+            FormFiltro dlg = new FormFiltro(tipos);
+            dlg.OnFiltro += new OnFiltroEvent(OnFiltroActualizado);
+            dlg.Filtro = obj;
+            dlg.ShowDialog();
+
+        }
+        private void OnFiltroActualizado(CFiltro filtro)
+        {
+            CFiltro obj = (CFiltro)ListaFiltros.SelectedItem;
+            cBuscadorAvanzado1.ActualizaFiltro(obj, filtro);
+        }
+        private bool EnableButtons
+        {
+            set
+            {
+                BAgregarFiltro.Enabled = value;
+                BQuitarFiltro.Enabled = value;
+                BEditar.Enabled = value;
+                BBuscar.Enabled = value;
+                treeView1.Enabled = value;
+            }
+        }
+
+        private void FormBuscadorAvanzado_Load(object sender, EventArgs e)
+        {
+            EnableButtons = true;
         }
     }
 }

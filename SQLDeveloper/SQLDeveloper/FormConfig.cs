@@ -40,6 +40,7 @@ namespace SQLDeveloper
             BarraSensibilidad.Value = comparador.SensibilidadComparador;
             TSensivilidad.Value = comparador.SensibilidadComparador;
             CHCaseSensibility.Checked = comparador.CaseSencibility;
+            ChCerrar.Checked=configuradorApp1.GetBooleanParameter("MostrarDialogoCerrar");
         }
 
         private void ColorLineaVVirtual_Load(object sender, EventArgs e)
@@ -114,6 +115,11 @@ namespace SQLDeveloper
         {
             comparador.CaseSencibility = CHCaseSensibility.Checked;
 
+        }
+
+        private void ChCerrar_CheckedChanged(object sender, EventArgs e)
+        {
+            configuradorApp1.SetBooleanParameter("MostrarDialogoCerrar", ChCerrar.Checked);
         }
     }
 }

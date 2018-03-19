@@ -1,6 +1,6 @@
-﻿namespace SQLDeveloper.Modulos.Inteliences.TextAnaliser
+﻿namespace Compiler.Lexer
 {
-    partial class CSQLTextAnaliser
+    public partial class Lecxer
     {
         /// <summary>
         /// Required designer variable.
@@ -28,19 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.lecxer1 = new Compiler.Lexer.Lecxer(this.components);
-            // 
-            // lecxer1
-            // 
-            this.lecxer1.Cadena = "";
-
+            components = new System.ComponentModel.Container();
         }
 
         #endregion
-
-        private Compiler.Lexer.Lecxer lecxer1;
-
-
     }
 }

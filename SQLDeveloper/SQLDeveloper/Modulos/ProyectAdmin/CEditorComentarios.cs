@@ -163,7 +163,7 @@ namespace SQLDeveloper.Modulos.ProyectAdmin
             if (colorDialog1.ShowDialog() != System.Windows.Forms.DialogResult.OK)
                 return;
             BFColor.BackColor = colorDialog1.Color;
-
+            BColor_Click(null, null);
         }
 
         private void BBColor_Click(object sender, EventArgs e)
@@ -172,7 +172,7 @@ namespace SQLDeveloper.Modulos.ProyectAdmin
             if (colorDialog1.ShowDialog() != System.Windows.Forms.DialogResult.OK)
                 return;
             BBColor.BackColor = colorDialog1.Color;
-
+            BBakColor_Click(null, null);
         }
 
         private void BFontDown_Click(object sender, EventArgs e)

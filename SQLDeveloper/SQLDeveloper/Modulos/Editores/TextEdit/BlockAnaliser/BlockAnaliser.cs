@@ -32,13 +32,38 @@ namespace SQLDeveloper.Modulos.Editores
         private List<CBloqueMach> ListaMatch;
         private int TotalLineas;
         private int LineaActual;
-        CNodo Arbol;
+        CNodo Arbol; 
+        
+        DataSet dataSet1;
+        DataTable Bloques;
+
         private string NombreArchivo
         {
             get
             {
+                if (System.IO.Directory.Exists(Application.StartupPath + "\\Colores") == false)
+                    System.IO.Directory.CreateDirectory(Application.StartupPath + "\\Colores");
                 return Application.StartupPath + "\\Colores\\bloques.xml";
             }
+        }
+        private void CargaValoresDefault()
+        {
+            IncializaTabla();
+            //inicializa valores si el archivo no existe
+            AddBloqueFile("comentarios", "/*", "*/", "/*..*/");
+            AddBloqueFile("begin", "begin ", "end ", "Begin...End", false, 0, true);
+            AddBloqueFile("case", "case ", "break ", "Case..Break", false, 0, true);
+            AddBloqueFile("case2", "case ", "end ", "Case..End", false, 0, true);
+            AddBloqueFile("llaves", "{", "}", "{..}", false, 0, true);
+            AddBloqueFile("Parentesis","(", ")", "(..)", false, 50, true);
+            AddBloqueFile("corchetes", "[", "]", "[..]");
+            AddBloqueFile("Region1", "#region ", "#endregion ", "", true);
+            AddBloqueFile("Region2", "--#region ", "--#endregion ", "", true);
+            AddBloqueFile("Transaccion1", "BEGIN TRANSACTION ", "COMMIT TRANSACTION ", "", true, 0, false);
+            AddBloqueFile("NOCOUNT", "SET NOCOUNT ON", "SET NOCOUNT OFF", "NOCOUNT", false, 0, false);
+            AddBloqueFile("create", "create procedure", "go", "NOCOUNT", true, 0, false);
+            AddBloqueFile("Transacciones", "BEGIN TRAN", "COMMIT TRAN", "Transaccion", false, 0, false);
+            dataSet1.WriteXml(NombreArchivo);
         }
         public BlockAnaliser()
         {
@@ -50,6 +75,11 @@ namespace SQLDeveloper.Modulos.Editores
             DataSet ds = new DataSet();
             try
             {
+                if (System.IO.File.Exists(NombreArchivo) == false)
+                {
+                    //si no existe el archivo de configuracion, lo crea
+                    CargaValoresDefault();
+                }
                 ds.ReadXml(NombreArchivo);
                 DataTable dt = ds.Tables["Bloques"];
                 foreach(DataRow dr in dt.Rows)
@@ -384,6 +414,35 @@ namespace SQLDeveloper.Modulos.Editores
             Arbol.Add(fin.ToLower(), false);
             //lo agrego a la lista de matchs
             ListaMatch.Add(new CBloqueMach(inicio,fin,textoRemplazo,useTextLine,minimumLength,apliaTabulador));
+        }
+        private void IncializaTabla()
+        {
+             dataSet1 = new DataSet();
+             Bloques = new DataTable();
+            dataSet1.Tables.Add(Bloques);
+            Bloques.TableName = "Bloques";
+            // 
+            // Bloques
+            // 
+            this.Bloques.Columns.Add("Nombre");
+            this.Bloques.Columns.Add("InicioMatch");
+            this.Bloques.Columns.Add("FinMatch");
+            this.Bloques.Columns.Add("TextoRemplazo");
+            this.Bloques.Columns.Add("UseTextLine",typeof(bool));
+            this.Bloques.Columns.Add("MinimumLength", typeof(int));
+            this.Bloques.Columns.Add("ApliaTabulador",typeof(bool));
+        }
+        private void AddBloqueFile(string nombre,string inicio, string fin, string textoRemplazo, bool useTextLine = false, int minimumLength = 0, bool apliaTabulador = false)
+        {
+            DataRow dr = Bloques.NewRow();
+            dr["Nombre"]=nombre;
+            dr["InicioMatch"]=inicio;
+            dr["FinMatch"]=fin;
+            dr["TextoRemplazo"]=textoRemplazo;
+            dr["UseTextLine"]=useTextLine;
+            dr["MinimumLength"]=minimumLength;
+            dr["ApliaTabulador"]=apliaTabulador;
+            Bloques.Rows.Add(dr);
         }
     }
 }

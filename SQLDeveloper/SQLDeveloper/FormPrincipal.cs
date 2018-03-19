@@ -267,9 +267,9 @@ namespace SQLDeveloper
             DBProvider.DB.SetConnectionString(obj.ConecctionString);
             try
             {
-                if(DBProvider.DB.Conectar()==false)
+                if (DBProvider.DB.Conectar() == false)
                 {
-                    MessageBox.Show("No se puede conectar a la base de datos: "+DBProvider.DB.GetStringError(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("No se puede conectar a la base de datos: " + DBProvider.DB.GetStringError(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 DBProvider.DB.Desconectar();
@@ -302,34 +302,34 @@ namespace SQLDeveloper
             switch (tipo)
             {
                 case MotorDB.EnumTipoObjeto.FUNCION:
-                    VerCodigo(motor,nombre, motor.DameCodigoFuncction(nombre));
+                    VerCodigo(motor, nombre, motor.DameCodigoFuncction(nombre));
                     break;
                 case MotorDB.EnumTipoObjeto.PROCEDURE:
-                    VerCodigo(motor,nombre, motor.DameCodigoStoreProcedure(nombre));
+                    VerCodigo(motor, nombre, motor.DameCodigoStoreProcedure(nombre));
                     break;
                 case MotorDB.EnumTipoObjeto.TABLE:
-                    MuestraTabla(motor,nombre);                    
+                    MuestraTabla(motor, nombre);
                     break;
                 case MotorDB.EnumTipoObjeto.TYPE_TABLE:
-                    MuestraTypeTable(motor,nombre);
+                    MuestraTypeTable(motor, nombre);
                     break;
                 case MotorDB.EnumTipoObjeto.TRIGER:
-                    VerCodigo(motor,nombre, motor.DameCodigoTrigger(nombre));
+                    VerCodigo(motor, nombre, motor.DameCodigoTrigger(nombre));
                     break;
                 case MotorDB.EnumTipoObjeto.VIEW:
-                    MuestraVista(motor,nombre);
+                    MuestraVista(motor, nombre);
                     break;
             }
         }
-        private void VerDependencias(MotorDB.IMotorDB motor,string nombre, MotorDB.EnumTipoObjeto tipo)
+        private void VerDependencias(MotorDB.IMotorDB motor, string nombre, MotorDB.EnumTipoObjeto tipo)
         {
-            Modulos.Visores.Dependencias.FormDependencias dlg = new Modulos.Visores.Dependencias.FormDependencias(motor,nombre);
+            Modulos.Visores.Dependencias.FormDependencias dlg = new Modulos.Visores.Dependencias.FormDependencias(motor, nombre);
             dlg.OnVerObjeto += new OnVerObjetoEvent(VerObjeto);
             VentanaAcoplable(dlg, 5, false, State.DockLeft);
         }
         private void VerRelaciones(MotorDB.IMotorDB motor, string nombre, MotorDB.EnumTipoObjeto tipo)
         {
-            Modulos.Visores.Relaciones.FormRelaciones dlg = new Modulos.Visores.Relaciones.FormRelaciones(motor,nombre);
+            Modulos.Visores.Relaciones.FormRelaciones dlg = new Modulos.Visores.Relaciones.FormRelaciones(motor, nombre);
             dlg.OnVerObjeto += new OnVerObjetoEvent(VerObjeto);
             VentanaAcoplable(dlg, 5, false, State.DockLeft);
         }
@@ -341,7 +341,7 @@ namespace SQLDeveloper
         }
         private void MuestraTabla(MotorDB.IMotorDB motor, string nombre)
         {
-            Modulos.Visores.Tabla.FormTabla dlg = new Modulos.Visores.Tabla.FormTabla(motor,nombre);
+            Modulos.Visores.Tabla.FormTabla dlg = new Modulos.Visores.Tabla.FormTabla(motor, nombre);
             dlg.OnVerTablaPadre += new OnVerObjetoEvent(VerObjeto);
             dlg.OnVerDependencias += new OnVerObjetoEvent(VerDependencias);
             dlg.OnVerRelaciones += new OnVerObjetoEvent(VerRelaciones);
@@ -352,7 +352,7 @@ namespace SQLDeveloper
         }
         private void MuestraTypeTable(MotorDB.IMotorDB motor, string nombre)
         {
-            Modulos.Visores.Tabla.FormTabla dlg = new Modulos.Visores.Tabla.FormTabla(motor,nombre,true);
+            Modulos.Visores.Tabla.FormTabla dlg = new Modulos.Visores.Tabla.FormTabla(motor, nombre, true);
             dlg.OnVerTablaPadre += new OnVerObjetoEvent(VerObjeto);
             dlg.OnVerDependencias += new OnVerObjetoEvent(VerDependencias);
             dlg.OnVerRelaciones += new OnVerObjetoEvent(VerRelaciones);
@@ -395,7 +395,7 @@ namespace SQLDeveloper
         }
         private void MuestraVista(MotorDB.IMotorDB motor, string nombre)
         {
-            Modulos.Visores.Vista.FormVista dlg = new Modulos.Visores.Vista.FormVista(motor,nombre);
+            Modulos.Visores.Vista.FormVista dlg = new Modulos.Visores.Vista.FormVista(motor, nombre);
             dlg.OnVerTablaPadre += new OnVerObjetoEvent(VerObjeto);
             dlg.OnVerDependencias += new OnVerObjetoEvent(VerDependencias);
             dlg.OnVerRelaciones += new OnVerObjetoEvent(VerRelaciones);
@@ -482,11 +482,14 @@ namespace SQLDeveloper
             CerrarPespaña = false;
             if (Cerrando == true)
                 return;
-            if (MessageBox.Show("Cerrar la aplicación", "Cerrar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            if (configuradorApp1.GetBooleanParameter("MostrarDialogoCerrar"))
             {
-                e.Cancel = true;
-                Cerrando = false;
-                return;
+                if (MessageBox.Show("Cerrar la aplicación", "Cerrar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                {
+                    e.Cancel = true;
+                    Cerrando = false;
+                    return;
+                }
             }
             Cerrando = true;
             if (VEditor != null)
@@ -500,7 +503,7 @@ namespace SQLDeveloper
         {
             VerCodigo(motor, nombre, motor.DameCodigoVista(nombre));
         }
-        private void VerCodigoTabla(MotorDB.IMotorDB motor,string nombre, MotorDB.EnumTipoObjeto tipo)
+        private void VerCodigoTabla(MotorDB.IMotorDB motor, string nombre, MotorDB.EnumTipoObjeto tipo)
         {
             VerCodigo(motor, nombre, motor.DameCodigoTabla(nombre));
         }
@@ -548,6 +551,7 @@ namespace SQLDeveloper
 
         private void FormPrincipal_Load(object sender, EventArgs e)
         {
+            VerificaColorSintaxis();
             LoadHistoryproyects();
             Conexiones.FormConexionInicial dlg = new Conexiones.FormConexionInicial();
             dlg.OnConexion += new Conexiones.OnFormConexionInicialEvent(ConexionInicial);
@@ -620,7 +624,7 @@ namespace SQLDeveloper
                 //dlg.OnComparar += new Modulos.ProyectAdmin.FormProyectEventComparer(Comparar);
                 //VentanaAcoplable(dlg, 4, true, State.DockLeft);
             }
-            catch(System.Exception ex)
+            catch (System.Exception ex)
             {
                 MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -641,7 +645,7 @@ namespace SQLDeveloper
                     MenuProyectoReciente.DropDownItems.Add(item);
                 }
             }
-            catch(System.Exception ex)
+            catch (System.Exception ex)
             {
                 return;
             }
@@ -669,7 +673,7 @@ namespace SQLDeveloper
                 //dlg.OnComparar += new Modulos.ProyectAdmin.FormProyectEventComparer(Comparar);
                 //VentanaAcoplable(dlg, 4, true, State.DockLeft);
             }
-            catch(System.Exception ex)
+            catch (System.Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -679,14 +683,14 @@ namespace SQLDeveloper
             //cierro el formulario
             cProjectManager1.CierraProyecto(archivo);
             List<Content> l = DameContenedorVentana(typeof(Modulos.ProyectAdmin.FormProyect));
-            foreach(Content c in l)
+            foreach (Content c in l)
             {
-                if((Modulos.ProyectAdmin.FormProyect)c.Control==sender)
+                if ((Modulos.ProyectAdmin.FormProyect)c.Control == sender)
                 {
                     CierraContenedor(c);
                     break;
                 }
-            }            
+            }
             sender.Close();
         }
 
@@ -697,7 +701,7 @@ namespace SQLDeveloper
             {
 
                 Modulos.Buscador.FormBuscadorAvanzado dlg = new Modulos.Buscador.FormBuscadorAvanzado(DBProvider.DB);
-                dlg.OnVerObjeto += new  OnVerObjetoEvent(VerObjeto);
+                dlg.OnVerObjeto += new OnVerObjetoEvent(VerObjeto);
                 VentanaAcoplable(dlg, 0, true, State.DockLeft);
             }
         }
@@ -763,11 +767,259 @@ namespace SQLDeveloper
             dlg.OnEditorComentaro += new Modulos.ProyectAdmin.FormProyectEventEditorComentaro(MuestraEditor);
             VentanaAcoplable(dlg, 4, true, State.DockLeft);
         }
-        private void MuestraEditor(Modulos.Editores.EditorGenerico edit,string titulo)
+        private void MuestraEditor(Modulos.Editores.EditorGenerico edit, string titulo)
         {
             CargaEditor();
             VEditor.AgregaEditor(edit, titulo);
             edit.SetFocus();
+        }
+        private string Directorio
+        {
+            get
+            {
+                if (System.IO.Directory.Exists(Application.StartupPath + "\\Colores") == false)
+                    System.IO.Directory.CreateDirectory(Application.StartupPath + "\\Colores");
+                return Application.StartupPath + "\\Colores";
+            }
+        }
+        private void VerificaColorSintaxis()
+        {
+            //verifica si hay archivos de definicion de colores.
+            //sim no hay ninguno, crea uno por default para SQL SERVER
+            string[] Archivos;
+            Archivos = System.IO.Directory.GetFiles(Directorio, "*.xshd");
+            if (Archivos.Length != 0)
+                return;
+            StreamWriter sr = System.IO.File.CreateText(Directorio + "\\SQLSERVER.xshd");
+            #region escritura del archivo
+            sr.WriteLine("<?xml version = \"1.0\"?>");
+            sr.WriteLine("<SyntaxDefinition name = \"SQLSERVER\" extensions = \".sql\">");
+            sr.WriteLine("	<Environment>");
+            sr.WriteLine("		<Default      color=\"#FFFF00\" bgcolor=\"#000000\"/>");
+            sr.WriteLine("		<VRuler       color = \"Blue\"/>");
+            sr.WriteLine("		<Selection    bgcolor = \"LightBlue\"/>");
+            sr.WriteLine("		<LineNumbers  color = \"Teal\" bgcolor = \"SystemColors.Window\"/>");
+            sr.WriteLine("		<InvalidLines color = \"Red\"/>");
+            sr.WriteLine("		<EOLMarkers   color = \"White\"/>");
+            sr.WriteLine("		<SpaceMarkers color = \"#E0E0E5\"/>");
+            sr.WriteLine("		<TabMarkers   color = \"#E0E0E5\"/>");
+            sr.WriteLine("		<CaretMarker  color = \"Yellow\"/>");
+            sr.WriteLine("		<FoldLine     color = \"#808080\" bgcolor=\"Black\"/>");
+            sr.WriteLine("		<FoldMarker   color = \"#808080\" bgcolor=\"White\"/>");
+            sr.WriteLine("	</Environment>");
+            sr.WriteLine("	<Properties>");
+            sr.WriteLine("		<Property name=\"LineComment\" value=\"--\"/>");
+            sr.WriteLine("	</Properties>");
+            sr.WriteLine("	<Digits name = \"Digits\" bold = \"true\" italic = \"false\" color=\"#C0C0C0\"/>");
+            sr.WriteLine("	<RuleSets>");
+            sr.WriteLine("		<RuleSet ignorecase = \"true\">");
+            sr.WriteLine("			<Delimiters>=!&gt;&lt;+-/*%&amp;|^~.}{,;][?:()</Delimiters>");
+            sr.WriteLine("			<Span name =\"LineComment\" bold =\"false\" italic =\"true\" color =\"#CE0000\" stopateol =\"true\">");
+            sr.WriteLine("				<Begin>--</Begin>");
+            sr.WriteLine("			</Span>");
+            sr.WriteLine("			<Span name =\"BlockComment\" bold =\"false\" italic =\"true\" color =\"#FF0000\" stopateol =\"false\">");
+            sr.WriteLine("				<Begin>/*</Begin>");
+            sr.WriteLine("				<End>*/</End>");
+            sr.WriteLine("			</Span>");
+            sr.WriteLine("			<Span name =\"String\" bold =\"true\" italic =\"false\" color =\"#FFFFFF\" stopateol =\"false\">");
+            sr.WriteLine("				<Begin>&quot;</Begin>");
+            sr.WriteLine("				<End>&quot;</End>");
+            sr.WriteLine("			</Span>");
+            sr.WriteLine("			<Span name =\"Character\" bold =\"true\" italic =\"false\" color =\"#FFFFFF\" stopateol =\"true\">");
+            sr.WriteLine("				<Begin>&apos;</Begin>");
+            sr.WriteLine("				<End>&apos;</End>");
+            sr.WriteLine("			</Span>");
+            sr.WriteLine("			<Span name =\"LineCommentC\" bold =\"false\" italic =\"true\" color =\"#C40000\" stopateol =\"true\">");
+            sr.WriteLine("				<Begin>//</Begin>");
+            sr.WriteLine("			</Span>");
+            sr.WriteLine("			<KeyWords name =\"JoinKeywords\" bold=\"true\" italic = \"false\" color=\"#8080FF\">");
+            sr.WriteLine("				<Key word = \"INNER\" />");
+            sr.WriteLine("				<Key word = \"JOIN\" />");
+            sr.WriteLine("				<Key word = \"LEFT\" />");
+            sr.WriteLine("				<Key word = \"RIGHT\" />");
+            sr.WriteLine("				<Key word = \"OUTER\" />");
+            sr.WriteLine("				<Key word = \"UNION\" />");
+            sr.WriteLine("				<Key word = \"ON\" />");
+            sr.WriteLine("				<Key word = \"NOCOUNT\" />");
+            sr.WriteLine("				<Key word = \"OFF\" />");
+            sr.WriteLine("				<Key word = \"FULL\" />");
+            sr.WriteLine("				<Key word = \"ALL\" />");
+            sr.WriteLine("			</KeyWords>");
+            sr.WriteLine("			<KeyWords name =\"AliasKeywords\" bold=\"true\" italic = \"false\" color=\"#0000FF\">");
+            sr.WriteLine("				<Key word = \"AS\" />");
+            sr.WriteLine("			</KeyWords>");
+            sr.WriteLine("			<KeyWords name =\"ComparisonKeywords\" bold=\"true\" italic = \"false\" color=\"#008080\">");
+            sr.WriteLine("				<Key word = \"AND\" />");
+            sr.WriteLine("				<Key word = \"OR\" />");
+            sr.WriteLine("				<Key word = \"LIKE\" />");
+            sr.WriteLine("				<Key word = \"IN\" />");
+            sr.WriteLine("				<Key word = \"EXISTS\" />");
+            sr.WriteLine("				<Key word = \"BETWEEN\" />");
+            sr.WriteLine("			</KeyWords>");
+            sr.WriteLine("			<KeyWords name =\"DestructiveKeywords\" bold=\"true\" italic = \"false\" color=\"Red\">");
+            sr.WriteLine("				<Key word = \"DROP\" />");
+            sr.WriteLine("				<Key word = \"DELETE\" />");
+            sr.WriteLine("				<Key word = \"TRUNCATE\" />");
+            sr.WriteLine("			</KeyWords>");
+            sr.WriteLine("			<KeyWords name =\"SpecializedKeywords\" bold=\"true\" italic = \"false\" color=\"#08D625\">");
+            sr.WriteLine("				<Key word = \"TOP\" />");
+            sr.WriteLine("				<Key word = \"DISTINCT\" />");
+            sr.WriteLine("				<Key word = \"LIMIT\" />");
+            sr.WriteLine("				<Key word = \"OPENDATASOURCE\" />");
+            sr.WriteLine("				<Key word = \"GO\" />");
+            sr.WriteLine("				<Key word = \"USE\" />");
+            sr.WriteLine("			</KeyWords>");
+            sr.WriteLine("			<KeyWords name =\"TransactionKeyWords\" bold=\"true\" italic = \"false\" color=\"#DA800A\">");
+            sr.WriteLine("				<Key word = \"COMMIMT\" />");
+            sr.WriteLine("				<Key word = \"ROLLBACK\" />");
+            sr.WriteLine("				<Key word = \"TRANSACTION\" />");
+            sr.WriteLine("				<Key word = \"TRAN\" />");
+            sr.WriteLine("			</KeyWords>");
+            sr.WriteLine("			<KeyWords name =\"DebugKeyWords\" bold=\"true\" italic = \"false\" color=\"#FF9900\">");
+            sr.WriteLine("				<Key word = \"TRY\" />");
+            sr.WriteLine("				<Key word = \"CATCH\" />");
+            sr.WriteLine("				<Key word = \"RAISERROR\" />");
+            sr.WriteLine("			</KeyWords>");
+            sr.WriteLine("			<KeyWords name =\"CursorKeywords\" bold=\"true\" italic = \"false\" color=\"#00869E\">");
+            sr.WriteLine("				<Key word = \"CURSOR\" />");
+            sr.WriteLine("				<Key word = \"FOR\" />");
+            sr.WriteLine("				<Key word = \"OPEN\" />");
+            sr.WriteLine("				<Key word = \"FETCH\" />");
+            sr.WriteLine("				<Key word = \"NEXT\" />");
+            sr.WriteLine("				<Key word = \"CLOSE\" />");
+            sr.WriteLine("				<Key word = \"DEALLOCATE\" />");
+            sr.WriteLine("				<Key word = \"FOREACH\" />");
+            sr.WriteLine("			</KeyWords>");
+            sr.WriteLine("			<KeyWords name =\"SqlKeywords\" bold=\"true\" italic = \"false\" color=\"#8080FF\">");
+            sr.WriteLine("				<Key word = \"NOT\" />");
+            sr.WriteLine("				<Key word = \"SET\" />");
+            sr.WriteLine("				<Key word = \"DESC\" />");
+            sr.WriteLine("				<Key word = \"ASC\" />");
+            sr.WriteLine("				<Key word = \"EXEC\" />");
+            sr.WriteLine("				<Key word = \"WITH\" />");
+            sr.WriteLine("				<Key word = \"EXECUTE\" />");
+            sr.WriteLine("				<Key word = \"identity\" />");
+            sr.WriteLine("				<Key word = \"NOLOCK\" />");
+            sr.WriteLine("			</KeyWords>");
+            sr.WriteLine("			<KeyWords name =\"SqlActionWords\" bold=\"true\" italic = \"false\" color=\"#0080FF\">");
+            sr.WriteLine("				<Key word = \"INSERT\" />");
+            sr.WriteLine("				<Key word = \"SELECT\" />");
+            sr.WriteLine("				<Key word = \"UPDATE\" />");
+            sr.WriteLine("				<Key word = \"FROM\" />");
+            sr.WriteLine("				<Key word = \"WHERE\" />");
+            sr.WriteLine("				<Key word = \"HAVING\" />");
+            sr.WriteLine("				<Key word = \"GROUP\" />");
+            sr.WriteLine("				<Key word = \"BY\" />");
+            sr.WriteLine("				<Key word = \"ORDER\" />");
+            sr.WriteLine("				<Key word = \"CREATE\" />");
+            sr.WriteLine("				<Key word = \"ALTER\" />");
+            sr.WriteLine("				<Key word = \"ADD\" />");
+            sr.WriteLine("				<Key word = \"NULL\" />");
+            sr.WriteLine("				<Key word = \"INTO\" />");
+            sr.WriteLine("				<Key word = \"VALUES\" />");
+            sr.WriteLine("			</KeyWords>");
+            sr.WriteLine("			<KeyWords name =\"SqlTypes\" bold=\"true\" italic = \"false\" color=\"#80FFFF\">");
+            sr.WriteLine("				<Key word = \"VARCHAR\" />");
+            sr.WriteLine("				<Key word = \"NVARCHAR\" />");
+            sr.WriteLine("				<Key word = \"CHAR\" />");
+            sr.WriteLine("				<Key word = \"NCHAR\" />");
+            sr.WriteLine("				<Key word = \"INT\" />");
+            sr.WriteLine("				<Key word = \"TEXT\" />");
+            sr.WriteLine("				<Key word = \"NTEXT\" />");
+            sr.WriteLine("				<Key word = \"DOUBLE\" />");
+            sr.WriteLine("				<Key word = \"MONEY\" />");
+            sr.WriteLine("				<Key word = \"BIT\" />");
+            sr.WriteLine("				<Key word = \"DATETIME\" />");
+            sr.WriteLine("				<Key word = \"DECIMAL\" />");
+            sr.WriteLine("				<Key word = \"FLOAT\" />");
+            sr.WriteLine("				<Key word = \"DATE\" />");
+            sr.WriteLine("				<Key word = \"DEFAULT\" />");
+            sr.WriteLine("				<Key word = \"real\" />");
+            sr.WriteLine("			</KeyWords>");
+            sr.WriteLine("			<KeyWords name =\"SqlObjects\" bold=\"true\" italic = \"true\" color=\"#FF8000\">");
+            sr.WriteLine("				<Key word = \"TABLE\" />");
+            sr.WriteLine("				<Key word = \"PROC\" />");
+            sr.WriteLine("				<Key word = \"PROCEDURE\" />");
+            sr.WriteLine("				<Key word = \"FUNCTION\" />");
+            sr.WriteLine("				<Key word = \"VIEW\" />");
+            sr.WriteLine("				<Key word = \"TRIGGER\" />");
+            sr.WriteLine("				<Key word = \"INDEX\" />");
+            sr.WriteLine("				<Key word = \"DATABASE\" />");
+            sr.WriteLine("				<Key word = \"TYPE\" />");
+            sr.WriteLine("				<Key word = \"column\" />");
+            sr.WriteLine("			</KeyWords>");
+            sr.WriteLine("			<KeyWords name =\"FlowControlKeyWords\" bold=\"true\" italic = \"true\" color=\"#408080\">");
+            sr.WriteLine("				<Key word = \"IF\" />");
+            sr.WriteLine("				<Key word = \"ELSE\" />");
+            sr.WriteLine("				<Key word = \"CASE\" />");
+            sr.WriteLine("				<Key word = \"WHEN\" />");
+            sr.WriteLine("				<Key word = \"THEN\" />");
+            sr.WriteLine("				<Key word = \"WHILE\" />");
+            sr.WriteLine("				<Key word = \"WAITFOR\" />");
+            sr.WriteLine("				<Key word = \"DELAY\" />");
+            sr.WriteLine("				<Key word = \"RETURN\" />");
+            sr.WriteLine("				<Key word = \"SWITCH\" />");
+            sr.WriteLine("				<Key word = \"BREAK\" />");
+            sr.WriteLine("			</KeyWords>");
+            sr.WriteLine("			<KeyWords name =\"TSql\" bold=\"true\" italic = \"false\" color=\"#339900\">");
+            sr.WriteLine("				<Key word = \"DECLARE\" />");
+            sr.WriteLine("				<Key word = \"BEGIN\" />");
+            sr.WriteLine("				<Key word = \"END\" />");
+            sr.WriteLine("				<Key word = \"#REGION\" />");
+            sr.WriteLine("				<Key word = \"#ENDREGION\" />");
+            sr.WriteLine("			</KeyWords>");
+            sr.WriteLine("			<KeyWords name =\"Punctuation\" bold=\"false\" italic = \"false\" color=\"#FFFFFF\">");
+            sr.WriteLine("				<Key word = \"(\" />");
+            sr.WriteLine("				<Key word = \")\" />");
+            sr.WriteLine("			</KeyWords>");
+            sr.WriteLine("			<KeyWords name =\"Operators\" bold=\"false\" italic = \"false\" color=\"#FFFFFF\">");
+            sr.WriteLine("				<Key word = \"&lt;\" />");
+            sr.WriteLine("				<Key word = \"&gt;\" />");
+            sr.WriteLine("				<Key word = \"=\" />");
+            sr.WriteLine("			</KeyWords>");
+            sr.WriteLine("			<KeyWords name =\"Functions\" bold=\"true\" italic = \"false\" color=\"BlueViolet\">");
+            sr.WriteLine("				<Key word = \"SUBSTRING\" />");
+            sr.WriteLine("				<Key word = \"UPPER\" />");
+            sr.WriteLine("				<Key word = \"LOWER\" />");
+            sr.WriteLine("				<Key word = \"REVERSE\" />");
+            sr.WriteLine("				<Key word = \"REPLACE\" />");
+            sr.WriteLine("				<Key word = \"LTRIM\" />");
+            sr.WriteLine("				<Key word = \"RTRIM\" />");
+            sr.WriteLine("				<Key word = \"CAST\" />");
+            sr.WriteLine("				<Key word = \"CONVERT\" />");
+            sr.WriteLine("				<Key word = \"ISNULL\" />");
+            sr.WriteLine("				<Key word = \"DATEDIFF\" />");
+            sr.WriteLine("				<Key word = \"GETDATE\" />");
+            sr.WriteLine("				<Key word = \"FLOOR\" />");
+            sr.WriteLine("				<Key word = \"openquery\" />");
+            sr.WriteLine("				<Key word = \"dateadd\" />");
+            sr.WriteLine("				<Key word = \"POWER\" />");
+            sr.WriteLine("				<Key word = \"ISDATE\" />");
+            sr.WriteLine("			</KeyWords>");
+            sr.WriteLine("			<KeyWords name =\"GroupByFunctions\" bold=\"true\" italic = \"false\" color=\"#AE1737\">");
+            sr.WriteLine("				<Key word = \"SUM\" />");
+            sr.WriteLine("				<Key word = \"COUNT\" />");
+            sr.WriteLine("				<Key word = \"MAX\" />");
+            sr.WriteLine("				<Key word = \"MIN\" />");
+            sr.WriteLine("				<Key word = \"AVG\" />");
+            sr.WriteLine("			</KeyWords>");
+            sr.WriteLine("			<KeyWords name =\"SignosEspeciales\" bold=\"true\" italic = \"true\" color=\"#FF0000\">");
+            sr.WriteLine("				<Key word = \"->\" />");
+            sr.WriteLine("			</KeyWords>");
+            sr.WriteLine("			<KeyWords name =\"Constantes\" bold=\"false\" italic = \"false\" color=\"#FF8040\">");
+            sr.WriteLine("				<Key word = \"month\" />");
+            sr.WriteLine("				<Key word = \"YEAR\" />");
+            sr.WriteLine("				<Key word = \"DAY\" />");
+            sr.WriteLine("			</KeyWords>");
+            sr.WriteLine("			<KeyWords name =\"SystemVariables\" bold=\"false\" italic = \"false\" color=\"#808080\">");
+            sr.WriteLine("				<Key word = \"@@TRANCOUNT\" />");
+            sr.WriteLine("				<Key word = \"@@Error\" />");
+            sr.WriteLine("			</KeyWords>");
+            sr.WriteLine("		</RuleSet>");
+            sr.WriteLine("	</RuleSets>");
+            sr.WriteLine("</SyntaxDefinition>");
+            #endregion
+            sr.Close();
         }
     }
 }
