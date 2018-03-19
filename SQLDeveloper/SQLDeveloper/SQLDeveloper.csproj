@@ -644,6 +644,8 @@
     </Compile>
     <Compile Include="Modulos\Inteliences\CInteliencesObject.cs" />
     <Compile Include="Modulos\Inteliences\IDataBaseChild.cs" />
+    <Compile Include="Modulos\Inteliences\TextAnaliser\CAlias.cs" />
+    <Compile Include="Modulos\Inteliences\TextAnaliser\CAliasManager.cs" />
     <Compile Include="Modulos\Inteliences\TextAnaliser\CAnaliseManager.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -1389,6 +1391,10 @@
     <ProjectReference Include="..\AnalizadorLexico\AnalizadorLexico.csproj">
       <Project>{c12aabae-4850-414e-a903-efa0da9a5665}</Project>
       <Name>AnalizadorLexico</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Compiler\Compiler.csproj">
+      <Project>{12f74cbc-e016-47d9-91fb-2c73e118bb45}</Project>
+      <Name>Compiler</Name>
     </ProjectReference>
     <ProjectReference Include="..\GridControl\GridControl.csproj">
       <Project>{F5F29C55-8FF0-4C14-AA74-6B9F801A4B18}</Project>

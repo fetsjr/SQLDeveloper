@@ -15,7 +15,7 @@ namespace SQLDeveloper.Modulos.Buscador
     {
         public event OnFiltroEvent OnFiltro;
         private bool OperadorEnable = true;
-        public FormFiltro(bool operadores=true)
+        public FormFiltro(bool operadores = true)
         {
             OperadorEnable = operadores;
             InitializeComponent();
@@ -28,25 +28,31 @@ namespace SQLDeveloper.Modulos.Buscador
         }
         private void CargaTipos()
         {
-            ComboTipo.Items.Clear();
-            ComboTipo.Items.Add(new CTipoBusqueda("Todos", MotorDB.EnumTipoObjeto.NONE));
-            ComboTipo.Items.Add(new CTipoBusqueda("Tablas", MotorDB.EnumTipoObjeto.TABLE));
-            ComboTipo.Items.Add(new CTipoBusqueda("Type Table", MotorDB.EnumTipoObjeto.TYPE_TABLE));
-            ComboTipo.Items.Add(new CTipoBusqueda("Vistas", MotorDB.EnumTipoObjeto.VIEW));
-            ComboTipo.Items.Add(new CTipoBusqueda("Procediientos almacenados", MotorDB.EnumTipoObjeto.PROCEDURE));
-            ComboTipo.Items.Add(new CTipoBusqueda("Funciones", MotorDB.EnumTipoObjeto.FUNCION));
-            ComboTipo.Items.Add(new CTipoBusqueda("Trigers", MotorDB.EnumTipoObjeto.TRIGER));
-            ComboTipo.Items.Add(new CTipoBusqueda("Buscar campos en objetos", MotorDB.EnumTipoObjeto.CAMPO));
-            ComboTipo.Items.Add(new CTipoBusqueda("Buscar en el codigo", MotorDB.EnumTipoObjeto.CODE));
-            ComboTipo.SelectedIndex = 0;
+            if (ComboTipo.Items.Count == 0)
+            {
+                ComboTipo.Items.Clear();
+                ComboTipo.Items.Add(new CTipoBusqueda("Todos", MotorDB.EnumTipoObjeto.NONE));
+                ComboTipo.Items.Add(new CTipoBusqueda("Tablas", MotorDB.EnumTipoObjeto.TABLE));
+                ComboTipo.Items.Add(new CTipoBusqueda("Type Table", MotorDB.EnumTipoObjeto.TYPE_TABLE));
+                ComboTipo.Items.Add(new CTipoBusqueda("Vistas", MotorDB.EnumTipoObjeto.VIEW));
+                ComboTipo.Items.Add(new CTipoBusqueda("Procediientos almacenados", MotorDB.EnumTipoObjeto.PROCEDURE));
+                ComboTipo.Items.Add(new CTipoBusqueda("Funciones", MotorDB.EnumTipoObjeto.FUNCION));
+                ComboTipo.Items.Add(new CTipoBusqueda("Trigers", MotorDB.EnumTipoObjeto.TRIGER));
+                ComboTipo.Items.Add(new CTipoBusqueda("Buscar campos en objetos", MotorDB.EnumTipoObjeto.CAMPO));
+                ComboTipo.Items.Add(new CTipoBusqueda("Buscar en el codigo", MotorDB.EnumTipoObjeto.CODE));
+                ComboTipo.SelectedIndex = 0;
+            }
 
         }
         private void cargaOperadores()
         {
-            ComboOperador.Items.Clear();
-            ComboOperador.Items.Add(OPERADOR.AND);
-            ComboOperador.Items.Add(OPERADOR.OR);
-            ComboOperador.Items.Add(OPERADOR.NOT);
+            if (ComboOperador.Items.Count == 0)
+            {
+                ComboOperador.Items.Clear();
+                ComboOperador.Items.Add(OPERADOR.AND);
+                ComboOperador.Items.Add(OPERADOR.OR);
+                ComboOperador.Items.Add(OPERADOR.NOT);
+            }
             Loperador.Visible = OperadorEnable;
             ComboOperador.Visible = OperadorEnable;
         }
@@ -67,7 +73,7 @@ namespace SQLDeveloper.Modulos.Buscador
             OPERADOR operador = OPERADOR.NONE;
             if (OperadorEnable)
             {
-                if (ComboOperador.SelectedItem==null)
+                if (ComboOperador.SelectedItem == null)
                 {
                     MessageBox.Show("Falta el operador de busqueda", "Buscar", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -79,6 +85,44 @@ namespace SQLDeveloper.Modulos.Buscador
                 OnFiltro(filtro);
             DialogResult = System.Windows.Forms.DialogResult.OK;
             Close();
+        }
+        public CFiltro Filtro
+        {
+            set
+            {
+                if (value == null)
+                    return;
+                if (value.operador != OPERADOR.NONE)
+                {
+                    if (ComboOperador.Items.Count == 0)
+                    {
+                        cargaOperadores();
+                    }
+                    for (int i = 0; i < ComboOperador.Items.Count; i++)
+                    {
+                        OPERADOR oper = (OPERADOR)ComboOperador.Items[i];
+                        if (value.operador == oper)
+                        {
+                            ComboOperador.SelectedIndex = i;
+                            break;
+                        }
+
+                    }
+                }
+                TNombre.Text = value.Cadena;
+                if (ComboTipo.Items.Count == 0)
+                    CargaTipos();
+                for (int i = 0; i < ComboTipo.Items.Count; i++)
+                {
+                    CTipoBusqueda tp = (CTipoBusqueda)ComboTipo.Items[i];
+                    if (value.Tipo == tp.Tipo)
+                    {
+                        ComboTipo.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
+
         }
 
     }

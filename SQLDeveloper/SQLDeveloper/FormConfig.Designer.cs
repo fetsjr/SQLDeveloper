@@ -48,6 +48,7 @@
             this.ColorNuevaLinea = new SQLDeveloper.Modulos.Herramientas.GestorColors.CComponetColor();
             this.ColorDiferenciaLinea = new SQLDeveloper.Modulos.Herramientas.GestorColors.CComponetColor();
             this.configuradorApp1 = new SQLDeveloper.ConfiguradorApp(this.components);
+            this.ChCerrar = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TSensivilidad)).BeginInit();
@@ -251,12 +252,24 @@
             this.ColorDiferenciaLinea.TabIndex = 0;
             this.ColorDiferenciaLinea.OnColorCahnge += new SQLDeveloper.Modulos.Herramientas.GestorColors.OnColorCahngeEvent(this.ColorDiferenciaLinea_OnColorCahnge);
             // 
+            // ChCerrar
+            // 
+            this.ChCerrar.AutoSize = true;
+            this.ChCerrar.Location = new System.Drawing.Point(218, 22);
+            this.ChCerrar.Name = "ChCerrar";
+            this.ChCerrar.Size = new System.Drawing.Size(216, 17);
+            this.ChCerrar.TabIndex = 3;
+            this.ChCerrar.Text = "Pedir confirmación al cerrar la aplicación";
+            this.ChCerrar.UseVisualStyleBackColor = true;
+            this.ChCerrar.CheckedChanged += new System.EventHandler(this.ChCerrar_CheckedChanged);
+            // 
             // FormConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.BCerrar;
             this.ClientSize = new System.Drawing.Size(476, 404);
+            this.Controls.Add(this.ChCerrar);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.CHConexionInicio);
             this.Controls.Add(this.panel1);
@@ -294,5 +307,6 @@
         private Modulos.Herramientas.GestorColors.CComponetColor ColoLetraLineaDiferente;
         private System.Windows.Forms.NumericUpDown TSensivilidad;
         private System.Windows.Forms.CheckBox CHCaseSensibility;
+        private System.Windows.Forms.CheckBox ChCerrar;
     }
 }

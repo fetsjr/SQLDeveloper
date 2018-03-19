@@ -7,13 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
 
-namespace Lexer
+namespace Compiler.Lexer
 {
     /// <summary>
     /// componente que realiza todo el analisi lexico de una cadena cualquiera
     /// </summary>
     public partial class Lecxer : Component, IEnumerable
     {
+        private int IndexActual; //cursor que siempre va a estar apuntando al lexema siguiente
         private static Dictionary<PALABRASRESERVADAS, string> PalabrasReservadas;
         #region Codigo generado por VS
         public Lecxer()
@@ -41,6 +42,28 @@ namespace Lexer
         #endregion
         #region Propiedades
         /// <summary>
+        /// regresa true si el apuntador de lexemas esta al inicio
+        /// </summary>
+        public bool CursorInicio
+        {
+            get
+            {
+                return IndexActual == 0;
+            }
+        }
+        /// <summary>
+        /// regresa true si el apuntador de lexemas esta apuntando al ultimo lexema
+        /// </summary>
+        public bool CursorFinal
+        {
+            get
+            {
+                if (lexemas == null)
+                    return false;
+                return IndexActual==lexemas.Count()-1;
+            }
+        }
+        /// <summary>
         /// Asigna o regresa la cadena que hay que separar en lexemas
         /// </summary>
         public string Cadena
@@ -57,6 +80,7 @@ namespace Lexer
                 FLongitudCadena = FCadena.Length;
                 Analiza();
                 BuscaPalabrasReservadas();
+                AsignaIndices();
             }
         }
         /// <summary>
@@ -168,6 +192,8 @@ namespace Lexer
                     return true;
                 case '"':
                     return true;
+                case '#':
+                    return true;
             }
             return false;
         }
@@ -234,6 +260,8 @@ namespace Lexer
                     return LEXTIPE.RESTA;
                 case '"':
                     return LEXTIPE.COMILLADOBLE;
+                case '#':
+                    return  LEXTIPE.GATO;
             }
             return LEXTIPE.INDEFINIDO;
         }
@@ -303,6 +331,7 @@ namespace Lexer
         /// </summary>
         private void Analiza()
         {
+            IndexActual = 0; //siempre se reinicia
             lexemas.Clear();
             posicion = 0;
             nLinea = 0;
@@ -694,7 +723,7 @@ namespace Lexer
                             #region SQLVARIABLE @nombre o SQLVARIABLESISTEMA @@nombre
                             case LEXTIPE.ARROBA:
                                 //el siguiente caracter debe de ser un caracter
-                                if(EsLetra(FCadena[posicion+1]))
+                                if (EsLetra(FCadena[posicion + 1]))
                                 {
                                     posicion++;
                                     while ((posicion < LongitudCadena) && (EsLetra(FCadena[posicion]) || EsDigito(FCadena[posicion])))
@@ -711,7 +740,7 @@ namespace Lexer
                                     lexemas.Add(lex);
                                     continue;
                                 }
-                                else if(FCadena[posicion+1]=='@')
+                                else if (FCadena[posicion + 1] == '@')
                                 {
                                     posicion++;
                                     lex.Texto += FCadena[posicion].ToString();
@@ -732,6 +761,25 @@ namespace Lexer
 
                                 }
                                 break;
+                            case LEXTIPE.GATO:
+                                if (EsLetra(FCadena[posicion + 1]))
+                                {
+                                    posicion++;
+                                    while ((posicion < LongitudCadena) && (EsLetra(FCadena[posicion]) || EsDigito(FCadena[posicion])))
+                                    {
+                                        lex.Texto += FCadena[posicion].ToString();
+                                        posicion++;
+                                        posLine++;
+                                    }
+                                    lex.Tipo = LEXTIPE.TABLATEMPORAL;
+                                    lex.PosicionFinal.PosicionLinea = posLine - 1;
+                                    lex.PosicionFinal.Linea = nLinea;
+                                    lex.PosicionFinal.PosicionGeneral = posicion - 1;
+                                    //lo agrego a la lista
+                                    lexemas.Add(lex);
+                                    continue;
+                                }
+                                break;
                             #endregion
                         }
                     }
@@ -742,15 +790,19 @@ namespace Lexer
                 }
                 #endregion
                 #region separadores
-                else if (FCadena[posicion] == '\n')
+                else if (FCadena[posicion] == '\r' && FCadena[posicion+1] == '\n')
                 {
                     //es una nueva linea
                     lex = new Lexema();
+                    //posicion inicial
                     lex.PosicionInicial.PosicionLinea = posLine;
                     lex.PosicionInicial.Linea = nLinea;
                     lex.PosicionInicial.PosicionGeneral = posicion;
-                    lex.Texto += FCadena[posicion].ToString();
+                    posicion++;
+                    posLine++;
+                    lex.Texto += "\r\n";
                     lex.Tipo = LEXTIPE.FINLINEA;
+                    //posicion final
                     lex.PosicionFinal.PosicionLinea = posLine;
                     lex.PosicionFinal.Linea = nLinea;
                     lex.PosicionFinal.PosicionGeneral = posicion;
@@ -759,12 +811,6 @@ namespace Lexer
                     posicion++;
                     posLine = 0;
                     nLinea++;
-                }
-                else if (FCadena[posicion] == '\r')
-                {
-                    //solo loignoro
-                    posicion++;
-                    posLine++;
                 }
                 else if (EsSeparador(FCadena[posicion]))
                 {
@@ -780,9 +826,9 @@ namespace Lexer
                         posLine++;
                     }
                     lex.Tipo = LEXTIPE.SEPARADOR;
-                    lex.PosicionFinal.PosicionLinea = posLine;
+                    lex.PosicionFinal.PosicionLinea = posLine-1;
                     lex.PosicionFinal.Linea = nLinea;
-                    lex.PosicionFinal.PosicionGeneral = posicion;
+                    lex.PosicionFinal.PosicionGeneral = posicion-1;
                     //lo agrego a la lista
                     lexemas.Add(lex);
                 }
@@ -824,7 +870,14 @@ namespace Lexer
                 }
             }
         }
+        private void AsignaIndices()
+        {
+            for(int i=0; i<lexemas.Count();i++)
+            {
+                lexemas[i].Index = i;
+            }
 
+        }
         #endregion
         #region Funciones publicas
         /// <summary>
@@ -859,7 +912,9 @@ namespace Lexer
             int i = 0;
             foreach (Lexema obj in lexemas)
             {
-                if (obj.PosicionInicial.PosicionGeneral >= pos && obj.PosicionFinal.PosicionGeneral <= pos)
+                if (obj.PosicionInicial.Linea == 42)
+                    i = i;
+                if (obj.PosicionInicial.PosicionGeneral <= pos && obj.PosicionFinal.PosicionGeneral >= pos)
                 {
                     return i;
                 }
@@ -868,6 +923,152 @@ namespace Lexer
             //si llega hasta aqui no se encontro
             return -1;
         }
+        #region Manejo de items
+        /// <summary>
+        /// reinicial el apuntador de lexemas y regresa el primer lexema que no sea separador o comentario o null si no encuentra alguno
+        /// </summary>
+        /// <returns></returns>
+        public Lexema DamePrimerLexemaUtil()
+        {
+            ReiniciaCursor();
+            return DameSiguienteLexemaUtil();
+        }
+        /// <summary>
+        /// reinicia el apuntador de lexemas
+        /// </summary>
+        public void ReiniciaCursor()
+        {
+            IndexActual = 0;
+        }
+        /// <summary>
+        /// mueve el apuntador de lexemas a la ultima posicion
+        /// </summary>
+        public void MueveCursosAlFinal()
+        {
+            IndexActual = lexemas.Count() - 1;
+        }
+        /// <summary>
+        /// Regresa el primer lexema que no sea separador o comentario o null si no encuentra alguno
+        /// </summary>
+        /// <returns></returns>
+        public Lexema DameSiguienteLexemaUtil()
+        {
+            while (IndexActual < lexemas.Count())
+            {
+                Lexema lex = lexemas[IndexActual];
+                IndexActual++;
+                if (lex.Tipo != LEXTIPE.SEPARADOR && lex.Tipo != LEXTIPE.FINLINEA && lex.Tipo != LEXTIPE.COMENTARIO)
+                    return lex;
+            }
+            return null;
+
+        }
+        /// <summary>
+        /// Regresa el lexema anterior a la posicion actual del apuntador ignorando espacios en blanco y comentarios
+        /// </summary>
+        /// <returns></returns>
+        public Lexema DameLexemaUtilAnterior()
+        {
+            if (IndexActual == 0)
+                return null;
+            do
+            {
+                IndexActual--;
+                Lexema lex = lexemas[IndexActual];
+                if (lex.Tipo != LEXTIPE.SEPARADOR && lex.Tipo != LEXTIPE.FINLINEA && lex.Tipo != LEXTIPE.COMENTARIO)
+                    return lex;
+
+            } while (IndexActual > 0);
+            return null;
+        }
+        /// <summary>
+        /// regresa el primer lexema que corresponda con el tipo. Si no encuentra regresa null y no afecta el apuntador de lexemas
+        /// </summary>
+        /// <param name="tipo"></param>
+        /// <returns></returns>
+        public Lexema BuscaSiguienteLexema(LEXTIPE tipo)
+        {
+            //guardo la posicion actual
+            int IndexActualOrg = IndexActual; 
+            while (IndexActual < lexemas.Count())
+            {
+                Lexema lex = lexemas[IndexActual];
+                IndexActual++;
+                if (lex.Tipo == tipo)
+                    return lex;
+            }
+            //restauro la posicion actual 
+            IndexActual = IndexActualOrg;
+            return null;
+        }
+        /// <summary>
+        /// regresa el lexema anterior que corresponda al tipo. Si no encuentra regresa null y no afecta el apuntador de lexemas
+        /// </summary>
+        /// <param name="tipo"></param>
+        /// <returns></returns>
+        public Lexema BuscaLexemaAnterior(LEXTIPE tipo)
+        {
+            //guardo la posicion actual
+            int IndexActualOrg = IndexActual;
+            while (IndexActual >0)
+            {
+                IndexActual--;
+                Lexema lex = lexemas[IndexActual];
+                if (lex.Tipo == tipo)
+                    return lex;
+            }
+            //restauro la posicion actual 
+            IndexActual = IndexActualOrg;
+            return null;            
+        }
+        /// <summary>
+        /// regresa la palabra reservada buscada. si no la encuentra regresa null y no afecta el puntador de lexemas
+        /// </summary>
+        /// <param name="palabra"></param>
+        /// <returns></returns>
+        public Lexema BuscaSiguientePalabraReservada(PALABRASRESERVADAS palabra)
+        {
+            int IndexActualOrg = IndexActual;
+            while (IndexActual < lexemas.Count())
+            {
+                Lexema lex = lexemas[IndexActual];
+                IndexActual++;
+                if (lex.Tipo == LEXTIPE.PALABRARESERVADA && lex.PalabraReservada == palabra)
+                    return lex;
+            }
+            //restauro la posicion actual 
+            IndexActual = IndexActualOrg;
+            return null;
+
+        }
+        /// <summary>
+        /// regresa la palabra reservada buscada. si no la encuentra regresa null y no mueve el apuntador de lexemas
+        /// </summary>
+        /// <param name="palabra"></param>
+        /// <returns></returns>
+        public Lexema BuscaPalabraReservadaAnterior(PALABRASRESERVADAS palabra)
+        {
+            //guardo la posicion actual
+            int IndexActualOrg = IndexActual;
+            while (IndexActual > 0)
+            {
+                IndexActual--;
+                Lexema lex = lexemas[IndexActual];
+                if (lex.Tipo ==  LEXTIPE.PALABRARESERVADA && lex.PalabraReservada== palabra)
+                    return lex;
+            }
+            //restauro la posicion actual 
+            IndexActual = IndexActualOrg;
+            return null;
+        }
+        /// <summary>
+        /// Regresa una posicion el apuntador de lexemas
+        /// </summary>
+        public void DesechaLexema()
+        {
+            IndexActual--;
+        }
+        #endregion
         #endregion
     }
 }

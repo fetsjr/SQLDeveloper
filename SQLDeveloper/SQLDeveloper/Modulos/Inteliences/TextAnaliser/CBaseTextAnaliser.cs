@@ -11,6 +11,9 @@ namespace SQLDeveloper.Modulos.Inteliences.TextAnaliser
 {
     public partial class CBaseTextAnaliser : Component, ITextAnaliser
     {
+        private bool Consultando=false;
+        private DateTime ProximoAnalisis; 
+        protected SQLDeveloper.Modulos.Editores.TextEdit.Buffer.CBuffer DbBuffer = null;
         private string FTextoInterno = "";
         protected bool AnalisisActivo = false; //variable que indica que el anasisis esta activo
         protected List<CSimbolo> TablaSimbolos = new List<CSimbolo>();
@@ -32,6 +35,8 @@ namespace SQLDeveloper.Modulos.Inteliences.TextAnaliser
         private void IniciaAnalisis()
         {
             AnalisisActivo = true;
+            //con esto obligo a que haga el analisi
+            ProximoAnalisis = System.DateTime.Now.AddSeconds( - 1);
             if (!backgroundWorker1.IsBusy)
                 backgroundWorker1.RunWorkerAsync();
         }
@@ -53,9 +58,14 @@ namespace SQLDeveloper.Modulos.Inteliences.TextAnaliser
             }
             return l;
         }
-
+        protected virtual void BuscaTablas()
+        {
+            // hay que sobreescribirla
+        }
         public List<string> GetTablesNames()
         {
+            Consultando = true;
+            BuscaTablas();
             List<string> l = new List<string>();
             foreach (CSimbolo obj in TablaSimbolos)
             {
@@ -64,11 +74,18 @@ namespace SQLDeveloper.Modulos.Inteliences.TextAnaliser
                     l.Add(obj.Name);
                 }
             }
+            Consultando = false;
             return l;
+        }
+        protected virtual void BuscaCamposTablas()
+        {
+            // hay que sobreescribirla
         }
 
         public List<string> GetTableFields(string tabla)
         {
+            Consultando = true;
+            BuscaCamposTablas();
             List<string> l = new List<string>();
             foreach (CSimbolo obj in TablaSimbolos)
             {
@@ -77,6 +94,22 @@ namespace SQLDeveloper.Modulos.Inteliences.TextAnaliser
                     l.Add(obj.Name);
                 }
             }
+            Consultando = false;
+            return l;
+        }
+        public List<string> GetAllFields()
+        {
+            Consultando = true;
+            BuscaCamposTablas();
+            List<string> l = new List<string>();
+            foreach (CSimbolo obj in TablaSimbolos)
+            {
+                if (obj.Tipo == TIPO_SIMBOLO.CAMPO)
+                {
+                    l.Add(obj.Name);
+                }
+            }
+            Consultando = false;
             return l;
         }
 
@@ -104,10 +137,10 @@ namespace SQLDeveloper.Modulos.Inteliences.TextAnaliser
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             string texto = "";
-            DateTime hora = DateTime.Now;
+            ProximoAnalisis = DateTime.Now;
             do
             {
-                if (DateTime.Now >= hora)
+                if (DateTime.Now >= ProximoAnalisis)
                 {
                     //hay que analisar el texto
                     try
@@ -115,7 +148,7 @@ namespace SQLDeveloper.Modulos.Inteliences.TextAnaliser
                         //me traigo el codigo que se tiene actualmente en el editor
                         FTextoInterno = null;
                         backgroundWorker1.ReportProgress(-1);
-                        while (FTextoInterno==null)
+                        while (FTextoInterno == null || Consultando==true)
                             Thread.Sleep(1000);
                         texto = FTextoInterno;// TCodigo.Text;
                         //limpio la tabla de simbolos
@@ -126,7 +159,7 @@ namespace SQLDeveloper.Modulos.Inteliences.TextAnaliser
                     {
                         ;//no hace nada
                     }
-                    hora = DateTime.Now.AddMinutes(TiempoRefresh);
+                    ProximoAnalisis = DateTime.Now.AddMinutes(TiempoRefresh);
                 }
                 Thread.Sleep(1000); // se duerme un segundo
             }
@@ -161,6 +194,14 @@ namespace SQLDeveloper.Modulos.Inteliences.TextAnaliser
             {
                 FTextoInterno = TCodigo.Text;
             }
+        }
+        public virtual string GetSincronizadorAnterior(int offset)
+        {
+            return "";
+        }
+        public void SetBuffer(SQLDeveloper.Modulos.Editores.TextEdit.Buffer.CBuffer buffer)
+        {
+            DbBuffer = buffer;
         }
     }
 }

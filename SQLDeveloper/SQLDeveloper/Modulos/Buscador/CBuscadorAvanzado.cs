@@ -90,6 +90,25 @@ namespace SQLDeveloper.Modulos.Buscador
             }
         }
         /// <summary>
+        /// modifica el filtro 1 por las caracteristicas del filtro 2
+        /// </summary>
+        /// <param name="filtro"></param>
+        /// <param name="filtro2"></param>
+        public void ActualizaFiltro(CFiltro filtro, CFiltro filtro2)
+        {
+            if (Filtros.Count() == 0)
+                return;
+            var r = (from x in Filtros.AsEnumerable() where x == filtro select x).Single();
+            if (r != null)
+            {
+                r.Cadena = filtro2.Cadena;
+                r.operador = filtro2.operador;
+                r.Tipo = filtro2.Tipo;
+                FiltroChange();
+            }
+
+        }
+        /// <summary>
         /// Quita un filtro de la busqueda
         /// </summary>
         /// <param name="filtro"></param>
@@ -255,18 +274,19 @@ namespace SQLDeveloper.Modulos.Buscador
             //lo ejecuto en paralelo para incrementar la velocidad
 
             //esto es con programacion en paralelo -> Es rapido
-            //Parallel.ForEach(Bases, (motor) =>
-            //    {
-            //        BuscaEnMotor(motor);
+            Parallel.ForEach(Bases, (motor) =>
+                {
+                    BuscaEnMotor(motor);
 
-            //    }
-            //    );
+                }
+                );
             
             //y esto es con tareas que tambien se ejecutan en paralelo pero son mucho mas rapidas
-            foreach (MotorDB.IMotorDB motor in Bases)
-            {
-                Task t = Task.Factory.StartNew(() => BuscaEnMotor(motor));
-            }
+            //pero no se espera a que terminen las consultas porque las hace en segundo plano
+            //foreach (MotorDB.IMotorDB motor in Bases)
+            //{
+            //    Task t = Task.Factory.StartNew(() => BuscaEnMotor(motor));
+            //}
         }
     }
 }
