@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLDeveloper", "SQLDeveloper\SQLDeveloper.csproj", "{A94BE1F9-9755-4929-8475-7F6CCB6040E2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FFB7B78C-45E4-40E4-9AB9-60E3A9176986} = {FFB7B78C-45E4-40E4-9AB9-60E3A9176986}
+		{36F387EA-F5E7-43B6-A645-C74110247B73} = {36F387EA-F5E7-43B6-A645-C74110247B73}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorDB", "MotorDB\MotorDB.csproj", "{FFB7B78C-45E4-40E4-9AB9-60E3A9176986}"
 EndProject
@@ -12,6 +16,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{F692E151-1146-48E5-B3C1-E2101D20A4CE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridControl", "GridControl\GridControl.csproj", "{F5F29C55-8FF0-4C14-AA74-6B9F801A4B18}"
+	ProjectSection(ProjectDependencies) = postProject
+		{36F387EA-F5E7-43B6-A645-C74110247B73} = {36F387EA-F5E7-43B6-A645-C74110247B73}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExportadorExcel", "ExportadorExcel\ExportadorExcel.csproj", "{36F387EA-F5E7-43B6-A645-C74110247B73}"
 EndProject
@@ -72,5 +79,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {96DAA8F5-78AE-42FB-99AF-5B1A355C05A2}
 	EndGlobalSection
 EndGlobal
