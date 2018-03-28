@@ -41,6 +41,8 @@ namespace SQLDeveloper.Modulos.Comparador {
             set
             {
                 FTexto1 = value;
+                if (FTexto1 == null)
+                    return;
                 string[] l1 = FTexto1.Split('\n');
                 foreach (string s in l1)
                 {
@@ -65,6 +67,8 @@ namespace SQLDeveloper.Modulos.Comparador {
             set
             {
                 FTexto2 = value;
+                if (FTexto2 == null)
+                    return;
                 string[] l1 = FTexto2.Split('\n');
                 foreach (string s in l1)
                 {

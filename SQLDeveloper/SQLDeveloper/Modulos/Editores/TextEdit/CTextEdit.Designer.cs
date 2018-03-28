@@ -57,6 +57,8 @@
             this.BNumeroLinea = new System.Windows.Forms.ToolStripButton();
             this.BTabular = new System.Windows.Forms.ToolStripButton();
             this.TCodigo = new ICSharpCode.TextEditor.TextEditorControl();
+            this.MenuCodigo = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.MenuDeficion = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.LArchivo = new System.Windows.Forms.ToolStripStatusLabel();
@@ -68,8 +70,12 @@
             this.BkConsulta = new System.ComponentModel.BackgroundWorker();
             this.TimerFolders = new System.Windows.Forms.Timer(this.components);
             this.cInteliences1 = new SQLDeveloper.Modulos.Inteliences.CInteliences(this.components);
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.lecxer1 = new Compiler.Lexer.Lecxer(this.components);
+            this.BVariables = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.toolStrip2.SuspendLayout();
+            this.MenuCodigo.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Contenedor)).BeginInit();
             this.Contenedor.Panel1.SuspendLayout();
@@ -165,7 +171,8 @@
             this.toolStripSeparator4,
             this.BBuscar,
             this.BNumeroLinea,
-            this.BTabular});
+            this.BTabular,
+            this.BVariables});
             this.toolStrip2.Location = new System.Drawing.Point(0, 0);
             this.toolStrip2.Name = "toolStrip2";
             this.toolStrip2.Size = new System.Drawing.Size(939, 25);
@@ -317,6 +324,7 @@
             // TCodigo
             // 
             this.TCodigo.AllowDrop = true;
+            this.TCodigo.ContextMenuStrip = this.MenuCodigo;
             this.TCodigo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TCodigo.IsReadOnly = false;
             this.TCodigo.Location = new System.Drawing.Point(0, 0);
@@ -326,6 +334,21 @@
             this.TCodigo.Size = new System.Drawing.Size(939, 207);
             this.TCodigo.TabIndex = 5;
             this.TCodigo.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TCodigo_KeyUp);
+            // 
+            // MenuCodigo
+            // 
+            this.MenuCodigo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuDeficion});
+            this.MenuCodigo.Name = "MenuCodigo";
+            this.MenuCodigo.Size = new System.Drawing.Size(159, 26);
+            // 
+            // MenuDeficion
+            // 
+            this.MenuDeficion.Image = ((System.Drawing.Image)(resources.GetObject("MenuDeficion.Image")));
+            this.MenuDeficion.Name = "MenuDeficion";
+            this.MenuDeficion.Size = new System.Drawing.Size(158, 22);
+            this.MenuDeficion.Text = "Ir a la definicion";
+            this.MenuDeficion.Click += new System.EventHandler(this.MenuDeficion_Click);
             // 
             // statusStrip1
             // 
@@ -426,6 +449,25 @@
             this.cInteliences1.FireAt = 0;
             this.cInteliences1.OnParentForm += new SQLDeveloper.Modulos.Inteliences.OnParentFormEvent(this.cInteliences1_OnParentForm);
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
+            // lecxer1
+            // 
+            this.lecxer1.Cadena = "";
+            // 
+            // BVariables
+            // 
+            this.BVariables.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BVariables.Image = ((System.Drawing.Image)(resources.GetObject("BVariables.Image")));
+            this.BVariables.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BVariables.Name = "BVariables";
+            this.BVariables.Size = new System.Drawing.Size(23, 22);
+            this.BVariables.Text = "Ver Variables";
+            this.BVariables.Click += new System.EventHandler(this.BVariables_Click);
+            // 
             // CTextEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -442,6 +484,7 @@
             this.toolStrip1.PerformLayout();
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
+            this.MenuCodigo.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.Contenedor.Panel1.ResumeLayout(false);
@@ -493,5 +536,10 @@
         private System.Windows.Forms.ToolStripButton BTabular;
         private Inteliences.CInteliences cInteliences1;
         private System.Windows.Forms.ToolStripButton BCambiarConexion;
+        private System.Windows.Forms.ContextMenuStrip MenuCodigo;
+        private System.Windows.Forms.ToolStripMenuItem MenuDeficion;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private Compiler.Lexer.Lecxer lecxer1;
+        private System.Windows.Forms.ToolStripButton BVariables;
     }
 }

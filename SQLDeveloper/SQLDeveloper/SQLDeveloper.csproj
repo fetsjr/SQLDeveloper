@@ -468,6 +468,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModeloNet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Modulos\DBComparador\ComparadorDB.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modulos\DBComparador\ComparadorDB.Designer.cs">
+      <DependentUpon>ComparadorDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modulos\DBComparador\Cprogreso.cs" />
+    <Compile Include="Modulos\DBComparador\EnumVer.cs" />
     <Compile Include="Modulos\Editores\TextEdit\BlockAnaliser\BlockAnaliser.cs" />
     <Compile Include="Modulos\Editores\TextEdit\BlockAnaliser\CBlock.cs" />
     <Compile Include="Modulos\Editores\TextEdit\BlockAnaliser\CBloqueMach.cs" />
@@ -957,6 +965,27 @@
       <DependentUpon>FormTrigger.cs</DependentUpon>
     </Compile>
     <Compile Include="Modulos\Visores\Trrigers\NodoTabla.cs" />
+    <Compile Include="Modulos\Visores\Variables\CDefinicionCampo.cs" />
+    <Compile Include="Modulos\Visores\Variables\CDefinicionTabla.cs" />
+    <Compile Include="Modulos\Visores\Variables\CDefinicionVariable.cs" />
+    <Compile Include="Modulos\Visores\Variables\FormVariables.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modulos\Visores\Variables\FormVariables.Designer.cs">
+      <DependentUpon>FormVariables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modulos\Visores\Variables\PropiedadesTabla.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modulos\Visores\Variables\PropiedadesTabla.Designer.cs">
+      <DependentUpon>PropiedadesTabla.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modulos\Visores\Variables\PropiedadesVariable.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modulos\Visores\Variables\PropiedadesVariable.Designer.cs">
+      <DependentUpon>PropiedadesVariable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Modulos\Visores\Vista\FormVista.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1120,6 +1149,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Modulos\CSharpLibaryGenerator\Generadores\GeneradorCSharp.resx">
       <DependentUpon>GeneradorCSharp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modulos\DBComparador\ComparadorDB.resx">
+      <DependentUpon>ComparadorDB.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modulos\Inteliences\Buffer\CBuffer.resx">
       <DependentUpon>CBuffer.cs</DependentUpon>
@@ -1310,6 +1342,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Modulos\Visores\Trrigers\FormTrigger.resx">
       <DependentUpon>FormTrigger.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modulos\Visores\Variables\FormVariables.resx">
+      <DependentUpon>FormVariables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modulos\Visores\Variables\PropiedadesTabla.resx">
+      <DependentUpon>PropiedadesTabla.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modulos\Visores\Variables\PropiedadesVariable.resx">
+      <DependentUpon>PropiedadesVariable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modulos\Visores\Vista\FormVista.resx">
       <DependentUpon>FormVista.cs</DependentUpon>

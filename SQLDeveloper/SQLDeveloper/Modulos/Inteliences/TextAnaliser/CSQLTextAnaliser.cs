@@ -1045,6 +1045,14 @@ namespace SQLDeveloper.Modulos.Inteliences.TextAnaliser
                     Name = tabla.Texto + "." + campo.Texto
                 }
                 );
+            AddSimbol(
+                new CSimbolo()
+                {
+                    DeclarationLinea = tabla.PosicionInicial.Linea,
+                    Tipo = TIPO_SIMBOLO.CAMPO,
+                    Name = campo.Texto
+                }
+                );
             //agrego la definicion del campo en la tabla
             //me traigo el registro de la tbla
             int x = 0;

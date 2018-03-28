@@ -19,9 +19,11 @@ namespace SQLDeveloper.Modulos.Editores
     public delegate void OnBuscarTextoEvent(ICSharpCode.TextEditor.TextEditorControl Editor);
     public partial class CTextEdit : EditorGenerico
     {
+        public event OnVerObjetoEvent OnVerObjeto;
         private bool FUsarConexionPrincipal = false;
         public event OnBuscarTextoEvent OnBuscarTexto;
         public event OnBuscarTextoEvent OnFoco;
+        public event OnBuscarTextoEvent VerVariables;
         private bool ModificadoExternamente = false;
         private string FColorEditor = "SQL";
         FileManager.CFIleInfo InfoFile;
@@ -491,11 +493,40 @@ namespace SQLDeveloper.Modulos.Editores
 
         private void BDescomentar_Click(object sender, EventArgs e)
         {
-            //comenta el dodigo seleccionado
+            //quita los comentarios que se encuentran en el inicio de cada linea
             string s;
             string s2 = "";
+            int n;
+            bool cadena = false;
             s = SelectedText;
-            s2 = s.Replace("--", "");
+            n = s.Length;
+            for (int i = 0; i < n;i++ )
+            {
+                if(s[i]=='-'&&i+1<n && s[i+1]=='-')
+                {
+                    //encontre un comentario
+                    if(cadena==false)
+                    {
+                        //y no esta dentro de una cadena
+                        //los quito
+                        i ++;
+                    }
+                    else
+                    {
+                        s2 += s[i];
+                    }
+                }
+                else
+                {
+                    if(s[i]=='\''||s[i]=='\"')
+                    {
+                        cadena = !cadena;
+                    }
+                    s2+=s[i];
+                }
+                
+            }
+             //   s2 = s.Replace("--", "");
             SelectedText = s2;
 
         }
@@ -554,6 +585,50 @@ namespace SQLDeveloper.Modulos.Editores
         public override string ToString()
         {
             return Nombre;
+        }
+        private int SelectionStart
+        {
+            get
+            {
+                if(TCodigo.ActiveTextAreaControl.SelectionManager.SelectionCollection.Count>0)
+                {
+                    ICSharpCode.TextEditor.Document.ISelection sel = null;
+                    sel = TCodigo.ActiveTextAreaControl.SelectionManager.SelectionCollection[0];
+                    return sel.Offset;
+                }
+                return TCodigo.ActiveTextAreaControl.Caret.Offset;
+            }
+        }
+        private void MenuDeficion_Click(object sender, EventArgs e)
+        {
+            lecxer1.Cadena = TCodigo.Text;
+            int pos=lecxer1.GetIndexPos(SelectionStart);
+            Compiler.Lexer.Lexema lex = lecxer1[pos];
+            //MessageBox.Show(lex.ToString());
+            switch(lex.Tipo)
+            {
+                case Compiler.Lexer.LEXTIPE.IDENTIFICADOR:
+                    List<MotorDB.CObjeto> objs = Motor.Buscar(lex.Texto, MotorDB.EnumTipoObjeto.NONE);
+                    if (objs.Count > 0)
+                    {
+                        foreach (MotorDB.CObjeto obj in objs)
+                        {
+                            if (obj.Nombre.ToUpper().Trim() == lex.Texto.ToUpper().Trim())
+                            {
+                                if (OnVerObjeto != null)
+                                    OnVerObjeto(Motor, obj.Nombre, obj.Tipo);
+                                return;
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
+
+        private void BVariables_Click(object sender, EventArgs e)
+        {
+            if (VerVariables != null)
+                VerVariables(TCodigo);
         }
     }
 }

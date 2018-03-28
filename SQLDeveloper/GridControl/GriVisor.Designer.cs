@@ -30,11 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GriVisor));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.BExportar = new System.Windows.Forms.ToolStripButton();
             this.BFiltrar = new System.Windows.Forms.ToolStripButton();
             this.BFiltoCampos = new System.Windows.Forms.ToolStripButton();
             this.BCalculadora = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.LTabla = new System.Windows.Forms.ToolStripLabel();
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -65,11 +65,6 @@
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
             // BExportar
             // 
             this.BExportar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -97,7 +92,7 @@
             this.BFiltoCampos.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BFiltoCampos.Name = "BFiltoCampos";
             this.BFiltoCampos.Size = new System.Drawing.Size(23, 22);
-            this.BFiltoCampos.Text = "Filtrar campos";
+            this.BFiltoCampos.Text = "Seleccionar Columnas";
             this.BFiltoCampos.Click += new System.EventHandler(this.BFiltoCampos_Click);
             // 
             // BCalculadora
@@ -109,6 +104,11 @@
             this.BCalculadora.Size = new System.Drawing.Size(23, 22);
             this.BCalculadora.Text = "Calculadora";
             this.BCalculadora.Click += new System.EventHandler(this.BCalculadora_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // LTabla
             // 

@@ -852,22 +852,46 @@ namespace Compiler.Lexer
 
                 #endregion
             }
+            //agrego un ultimo lexema
+            lex = new Lexema();
+            //posicion inicial
+            lex.PosicionInicial.PosicionLinea = posLine;
+            lex.PosicionInicial.Linea = nLinea;
+            lex.PosicionInicial.PosicionGeneral = posicion;
+            posicion++;
+            posLine++;
+            lex.Texto += "\r\n";
+            lex.Tipo = LEXTIPE.FINLINEA;
+            //posicion final
+            lex.PosicionFinal.PosicionLinea = posLine;
+            lex.PosicionFinal.Linea = nLinea;
+            lex.PosicionFinal.PosicionGeneral = posicion;
+            //lo agrego a la lista
+            lexemas.Add(lex);
+
         }
         /// <summary>
         /// Busca los identificadores que son palabras reservadas y les asigna su valor corespondiente
         /// </summary>
         private void BuscaPalabrasReservadas()
         {
-            foreach (Lexema lex in lexemas)
+            try
             {
-                if (lex.Tipo == LEXTIPE.IDENTIFICADOR)
+                foreach (Lexema lex in lexemas)
                 {
-                    if (EsPalabraReservada(lex.Texto) == true)
+                    if (lex.Tipo == LEXTIPE.IDENTIFICADOR)
                     {
-                        lex.Tipo = LEXTIPE.PALABRARESERVADA;
-                        lex.PalabraReservada = DamePalabraReservada(lex.Texto);
+                        if (EsPalabraReservada(lex.Texto) == true)
+                        {
+                            lex.Tipo = LEXTIPE.PALABRARESERVADA;
+                            lex.PalabraReservada = DamePalabraReservada(lex.Texto);
+                        }
                     }
                 }
+            }
+            catch(System.Exception ex)
+            {
+                return;
             }
         }
         private void AsignaIndices()
@@ -1067,6 +1091,16 @@ namespace Compiler.Lexer
         public void DesechaLexema()
         {
             IndexActual--;
+        }
+        /// <summary>
+        /// mueve el apuntador de lexemas a la posicion indicada
+        /// </summary>
+        /// <param name="pos"></param>
+        public void MueveCursorA(int pos)
+        {
+            if (pos >= lexemas.Count() || pos<0)
+                throw new Exception("Posicion fuera del intervalo");
+            IndexActual = pos;
         }
         #endregion
         #endregion

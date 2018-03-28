@@ -112,6 +112,15 @@ namespace GridControl
                     dt.Rows.Add(dr2);
                 }
                 Grid.DataSource = dt;
+                System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GriVisor));
+                if(Filtro.Trim()=="")
+                {
+                    this.BFiltrar.Image = ((System.Drawing.Image)(resources.GetObject("BFiltrar.Image")));
+                }
+                else
+                {
+                    this.BFiltrar.Image = ((System.Drawing.Image)(resources.GetObject("check")));
+                }
             }
             catch (System.Exception ex)
             {

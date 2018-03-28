@@ -70,6 +70,7 @@
             this.ComboConexiones = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.BBuscador = new System.Windows.Forms.ToolStripButton();
+            this.BBuscaAvanzado = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.Bpropiedades = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -79,7 +80,7 @@
             this.BAbrir = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.BComparar = new System.Windows.Forms.ToolStripButton();
-            this.BBuscaAvanzado = new System.Windows.Forms.ToolStripButton();
+            this.BDBComparer = new System.Windows.Forms.ToolStripButton();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
@@ -372,6 +373,7 @@
             this.ComboConexiones,
             this.toolStripSeparator9,
             this.BBuscador,
+            this.BBuscaAvanzado,
             this.toolStripSeparator1,
             this.Bpropiedades,
             this.toolStripSeparator2,
@@ -381,7 +383,7 @@
             this.BAbrir,
             this.toolStripSeparator11,
             this.BComparar,
-            this.BBuscaAvanzado});
+            this.BDBComparer});
             this.toolStrip.Location = new System.Drawing.Point(0, 24);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(632, 27);
@@ -395,7 +397,7 @@
             this.BConexiones.ImageTransparentColor = System.Drawing.Color.Black;
             this.BConexiones.Name = "BConexiones";
             this.BConexiones.Size = new System.Drawing.Size(24, 24);
-            this.BConexiones.Text = "Conexiones";
+            this.BConexiones.Text = "Administrar Conexiones";
             this.BConexiones.Click += new System.EventHandler(this.Conecciones);
             // 
             // toolStripLabel1
@@ -440,6 +442,16 @@
             this.BBuscador.Size = new System.Drawing.Size(24, 24);
             this.BBuscador.Text = "Buscador de Objetos";
             this.BBuscador.Click += new System.EventHandler(this.BBuscador_Click);
+            // 
+            // BBuscaAvanzado
+            // 
+            this.BBuscaAvanzado.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BBuscaAvanzado.Image = ((System.Drawing.Image)(resources.GetObject("BBuscaAvanzado.Image")));
+            this.BBuscaAvanzado.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BBuscaAvanzado.Name = "BBuscaAvanzado";
+            this.BBuscaAvanzado.Size = new System.Drawing.Size(24, 24);
+            this.BBuscaAvanzado.Text = "Busqueda avanzada";
+            this.BBuscaAvanzado.Click += new System.EventHandler(this.BBuscaAvanzado_Click);
             // 
             // toolStripSeparator1
             // 
@@ -493,7 +505,7 @@
             this.BAbrir.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BAbrir.Name = "BAbrir";
             this.BAbrir.Size = new System.Drawing.Size(24, 24);
-            this.BAbrir.Text = "toolStripButton1";
+            this.BAbrir.Text = "Abrir Archivo";
             this.BAbrir.Click += new System.EventHandler(this.BAbrir_Click);
             // 
             // toolStripSeparator11
@@ -508,18 +520,18 @@
             this.BComparar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BComparar.Name = "BComparar";
             this.BComparar.Size = new System.Drawing.Size(24, 24);
-            this.BComparar.Text = "Comparar";
+            this.BComparar.Text = "Comparar Codigo";
             this.BComparar.Click += new System.EventHandler(this.BComparar_Click);
             // 
-            // BBuscaAvanzado
+            // BDBComparer
             // 
-            this.BBuscaAvanzado.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.BBuscaAvanzado.Image = ((System.Drawing.Image)(resources.GetObject("BBuscaAvanzado.Image")));
-            this.BBuscaAvanzado.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.BBuscaAvanzado.Name = "BBuscaAvanzado";
-            this.BBuscaAvanzado.Size = new System.Drawing.Size(24, 24);
-            this.BBuscaAvanzado.Text = "Busqueda avanzada";
-            this.BBuscaAvanzado.Click += new System.EventHandler(this.BBuscaAvanzado_Click);
+            this.BDBComparer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BDBComparer.Image = ((System.Drawing.Image)(resources.GetObject("BDBComparer.Image")));
+            this.BDBComparer.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BDBComparer.Name = "BDBComparer";
+            this.BDBComparer.Size = new System.Drawing.Size(24, 24);
+            this.BDBComparer.Text = "Comparar Bases de Datos";
+            this.BDBComparer.Click += new System.EventHandler(this.BDBComparer_Click);
             // 
             // statusStrip
             // 
@@ -642,6 +654,7 @@
         private System.Windows.Forms.ToolStripButton BBuscaAvanzado;
         private System.Windows.Forms.ToolStripMenuItem generadorLiberiaCToolStripMenuItem;
         private ConfiguradorApp configuradorApp1;
+        private System.Windows.Forms.ToolStripButton BDBComparer;
     }
 }
 

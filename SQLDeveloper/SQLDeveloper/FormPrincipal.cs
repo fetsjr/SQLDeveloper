@@ -153,6 +153,7 @@ namespace SQLDeveloper
                 Bnuevo.Enabled = value;
                 BAbrir.Enabled = value;
                 BComparar.Enabled = value;
+                BDBComparer.Enabled = value;
             }
         }
 
@@ -435,8 +436,10 @@ namespace SQLDeveloper
             edit.ColorEditor = DBProvider.DB.GetMotor().ToString();
             edit.GestorArchivo = new FileManager.CFileManager();
             edit.OnBuscarTexto += new Modulos.Editores.OnBuscarTextoEvent(BuscarTexto);
+            edit.VerVariables += new Modulos.Editores.OnBuscarTextoEvent(VerVariabes);
             edit.OnFoco += new Modulos.Editores.OnBuscarTextoEvent(EditorFocoText);
             OnRecargaColores += new OnRecargaColoresEvent(edit.ActualizaColores);
+            edit.OnVerObjeto += new OnVerObjetoEvent(VerObjeto);
             VEditor.AgregaEditor(edit, "Sin titulo");
         }
         private void VerCodigo(MotorDB.IMotorDB motor, string nombre, string codigo)
@@ -452,31 +455,13 @@ namespace SQLDeveloper
             edit.ColorEditor = motor.GetMotor().ToString();
             edit.GestorArchivo = new FileManager.CFileManager();
             edit.OnBuscarTexto += new Modulos.Editores.OnBuscarTextoEvent(BuscarTexto);
+            edit.VerVariables += new Modulos.Editores.OnBuscarTextoEvent(VerVariabes);
             edit.OnFoco += new Modulos.Editores.OnBuscarTextoEvent(EditorFocoText);
+            edit.OnVerObjeto += new OnVerObjetoEvent(VerObjeto);
             OnRecargaColores += new OnRecargaColoresEvent(edit.ActualizaColores);
             VEditor.AgregaEditor(edit, nombre);
             edit.SetFocus();
         }
-        private void BuscarTexto(ICSharpCode.TextEditor.TextEditorControl Editor)
-        {
-            if (ExisteVentanaIzquierda(typeof(Modulos.Editores.FormBuscador)) == false)
-            {
-                Modulos.Editores.FormBuscador dlg = new Modulos.Editores.FormBuscador();
-                dlg.Editor = Editor;
-                VentanaAcoplable(dlg, 0, true, State.DockRight);
-            }
-
-        }
-        private void EditorFocoText(ICSharpCode.TextEditor.TextEditorControl Editor)
-        {
-            Modulos.Editores.FormBuscador dlg;
-            dlg = (Modulos.Editores.FormBuscador)DameVentana(typeof(Modulos.Editores.FormBuscador));
-            if (dlg != null)
-            {
-                dlg.Editor = Editor;
-            }
-        }
-
         private void FormPrincipal_FormClosing(object sender, FormClosingEventArgs e)
         {
             CerrarPespaña = false;
@@ -519,8 +504,10 @@ namespace SQLDeveloper
             edit.ColorEditor = DBProvider.DB.GetMotor().ToString();
             edit.GestorArchivo = new FileManager.CFileManager();
             edit.OnBuscarTexto += new Modulos.Editores.OnBuscarTextoEvent(BuscarTexto);
+            edit.VerVariables += new Modulos.Editores.OnBuscarTextoEvent(VerVariabes);
             edit.OnFoco += new Modulos.Editores.OnBuscarTextoEvent(EditorFocoText);
             OnRecargaColores += new OnRecargaColoresEvent(edit.ActualizaColores);
+            edit.OnVerObjeto += new OnVerObjetoEvent(VerObjeto);
             VEditor.AgregaEditor(edit, "Sin titulo");
             edit.Abrir();
         }
@@ -752,8 +739,10 @@ namespace SQLDeveloper
             else
                 edit.GestorArchivo = fm;
             edit.OnBuscarTexto += new Modulos.Editores.OnBuscarTextoEvent(BuscarTexto);
+            edit.VerVariables += new Modulos.Editores.OnBuscarTextoEvent(VerVariabes);
             edit.OnFoco += new Modulos.Editores.OnBuscarTextoEvent(EditorFocoText);
             OnRecargaColores += new OnRecargaColoresEvent(edit.ActualizaColores);
+            edit.OnVerObjeto += new OnVerObjetoEvent(VerObjeto);
             VEditor.AgregaEditor(edit, objeto);
             edit.SetFocus();
 
@@ -1020,6 +1009,50 @@ namespace SQLDeveloper
             sr.WriteLine("</SyntaxDefinition>");
             #endregion
             sr.Close();
+        }
+        private void EditorFocoText(ICSharpCode.TextEditor.TextEditorControl Editor)
+        {
+            Modulos.Editores.FormBuscador dlg;
+            dlg = (Modulos.Editores.FormBuscador)DameVentana(typeof(Modulos.Editores.FormBuscador));
+            if (dlg != null)
+            {
+                dlg.Editor = Editor;
+            }
+            Modulos.Visores.Variables.FormVariables dlg2 = (Modulos.Visores.Variables.FormVariables)DameVentana(typeof(Modulos.Visores.Variables.FormVariables));
+            if (dlg2 != null)
+            {
+                dlg2.Editor = Editor;
+            }
+        }
+        private void BuscarTexto(ICSharpCode.TextEditor.TextEditorControl Editor)
+        {
+            if (ExisteVentanaIzquierda(typeof(Modulos.Editores.FormBuscador)) == false)
+            {
+                Modulos.Editores.FormBuscador dlg = new Modulos.Editores.FormBuscador();
+                dlg.Editor = Editor;
+                VentanaAcoplable(dlg, 0, true, State.DockRight);
+            }
+
+        }
+        private void VerVariabes(ICSharpCode.TextEditor.TextEditorControl Editor)
+        {
+            if (ExisteVentanaIzquierda(typeof(Modulos.Visores.Variables.FormVariables)) == false)
+            {
+                Modulos.Visores.Variables.FormVariables dlg = new Modulos.Visores.Variables.FormVariables();
+                dlg.Editor = Editor;
+                VentanaAcoplable(dlg, 0, true, State.DockRight);
+            }
+        }
+
+        private void BDBComparer_Click(object sender, EventArgs e)
+        {
+            if (ExisteVentanaIzquierda(typeof(Modulos.DBComparador.ComparadorDB)) == false)
+            {
+                Modulos.DBComparador.ComparadorDB dlg = new Modulos.DBComparador.ComparadorDB();
+                dlg.OnCompararCodigo += new Modulos.DBComparador.OnComparadorDBEvent(Comparar);
+                dlg.OnVerCodigoObjeto += new Modulos.DBComparador.OnComparadorDBVerCodigoEvent(VerCodigo);
+                VentanaAcoplable(dlg, 0, true, State.DockLeft);
+            }
         }
     }
 }
